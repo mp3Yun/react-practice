@@ -1,6 +1,6 @@
 interface BaseButton {
   text?: string
-  iconSrc?: string
+  iconSrc?: any
   style?: {
     [key: string]: any
   }

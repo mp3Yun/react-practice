@@ -1,9 +1,11 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { IconDefinitions } from '../../icons/icon.definitions'
+
 function IconBtn(props: BaseButton) {
-  const icon = props.iconSrc || 'default'
+  const icon = props.iconSrc || IconDefinitions.add
   return (
     <button>
-      {/* TODO: add Icon */}
-      not done icon {icon}
+      <FontAwesomeIcon icon={icon.src}></FontAwesomeIcon>
     </button>
   )
 }
