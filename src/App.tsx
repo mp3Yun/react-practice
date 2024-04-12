@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Todo from './components/todos/Todo'
+import TextBtn from './components/buttons/TextBtn'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,7 +11,7 @@ function App() {
       <div>
         <Todo />
       </div>
-      <Todo />
+      <TextBtn text="純文字按鈕"></TextBtn>
     </>
   )
 }
