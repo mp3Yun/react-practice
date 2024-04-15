@@ -10,14 +10,24 @@ import TextIconBtn from './components/buttons/TextIconBtn'
 function App() {
   const [count, setCount] = useState(0)
 
+  const iconProps = {
+    size: 'xs',
+  }
+
   return (
     <>
       <div>
         <Todo />
       </div>
-      <TextBtn text="純文字按鈕"></TextBtn>
+      <TextBtn
+        btnClassName="bg-blue-500 rounded-md pd-4"
+        text="純文字按鈕"
+      ></TextBtn>
       <br></br>
-      <IconBtn iconSrc={IconDefinitions.copy}></IconBtn>
+      <IconBtn
+        iconSrc={IconDefinitions.copy}
+        btnClassName="bg-blue-400 w-6 rounded-md"
+      ></IconBtn>
       <br></br>
       <IconTextBtn
         iconSrc={IconDefinitions.faSearch}
