@@ -3,7 +3,7 @@ import './App.css'
 import Todo from './components/todos/Todo'
 import TextBtn from './components/buttons/TextBtn'
 import IconBtn from './components/buttons/IconBtn'
-import { IconDefinitions } from './icons/icon.definitions'
+import { IconDefinitions } from './components/icons/icon.definitions'
 import IconTextBtn from './components/buttons/IconTextBtn'
 import TextIconBtn from './components/buttons/TextIconBtn'
 

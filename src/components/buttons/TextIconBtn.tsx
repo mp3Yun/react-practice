@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { IconDefinitions } from '../../icons/icon.definitions'
+import FaIcon from '../icons/FaIcon'
+import { IconDefinitions } from '../icons/icon.definitions'
 import { BaseButton } from './button.vo'
 
 function TextIconBtn(props: BaseButton) {
@@ -8,12 +8,12 @@ function TextIconBtn(props: BaseButton) {
   return (
     <button style={props.style} className={props.btnClassName}>
       {props.text}
-      <FontAwesomeIcon
-        icon={icon.src}
+      <FaIcon
+        iconSrc={icon.src}
         size={iconProps?.size}
         rotation={iconProps?.rotation}
         flip={iconProps?.flip}
-      ></FontAwesomeIcon>
+      ></FaIcon>
     </button>
   )
 }
