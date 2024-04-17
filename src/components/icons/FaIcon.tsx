@@ -8,7 +8,6 @@ import {
 import { FaIconProps } from './icon.vo'
 
 function FaIcon(props: FaIconProps) {
-  console.error('99-我是 FaIcon =>', props)
   const icon = props.iconSrc || IconDefinitions.add
   const iconSize = props.size as SizeProp
   const iconRotation = props.rotation as RotateProp
