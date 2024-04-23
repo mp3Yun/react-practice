@@ -6,6 +6,9 @@ import IconBtn from './components/buttons/IconBtn'
 import { IconDefinitions } from './components/icons/icon.definitions'
 import IconTextBtn from './components/buttons/IconTextBtn'
 import TextIconBtn from './components/buttons/TextIconBtn'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import IconDemo from './components/demo/IconDemo'
+import DemoHome from './components/demo/DemoHome'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,9 +19,6 @@ function App() {
 
   return (
     <>
-      <div>
-        <Todo />
-      </div>
       <TextBtn
         btnClassName="bg-blue-500 rounded-md pd-4"
         text="純文字按鈕"
@@ -42,6 +42,14 @@ function App() {
       <div className="bg-blue-500 text-white p-4">
         <h1 className="text-2xl font-bold">Hello, Tailwind CSS!</h1>
       </div>
+      <br />
+      <Router>
+        <Routes>
+          <Route path="/" element={<DemoHome />} />
+          <Route path="/iconDemo" element={<IconDemo />} />
+          <Route path="/buttonDemo" element={<IconDemo />} />
+        </Routes>
+      </Router>
     </>
   )
 }
