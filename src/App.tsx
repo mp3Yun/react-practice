@@ -6,7 +6,12 @@ import IconBtn from './components/buttons/IconBtn'
 import { IconDefinitions } from './components/icons/icon.definitions'
 import IconTextBtn from './components/buttons/IconTextBtn'
 import TextIconBtn from './components/buttons/TextIconBtn'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+} from 'react-router-dom'
 import IconDemo from './components/demo/IconDemo'
 import DemoHome from './components/demo/DemoHome'
 
@@ -43,13 +48,12 @@ function App() {
         <h1 className="text-2xl font-bold">Hello, Tailwind CSS!</h1>
       </div>
       <br />
-      <Router>
-        <Routes>
-          <Route path="/" element={<DemoHome />} />
-          <Route path="/iconDemo" element={<IconDemo />} />
-          <Route path="/buttonDemo" element={<IconDemo />} />
-        </Routes>
-      </Router>
+      <DemoHome />
+      outlet:
+      <div>
+        <Outlet />
+      </div>
+      ---
     </>
   )
 }
