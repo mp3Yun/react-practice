@@ -10,7 +10,7 @@ export interface BaseButton {
     [key: string]: any
   }
   btnClassName?: string
-  onBtnClick?: (props: any) => void
+  onBtnClick?: (props: any) => void | undefined
 }
 
 export interface ListBaseButton extends BaseButton {

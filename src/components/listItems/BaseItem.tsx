@@ -52,22 +52,26 @@ function BaseItem(item: ListBaseButton) {
   //   })
   // }
 
+  const handleClick = () => {
+    item.onBtnClick ? item.onBtnClick(item) : ''
+  }
+
   const setListItemView = () => {
     switch (item.type) {
       case 'IconBtn': {
-        return <IconBtn {...item}></IconBtn>
+        return <IconBtn {...item} onBtnClick={handleClick}></IconBtn>
       }
 
       case 'TextBtn': {
-        return <TextBtn {...item}></TextBtn>
+        return <TextBtn {...item} onBtnClick={handleClick}></TextBtn>
       }
 
       case 'IconTextBtn': {
-        return <IconTextBtn {...item}></IconTextBtn>
+        return <IconTextBtn {...item} onBtnClick={handleClick}></IconTextBtn>
       }
 
       case 'TextIconBtn': {
-        return <TextIconBtn {...item}></TextIconBtn>
+        return <TextIconBtn {...item} onBtnClick={handleClick}></TextIconBtn>
       }
     }
   }
