@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import './App.css'
 import { BaseButton } from './components/buttons/button.vo'
 import { IconDefinitions } from './components/icons/icon.definitions'
+import BaseItem from './components/listItems/BaseItem'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -10,15 +11,18 @@ function App() {
   // TODO: add list item
   const listItems: BaseButton[] = [
     {
+      id: 1,
       type: 'TextBtn',
       text: 'Icon Demo Page',
     },
     {
+      id: 2,
       type: 'IconTextBtn',
       text: 'TEST Icon Demo 111',
       iconSrc: IconDefinitions.faSearch,
     },
     {
+      id: 3,
       type: 'TextIconBtn',
       text: 'TEST Icon Demo 222',
       iconSrc: IconDefinitions.faPencil,
@@ -30,7 +34,11 @@ function App() {
       <div className="flex w-[100%] h-[100%]">
         <div className="flex-none w-[25%] h-auto border-solid border-2 border-current">
           列表的按鈕
-          {/* TODO: 應該在這邊使用那個元件 */}
+          {/* { listItems.map((item) => (
+						<div key={item.id}>
+							<BaseItem item></BaseItem>
+						</div>
+					))} */}
         </div>
         <div className="flex-initial w-[75%] h-auto">
           <div className="bg-blue-500 text-white p-4">
