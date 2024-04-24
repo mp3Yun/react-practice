@@ -47,7 +47,10 @@ function App() {
         <div className="flex-none w-[25%] h-auto border-solid border-2 border-current">
           {listItems.map((item) => (
             <div key={item.id}>
-              <BaseItem {...item} onBtnClick={listItemOnBtnClick}></BaseItem>
+              <BaseItem
+                {...item}
+                onBtnClick={() => listItemOnBtnClick(item)}
+              ></BaseItem>
             </div>
           ))}
         </div>
