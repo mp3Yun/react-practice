@@ -1,40 +1,38 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import './App.css'
-import { BaseButton, ListBaseButton } from './components/buttons/button.vo'
 import { IconDefinitions } from './components/icons/icon.definitions'
-import BaseItem from './components/listItems/BaseItem'
+import Button, { ButtonProps } from './components/Button'
 
-function App() {
+type ListItem = { id: number; navigatorUrl: string } & ButtonProps
+
+export const App: FC = () => {
   const [count, setCount] = useState(0)
 
   // TODO: add list item
-  const listItems: ListBaseButton[] = [
+  const listItems: ListItem[] = [
     {
       id: 1,
-      type: 'TextBtn',
-      text: 'Icon Demo Page',
+      children: 'Icon Demo Page',
       navigatorUrl: '/iconDemo',
     },
     {
       id: 2,
-      type: 'IconTextBtn',
-      text: 'TEST Icon Demo 111',
-      iconSrc: IconDefinitions.faSearch,
+      children: 'TEST Icon Demo 111',
+      prefixIcon: { iconSrc: IconDefinitions.faSearch },
       navigatorUrl: 'TODO:',
     },
     {
       id: 3,
-      type: 'TextIconBtn',
-      text: 'TEST Icon Demo 222',
-      iconSrc: IconDefinitions.faPencil,
+      children: 'TEST Icon Demo 222',
+      suffixIcon: { iconSrc: IconDefinitions.faPencil },
       navigatorUrl: 'TODO:',
     },
   ]
 
   const navigate = useNavigate()
 
-  const listItemOnBtnClick = (item: ListBaseButton) => {
+  const listItemOnBtnClick = (item: ListItem) => {
     console.log('99----> 有沒有被 trigger ?', item)
     if (item.navigatorUrl) {
       navigate(item.navigatorUrl)
@@ -47,7 +45,10 @@ function App() {
         <div className="flex-none w-[25%] h-auto border-solid border-2 border-current">
           {listItems.map((item) => (
             <div key={item.id}>
-              <BaseItem {...item} onBtnClick={listItemOnBtnClick}></BaseItem>
+              <Button
+                {...item}
+                onClick={() => listItemOnBtnClick(item)}
+              ></Button>
             </div>
           ))}
         </div>
