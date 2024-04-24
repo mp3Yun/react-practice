@@ -2,9 +2,9 @@ import IconBtn from '../buttons/IconBtn'
 import IconTextBtn from '../buttons/IconTextBtn'
 import TextBtn from '../buttons/TextBtn'
 import TextIconBtn from '../buttons/TextIconBtn'
-import { BaseButton } from '../buttons/button.vo'
+import { ListBaseButton } from '../buttons/button.vo'
 
-function BaseItem(item: BaseButton) {
+function BaseItem(item: ListBaseButton) {
   // const setListItemView = () => {
   //   baseButtonItems.map((item) => {
   //     switch (item.type) {
@@ -55,50 +55,24 @@ function BaseItem(item: BaseButton) {
   const setListItemView = () => {
     switch (item.type) {
       case 'IconBtn': {
-        return (
-          <IconBtn
-            iconSrc={item.iconSrc}
-            btnClassName={item.btnClassName}
-            style={item.style}
-          ></IconBtn>
-        )
+        return <IconBtn {...item}></IconBtn>
       }
 
       case 'TextBtn': {
-        return (
-          <TextBtn
-            btnClassName={item.btnClassName}
-            style={item.style}
-          ></TextBtn>
-        )
+        return <TextBtn {...item}></TextBtn>
       }
 
       case 'IconTextBtn': {
-        return (
-          <IconTextBtn
-            iconSrc={item.iconSrc}
-            text={item.text}
-            btnClassName={item.btnClassName}
-            style={item.style}
-          ></IconTextBtn>
-        )
+        return <IconTextBtn {...item}></IconTextBtn>
       }
 
       case 'TextIconBtn': {
-        return (
-          <TextIconBtn
-            iconSrc={item.iconSrc}
-            text={item.text}
-            btnClassName={item.btnClassName}
-            style={item.style}
-          ></TextIconBtn>
-        )
+        return <TextIconBtn {...item}></TextIconBtn>
       }
     }
   }
 
-  return
-  ;<>{setListItemView()}</>
+  return setListItemView()
 }
 
 export default BaseItem

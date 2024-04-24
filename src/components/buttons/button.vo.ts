@@ -10,8 +10,10 @@ export interface BaseButton {
     [key: string]: any
   }
   btnClassName?: string
+  onBtnClick?: (props: any) => void
 }
 
 export interface ListBaseButton extends BaseButton {
-  subBtns: BaseButton[]
+  subBtns?: BaseButton[]
+  navigatorUrl?: string
 }

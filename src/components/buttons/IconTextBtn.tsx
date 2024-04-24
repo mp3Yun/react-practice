@@ -6,7 +6,11 @@ function IconTextBtn(props: BaseButton) {
   const icon = props?.iconSrc || IconDefinitions.add
   const iconProps = props.iconProps
   return (
-    <button style={props.style} className={props.btnClassName}>
+    <button
+      style={props.style}
+      className={props.btnClassName}
+      onClick={props.onBtnClick}
+    >
       <FaIcon
         iconSrc={icon}
         size={iconProps?.size}
