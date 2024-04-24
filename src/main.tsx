@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
-import DemoHome from './components/demo/DemoHome.tsx'
+import DemoHome from './pages/demo/DemoHome.tsx'
 import './index.css'
-import IconDemo from './components/demo/IconDemo.tsx'
+import IconDemo from './pages/demo/IconDemo.tsx'
 
 const router = createBrowserRouter([
   {

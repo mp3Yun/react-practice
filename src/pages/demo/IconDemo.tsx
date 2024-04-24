@@ -1,5 +1,5 @@
-import FaIcon from '../icons/FaIcon'
-import { IconDefinitions } from '../icons/icon.definitions'
+import FaIcon from '../../components/icons/FaIcon'
+import { IconDefinitions } from '../../components/icons/icon.definitions'
 
 function IconDemo() {
   const data = [
