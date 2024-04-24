@@ -1,6 +1,7 @@
 import { FaIconProps } from '../icons/icon.vo'
 
 export interface BaseButton {
+  type?: 'IconBtn' | 'IconTextBtn' | 'TextBtn' | 'TextIconBtn'
   text?: string
   iconSrc?: any
   iconProps?: FaIconProps
@@ -8,4 +9,8 @@ export interface BaseButton {
     [key: string]: any
   }
   btnClassName?: string
+}
+
+export interface ListBaseButton extends BaseButton {
+  subBtns: BaseButton[]
 }
