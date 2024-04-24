@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import App from './App.tsx'
+import DemoHome from './components/demo/DemoHome.tsx'
+import './index.css'
 import IconDemo from './components/demo/IconDemo.tsx'
 
 const router = createBrowserRouter([
@@ -10,13 +11,24 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
+      /**
+       * Demo module
+       * If it's as sub module,
+       * In this case, you should add <Outlet /> in DemoHome.
+       */
       {
-        path: '/iconDemo',
-        element: <IconDemo />,
-      },
-      {
-        path: '/buttonDemo',
-        element: <IconDemo />,
+        path: '/Demo',
+        element: <DemoHome />,
+        children: [
+          {
+            path: 'IconDemo',
+            element: <IconDemo />,
+          },
+          {
+            path: 'ButtonDemo',
+            element: <IconDemo />,
+          },
+        ],
       },
     ],
   },

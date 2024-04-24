@@ -8,20 +8,25 @@ import BaseItem from './components/listItems/BaseItem'
 function App() {
   const [count, setCount] = useState(0)
 
-  // TODO: add list item
   const listItems: ListBaseButton[] = [
+    {
+      id: 0,
+      type: 'TextBtn',
+      text: 'Demo Home Page',
+      navigatorUrl: '/Demo',
+    },
     {
       id: 1,
       type: 'TextBtn',
       text: 'Icon Demo Page',
-      navigatorUrl: '/iconDemo',
+      navigatorUrl: '/Demo/IconDemo',
     },
     {
       id: 2,
       type: 'IconTextBtn',
-      text: 'TEST Icon Demo 111',
+      text: 'Button Demo Page',
       iconSrc: IconDefinitions.faSearch,
-      navigatorUrl: 'TODO:',
+      navigatorUrl: '/Demo/ButtonDemo',
     },
     {
       id: 3,
@@ -35,7 +40,6 @@ function App() {
   const navigate = useNavigate()
 
   const listItemOnBtnClick = (item: ListBaseButton) => {
-    console.log('99----> 有沒有被 trigger ?', item)
     if (item.navigatorUrl) {
       navigate(item.navigatorUrl)
     }

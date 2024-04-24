@@ -1,4 +1,4 @@
-import { Route, Router, Routes, useNavigate } from 'react-router-dom'
+import { Outlet, Route, Router, Routes, useNavigate } from 'react-router-dom'
 import IconDemo from './IconDemo'
 
 function DemoHome() {
@@ -7,10 +7,10 @@ function DemoHome() {
   const handleClick = (page: string) => {
     switch (page) {
       case 'iconDemo':
-        navigate('/iconDemo')
+        navigate('/IconDemo')
         break
       case 'buttonDemo':
-        navigate('/buttonDemo')
+        navigate('/Demo/ButtonDemo')
         break
     }
   }
@@ -41,7 +41,9 @@ function DemoHome() {
       </div>
       <br />
       <br />
-      <div className="border-solid border-current"></div>
+      <div className="border-solid border-current">
+        <Outlet />
+      </div>
     </div>
   )
 }
