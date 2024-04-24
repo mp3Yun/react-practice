@@ -1,6 +1,7 @@
 import { FaIconProps } from '../icons/icon.vo'
 
 export interface BaseButton {
+  id?: number
   type?: 'IconBtn' | 'IconTextBtn' | 'TextBtn' | 'TextIconBtn'
   text?: string
   iconSrc?: any

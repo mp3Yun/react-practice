@@ -1,11 +1,29 @@
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import './App.css'
+import { BaseButton } from './components/buttons/button.vo'
+import { IconDefinitions } from './components/icons/icon.definitions'
 
 function App() {
   const [count, setCount] = useState(0)
 
   // TODO: add list item
+  const listItems: BaseButton[] = [
+    {
+      type: 'TextBtn',
+      text: 'Icon Demo Page',
+    },
+    {
+      type: 'IconTextBtn',
+      text: 'TEST Icon Demo 111',
+      iconSrc: IconDefinitions.faSearch,
+    },
+    {
+      type: 'TextIconBtn',
+      text: 'TEST Icon Demo 222',
+      iconSrc: IconDefinitions.faPencil,
+    },
+  ]
 
   return (
     <>
