@@ -18,6 +18,7 @@ function DemoHome() {
   return (
     <div>
       <h1
+        className="border-solid border-2 border-inherit"
         onClick={() => {
           navigate('/')
         }}
