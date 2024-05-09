@@ -8,15 +8,27 @@ function ButtonDemo() {
       button demo page<br></br>
       <CardIconButton
         size={'xs'}
-        prefixIcon={IconDefinitions.faPencil as FaIconProps}
+        prefixIcon={{ iconSrc: IconDefinitions.faPencil }}
       >
         xs 按鈕
       </CardIconButton>
       <CardIconButton
         size={'sm'}
-        prefixIcon={IconDefinitions.faPencil as FaIconProps}
+        prefixIcon={{ iconSrc: IconDefinitions.faPencil }}
       >
         sm 按鈕
+      </CardIconButton>
+      <CardIconButton
+        size={'md'}
+        prefixIcon={{ iconSrc: IconDefinitions.faPencil }}
+      >
+        md 按鈕
+      </CardIconButton>
+      <CardIconButton
+        size={'lg'}
+        prefixIcon={{ iconSrc: IconDefinitions.faPencil }}
+      >
+        lg 按鈕
       </CardIconButton>
     </div>
   )
