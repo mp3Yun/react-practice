@@ -19,7 +19,7 @@ function PanelDemo() {
   }
 
   return (
-    <div>
+    <div className="bg-cyan-100">
       panel demo page
       <br />
       <BottomPanel className="border-solid border-2 border-green-200">
