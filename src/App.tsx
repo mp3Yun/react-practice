@@ -13,31 +13,31 @@ export const App: FC = () => {
   const listItems: ListItem[] = [
     {
       id: 0,
+      children: 'Demo Home Page',
       navigatorUrl: '/Demo',
     },
     {
       id: 1,
       children: 'Icon Demo Page',
-      navigatorUrl: '/iconDemo',
+      navigatorUrl: '/Demo/iconDemo',
     },
     {
       id: 2,
-      children: 'TEST Icon Demo 111',
+      children: 'Button Demo page',
       prefixIcon: { iconSrc: IconDefinitions.faSearch },
-      navigatorUrl: 'TODO:',
+      navigatorUrl: '/Demo/buttonDemo',
     },
     {
       id: 3,
-      children: 'TEST Icon Demo 222',
+      children: 'Panel Demo page',
       suffixIcon: { iconSrc: IconDefinitions.faPencil },
-      navigatorUrl: 'TODO:',
+      navigatorUrl: '/Demo/panelDemo',
     },
   ]
 
   const navigate = useNavigate()
 
   const listItemOnBtnClick = (item: ListItem) => {
-    console.log('99----> 有沒有被 trigger ?', item)
     if (item.navigatorUrl) {
       navigate(item.navigatorUrl)
     }
@@ -61,11 +61,11 @@ export const App: FC = () => {
             <h1 className="text-2xl font-bold">Hello, here is Title !</h1>
           </div>
           <div>
-            outlet:
+            app outlet:
             <div>
               <Outlet />
             </div>
-            ---
+            app ---
           </div>
         </div>
       </div>

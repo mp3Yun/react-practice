@@ -5,6 +5,8 @@ import App from './App.tsx'
 import DemoHome from './pages/demo/DemoHome.tsx'
 import './index.css'
 import IconDemo from './pages/demo/IconDemo.tsx'
+import ButtonDemo from './pages/demo/ButtonDemo.tsx'
+import PanelDemo from './pages/demo/PanelDemo.tsx'
 
 const router = createBrowserRouter([
   {
@@ -26,7 +28,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'ButtonDemo',
-            element: <IconDemo />,
+            element: <ButtonDemo />,
+          },
+          {
+            path: 'PanelDemo',
+            element: <PanelDemo />,
           },
         ],
       },

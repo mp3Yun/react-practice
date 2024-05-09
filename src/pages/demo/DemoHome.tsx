@@ -17,7 +17,7 @@ function DemoHome() {
 
   return (
     <div>
-      <h1
+      {/* <h1
         className="border-solid border-2 border-inherit"
         onClick={() => {
           navigate('/')
@@ -31,7 +31,7 @@ function DemoHome() {
         }}
       >
         page 2
-      </h1>
+      </h1> */}
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <button onClick={handleClick.bind(null, 'iconDemo')}>
           Go to Icon Demo Page
@@ -42,7 +42,8 @@ function DemoHome() {
       </div>
       <br />
       <br />
-      <div className="border-solid border-current">
+      Here is Demo Home Page Content
+      <div className="flex border-solid border-2 border-orange-200">
         <Outlet />
       </div>
     </div>
