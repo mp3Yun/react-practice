@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 function ConceptDemo() {
   return (
@@ -75,7 +75,7 @@ export function Scoreboard() {
   )
 }
 
-function Counter({ person }) {
+const Counter: FC<{ person: string }> = ({ person }) => {
   const [score, setScore] = useState(0)
   const [hover, setHover] = useState(false)
 
@@ -97,3 +97,4 @@ function Counter({ person }) {
     </div>
   )
 }
+export { Counter }
