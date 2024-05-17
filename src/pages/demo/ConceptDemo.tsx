@@ -113,6 +113,7 @@ export function ScoreboardSetByDiffPosition() {
       {isPlayerA && <Counter person="Taylor" />}
       {!isPlayerA && <Counter person="Sarah" />}
       <button
+        className="border-2 border-blue-200 border-solid rounded-lg bg-blue-200"
         onClick={() => {
           setIsPlayerA(!isPlayerA)
         }}
@@ -133,6 +134,7 @@ export function ScoreboardSetByKey() {
         <Counter key="Sarah" person="Sarah" />
       )}
       <button
+        className="border-2 border-blue-200 border-solid rounded-lg bg-blue-200"
         onClick={() => {
           setIsPlayerA(!isPlayerA)
         }}
