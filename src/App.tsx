@@ -35,6 +35,11 @@ export const App: FC = () => {
       children: 'Drag Demo page',
       navigatorUrl: '/Demo/dragDemo',
     },
+    {
+      id: 5,
+      children: 'Concept Demo page',
+      navigatorUrl: '/Demo/conceptDemo',
+    },
   ]
 
   const navigate = useNavigate()

@@ -7,6 +7,7 @@ import './index.css'
 import IconDemo from './pages/demo/IconDemo.tsx'
 import ButtonDemo from './pages/demo/ButtonDemo.tsx'
 import PanelDemo from './pages/demo/PanelDemo.tsx'
+import ConceptDemo from './pages/demo/ConceptDemo.tsx'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
           {
             path: 'PanelDemo',
             element: <PanelDemo />,
+          },
+          {
+            path: 'ConceptDemo',
+            element: <ConceptDemo />,
           },
         ],
       },

@@ -38,7 +38,6 @@ const CardIconButton: FC<CardButtonProps> = ({
   size,
   style,
   prefixIcon,
-  suffixIcon,
   className,
   onClick,
   children,
@@ -50,16 +49,16 @@ const CardIconButton: FC<CardButtonProps> = ({
       'font-medium bg-sky-100 border-dash border-4 border-sky-600 '
     switch (size) {
       case 'xs':
-        cardClassName = cardClassName + ' w-24 h-24 rounded-sm '
+        cardClassName = cardClassName + ' w-16 h-16 rounded-sm '
         break
       case 'sm':
-        cardClassName = cardClassName + ' w-28 h-28 rounded '
+        cardClassName = cardClassName + ' w-20 h-20 rounded '
         break
       case 'md':
-        cardClassName = cardClassName + ' w-32 h-32 rounded-md '
+        cardClassName = cardClassName + ' w-24 h-24 rounded-md '
         break
       case 'lg':
-        cardClassName = cardClassName + ' w-36 h-36 rounded-lg '
+        cardClassName = cardClassName + ' w-28 h-28 rounded-lg '
         break
     }
   }
@@ -68,8 +67,10 @@ const CardIconButton: FC<CardButtonProps> = ({
     <Button
       style={style}
       className={cardClassName}
-      prefixIcon={{ ...prefixIcon, size: size }}
-      suffixIcon={{ ...suffixIcon, size: size }}
+      prefixIcon={{
+        ...prefixIcon,
+        size: prefixIcon && size ? size : undefined,
+      }}
       onClick={onClick}
     >
       <br></br>

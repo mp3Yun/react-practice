@@ -1,6 +1,5 @@
 import { CardIconButton } from '../../components/Button'
 import { IconDefinitions } from '../../components/icons/icon.definitions'
-import { FaIconProps } from '../../components/icons/icon.vo'
 
 function ButtonDemo() {
   return (
