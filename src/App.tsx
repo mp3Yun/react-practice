@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import './App.css'
+import './App.scss'
 import { IconDefinitions } from './components/icons/icon.definitions'
 import Button, { ButtonProps } from './components/Button'
 

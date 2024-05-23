@@ -1,5 +1,5 @@
 import { FC, useState } from 'react'
-import './ConceptDemo.css'
+import './ConceptDemo.scss'
 
 function ConceptDemo() {
   return (
