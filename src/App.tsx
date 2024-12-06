@@ -1,47 +1,33 @@
 import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
 import './App.css'
-import Todo from './components/todos/Todo'
-import TextBtn from './components/buttons/TextBtn'
-import IconBtn from './components/buttons/IconBtn'
-import { IconDefinitions } from './icons/icon.definitions'
-import IconTextBtn from './components/buttons/IconTextBtn'
-import TextIconBtn from './components/buttons/TextIconBtn'
 
 function App() {
   const [count, setCount] = useState(0)
 
-  const iconProps = {
-    size: 'xs',
-  }
-
   return (
     <>
       <div>
-        <Todo />
+        <a href="https://vitejs.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
       </div>
-      <TextBtn
-        btnClassName="bg-blue-500 rounded-md pd-4"
-        text="純文字按鈕"
-      ></TextBtn>
-      <br></br>
-      <IconBtn
-        iconSrc={IconDefinitions.copy}
-        btnClassName="bg-blue-400 w-6 rounded-md"
-      ></IconBtn>
-      <br></br>
-      <IconTextBtn
-        iconSrc={IconDefinitions.faSearch}
-        text="左 icon + 文字按鈕"
-      ></IconTextBtn>
-      <br />
-      <TextIconBtn
-        iconSrc={IconDefinitions.faPencil}
-        text="右 icon + 文字按鈕"
-      ></TextIconBtn>
-      <br />
-      <div className="bg-blue-500 text-white p-4">
-        <h1 className="text-2xl font-bold">Hello, Tailwind CSS!</h1>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.tsx</code> and save to test HMR
+        </p>
       </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
     </>
   )
 }
