@@ -8,10 +8,12 @@ import IconDemo from './pages/demo/IconDemo.tsx'
 import ButtonDemo from './pages/demo/ButtonDemo.tsx'
 import PanelDemo from './pages/demo/PanelDemo.tsx'
 import ConceptDemo from './pages/demo/ConceptDemo.tsx'
+import Login from './pages/login/Login.tsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
+    // TODO: 如果想要有個登入頁的話，
     element: <App />,
     children: [
       /**
@@ -46,6 +48,10 @@ const router = createBrowserRouter([
   {
     path: '/second',
     element: <div>root level page</div>,
+  },
+  {
+    path: '/login',
+    element: <Login></Login>,
   },
 ])
 

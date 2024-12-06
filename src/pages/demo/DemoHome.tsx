@@ -32,6 +32,13 @@ function DemoHome() {
       >
         page 2
       </h1> */}
+      <h1
+        onClick={() => {
+          navigate('/login')
+        }}
+      >
+        login page
+      </h1>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <button onClick={handleClick.bind(null, 'iconDemo')}>
           Go to Icon Demo Page
