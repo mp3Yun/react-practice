@@ -1,8 +1,8 @@
 import { Box, Flex } from '@chakra-ui/react'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import './styles/style.css'
 import Card from './components/Card'
+import FixedButton from './components/buttons/FixedButton'
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
             <Card>
               {/* router TODO: */}
               <h1>main content</h1>
+              <FixedButton />
             </Card>
           </Box>
         </Flex>

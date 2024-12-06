@@ -1,7 +1,14 @@
 import { extendTheme } from '@chakra-ui/react'
 
 const theme = extendTheme({
-  color: {
+  styles: {
+    global: {
+      '.dev-border': {
+        border: '1px solid gray !important',
+      },
+    },
+  },
+  colors: {
     primary: {
       50: '#f5faff', // 淺色
       100: '#e0f0ff', // 次淺色
@@ -50,7 +57,7 @@ const theme = extendTheme({
       800: '#800000',
       900: '#4d0000',
     },
-    background: {
+    gray: {
       50: '#f7fafc', // 非常淺的灰色
       100: '#edf2f7', // 很淺的灰色
       200: '#e2e8f0', // 淺灰色
