@@ -4,9 +4,14 @@ import Header from './components/Header'
 import Card from './components/Card'
 import FixedButton from './components/buttons/FixedButton'
 import ConfirmDialog from './components/dialogs/ConfirmDialog'
+import ExpandableTextCard from './components/expandableTextCards/ExpandableTextCard'
+import expandableTextDataSet from './dataSet/expandableText-data'
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  // 我的模擬資料
+  const expandableTextData = [...expandableTextDataSet]
   return (
     <>
       <Flex
@@ -25,17 +30,30 @@ function App() {
             <Card>
               {/* router TODO: */}
               <h1>main content</h1>
-              <Box>
-                <FixedButton onClick={onOpen} />
-                <ConfirmDialog
-                  isOpen={isOpen}
-                  onConfirm={onClose}
-                  onClose={onClose}
-                  confirmTitle={'新增一筆 note'}
-                  confirmMessage={'是否新增一筆 note?'}
-                ></ConfirmDialog>
-              </Box>
+
+              {/* 展開卡片測試 */}
+              {expandableTextData.map((text, index) => (
+                <ExpandableTextCard
+                  key={index}
+                  mt={'1rem'}
+                  text={text}
+                ></ExpandableTextCard>
+              ))}
+
+              {/* 底部按鈕處理
+              TODO: 我想要進階，變成可以拖拉的狀態
+              */}
             </Card>
+          </Box>
+          <Box>
+            <FixedButton onClick={onOpen} />
+            <ConfirmDialog
+              isOpen={isOpen}
+              onConfirm={onClose}
+              onClose={onClose}
+              confirmTitle={'新增一筆 note'}
+              confirmMessage={'是否新增一筆 note?'}
+            ></ConfirmDialog>
           </Box>
         </Flex>
 

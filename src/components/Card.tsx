@@ -5,6 +5,7 @@ interface CardProps {
   bgColor?: string // 可選的 bgColor 屬性
 }
 const Card: React.FC<CardProps> = ({ children, bgColor = 'white' }) => {
+  // TODO: 這好像可以刪掉耶，因為 chakra 有
   return (
     <Box
       padding={'15px'}

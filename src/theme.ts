@@ -3,8 +3,8 @@ import { extendTheme } from '@chakra-ui/react'
 const theme = extendTheme({
   styles: {
     global: {
-      '.dev-border': {
-        border: '1px solid gray !important',
+      '.show-border': {
+        border: '2px solid var(--chakra-colors-gray-300) !important',
       },
     },
   },
@@ -109,6 +109,13 @@ const theme = extendTheme({
           color: 'white',
           _hover: {
             bg: 'secondary.600',
+          },
+        },
+        gray: {
+          bg: 'gray.100',
+          color: 'gray.500',
+          _hover: {
+            bg: 'gray.100',
           },
         },
       },
