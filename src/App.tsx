@@ -6,7 +6,7 @@ import FixedButton from './components/buttons/FixedButton'
 import ConfirmDialog from './components/dialogs/ConfirmDialog'
 import ExpandableTextCard from './components/expandableTextCards/ExpandableTextCard'
 import expandableTextDataSet from './dataSet/expandableText-data'
-import { ChakraIcons, createChakraIcon } from './utils/icons-utils'
+import { ChakraIcons, createIcon, SvgIcons } from './utils/icons-utils'
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -41,27 +41,31 @@ function App() {
               <Box>
                 <div>
                   {/* 動態創建 AddIcon */}
-                  {createChakraIcon(ChakraIcons.Add, {
+                  {createIcon(ChakraIcons.Add, {
                     boxSize: 6,
                     color: 'blue.500',
                   })}
 
                   {/* 動態創建 DeleteIcon */}
-                  {createChakraIcon(ChakraIcons.Delete, {
+                  {createIcon(ChakraIcons.Delete, {
                     boxSize: 8,
                     color: 'red.500',
                   })}
 
                   {/* 動態創建 EditIcon */}
-                  {createChakraIcon(ChakraIcons.Edit, {
+                  {createIcon(ChakraIcons.Edit, {
                     boxSize: 10,
                     color: 'green.500',
                   })}
 
                   {/* 動態創建 InfoIcon */}
-                  {createChakraIcon(ChakraIcons.Info, {
+                  {createIcon(ChakraIcons.Info, {
                     boxSize: 10,
                     color: 'primary.500',
+                  })}
+                  {/* 自定義 SVG Icon */}
+                  {createIcon(SvgIcons.React, {
+                    imgProps: { width: 50, height: 50, alt: 'Custom Icon 1' },
                   })}
                 </div>
               </Box>
