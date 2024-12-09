@@ -6,6 +6,24 @@ const theme = extendTheme({
       '.show-border': {
         border: '2px solid var(--chakra-colors-gray-300) !important',
       },
+      '.custom-scrollbar': {
+        overflowY: 'auto',
+        maxHeight: 'var(--scrollbar-max-height)', // 依賴 CSS 變量
+        border: '1px solid #e2e8f0',
+        '&::-webkit-scrollbar': {
+          width: '8px',
+        },
+        '&::-webkit-scrollbar-thumb': {
+          background: 'var(--chakra-colors-primary-400)',
+          borderRadius: '4px',
+        },
+        '&::-webkit-scrollbar-thumb:hover': {
+          background: 'var(--chakra-colors-primary-300)',
+        },
+        '&::-webkit-scrollbar-track': {
+          background: 'gray.100',
+        },
+      },
     },
   },
   colors: {

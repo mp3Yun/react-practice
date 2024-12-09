@@ -27,7 +27,12 @@ function App() {
           <Box w={{ base: '25%', md: '25%' }} bg="gray.100"></Box>
           {/* main content */}
           <Box flex={1} p={4} alignItems={'center'} justifyContent={'center'}>
-            <Card>
+            <Card
+              className="custom-scrollbar"
+              sx={{
+                '--scrollbar-max-height': 'calc(100vh - 160px)',
+              }} // 動態設置 CSS 變數
+            >
               {/* router TODO: */}
               <h1>main content</h1>
 
@@ -39,12 +44,11 @@ function App() {
                   text={text}
                 ></ExpandableTextCard>
               ))}
-
-              {/* 底部按鈕處理
-              TODO: 我想要進階，變成可以拖拉的狀態
-              */}
             </Card>
           </Box>
+          {/* 底部按鈕處理
+            TODO: 我想要進階，變成可以拖拉的狀態
+            */}
           <Box>
             <FixedButton onClick={onOpen} />
             <ConfirmDialog

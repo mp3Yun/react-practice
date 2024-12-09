@@ -1,13 +1,17 @@
-import { Box } from '@chakra-ui/react'
+import { Box, BoxProps } from '@chakra-ui/react'
 
-interface CardProps {
+interface CardProps extends BoxProps {
   children?: React.ReactNode
   bgColor?: string // 可選的 bgColor 屬性
 }
-const Card: React.FC<CardProps> = ({ children, bgColor = 'white' }) => {
-  // TODO: 這好像可以刪掉耶，因為 chakra 有
+const Card: React.FC<CardProps> = ({
+  children,
+  bgColor = 'white',
+  ...boxprops
+}) => {
   return (
     <Box
+      {...boxprops}
       padding={'15px'}
       borderRadius={'10px'}
       bgColor={`${bgColor}`}
