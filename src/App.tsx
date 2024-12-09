@@ -1,7 +1,7 @@
 import { Box, Flex, useDisclosure } from '@chakra-ui/react'
+import Card from './components/Card'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import Card from './components/Card'
 import FixedButton from './components/buttons/FixedButton'
 import ConfirmDialog from './components/dialogs/ConfirmDialog'
 import ExpandableTextCard from './components/expandableTextCards/ExpandableTextCard'
@@ -46,9 +46,6 @@ function App() {
               ))}
             </Card>
           </Box>
-          {/* 底部按鈕處理
-            TODO: 我想要進階，變成可以拖拉的狀態
-            */}
           <Box>
             <FixedButton onClick={onOpen} />
             <ConfirmDialog
