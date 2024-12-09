@@ -6,6 +6,7 @@ import FixedButton from './components/buttons/FixedButton'
 import ConfirmDialog from './components/dialogs/ConfirmDialog'
 import ExpandableTextCard from './components/expandableTextCards/ExpandableTextCard'
 import expandableTextDataSet from './dataSet/expandableText-data'
+import { ChakraIcons, createChakraIcon } from './utils/icons-utils'
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -35,6 +36,35 @@ function App() {
             >
               {/* router TODO: */}
               <h1>main content</h1>
+
+              {/* icon 測試區 */}
+              <Box>
+                <div>
+                  {/* 動態創建 AddIcon */}
+                  {createChakraIcon(ChakraIcons.Add, {
+                    boxSize: 6,
+                    color: 'blue.500',
+                  })}
+
+                  {/* 動態創建 DeleteIcon */}
+                  {createChakraIcon(ChakraIcons.Delete, {
+                    boxSize: 8,
+                    color: 'red.500',
+                  })}
+
+                  {/* 動態創建 EditIcon */}
+                  {createChakraIcon(ChakraIcons.Edit, {
+                    boxSize: 10,
+                    color: 'green.500',
+                  })}
+
+                  {/* 動態創建 InfoIcon */}
+                  {createChakraIcon(ChakraIcons.Info, {
+                    boxSize: 10,
+                    color: 'primary.500',
+                  })}
+                </div>
+              </Box>
 
               {/* 展開卡片測試 */}
               {expandableTextData.map((text, index) => (
