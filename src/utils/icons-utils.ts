@@ -26,16 +26,16 @@ const iconMap: Record<AllIcons, React.ElementType | string> = {
 // 定義 IconTypes
 export type IconTypes = keyof typeof iconMap
 export function createIcon<T extends IconTypes>(
-  type: T,
+  iconType: T,
   props?: React.ComponentProps<typeof AddIcon> & {
     // 繼承 Chakra Icon 的屬性
     imgProps?: React.ComponentProps<'img'>
   }
 ): React.ReactElement | null {
-  const SelectedIcon = iconMap[type]
+  const SelectedIcon = iconMap[iconType]
 
   if (!SelectedIcon) {
-    console.error(`Unknown icon type: ${type}`)
+    console.error(`Unknown icon type: ${iconType}`)
     return null
   }
 
@@ -46,6 +46,12 @@ export function createIcon<T extends IconTypes>(
   }
 
   // 如果是 SVG 路徑，渲染 img 元素
-  const { imgProps, ...svgProps } = props || {}
-  return React.createElement('img', { src: SelectedIcon, ...props })
+  const { imgProps, ...restProps } = props || {} // 解構 imgProps 和其他屬性
+
+  return React.createElement('img', {
+    src: SelectedIcon,
+    alt: iconType, // 為了可訪問性設置 alt 屬性
+    ...imgProps, // 擴展 imgProps
+    ...restProps, // 擴展其他 props
+  })
 }
