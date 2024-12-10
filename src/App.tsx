@@ -1,4 +1,5 @@
-import { Box, Flex, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, useDisclosure } from '@chakra-ui/react'
+import { useRouter } from '@tanstack/react-router'
 import Card from './components/Card'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -10,6 +11,8 @@ import { ChakraIcons, createIcon, SvgIcons } from './utils/icons-utils'
 
 function App() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  const router = useRouter() // TODO: 我的路由，在拉成 service???
 
   // 我的模擬資料
   const expandableTextData = [...expandableTextDataSet]
@@ -25,7 +28,27 @@ function App() {
         {/* main */}
         <Flex as="main" flex={1} py={4} justify={'left'}>
           {/* sidebar */}
-          <Box w={{ base: '25%', md: '25%' }} bg="gray.100"></Box>
+          <Box w={{ base: '25%', md: '25%' }} bg="gray.100">
+            {/* TODO: 路由測試 */}
+            <Button
+              onClick={() => {
+                router.navigate({
+                  to: '/home',
+                })
+              }}
+            >
+              home
+            </Button>
+            <Button
+              onClick={() => {
+                router.navigate({
+                  to: '/button',
+                })
+              }}
+            >
+              button
+            </Button>
+          </Box>
           {/* main content */}
           <Box flex={1} p={4} alignItems={'center'} justifyContent={'center'}>
             <Card
@@ -34,7 +57,6 @@ function App() {
                 '--scrollbar-max-height': 'calc(100vh - 160px)',
               }} // 動態設置 CSS 變數
             >
-              {/* router TODO: */}
               <h1>main content</h1>
 
               {/* icon 測試區 */}
