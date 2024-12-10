@@ -1,11 +1,4 @@
-import { ChakraProvider } from '@chakra-ui/react'
-import { RouterProvider } from '@tanstack/react-router'
 import ReactDOM from 'react-dom/client'
-import { router } from './routes/routes.ts'
-import customTheme from './theme.ts'
+import App from './App.tsx'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ChakraProvider theme={customTheme}>
-    <RouterProvider router={router} />
-  </ChakraProvider>
-)
+ReactDOM.createRoot(document.getElementById('root')!).render(<App></App>)
