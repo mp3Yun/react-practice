@@ -1,9 +1,12 @@
-import { Box } from '@chakra-ui/react'
+import { Box, useDisclosure } from '@chakra-ui/react'
 import ExpandableTextCard from '../../components/expandableTextCards/ExpandableTextCard'
 import expandableTextDataSet from '../../dataSet/expandableText-data'
 import { ChakraIcons, createIcon, SvgIcons } from '../../utils/icons-utils'
+import FixedButton from '../../components/buttons/FixedButton'
+import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
 
 const MainPage: React.FC = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure()
   // 我的模擬資料
   const expandableTextData = [...expandableTextDataSet]
   return (
@@ -49,6 +52,17 @@ const MainPage: React.FC = () => {
           text={text}
         ></ExpandableTextCard>
       ))}
+
+      <Box>
+        <FixedButton onClick={onOpen} />
+        <ConfirmDialog
+          isOpen={isOpen}
+          onConfirm={onClose}
+          onClose={onClose}
+          confirmTitle={'新增一筆 note'}
+          confirmMessage={'是否新增一筆 note?'}
+        ></ConfirmDialog>
+      </Box>
     </>
   )
 }

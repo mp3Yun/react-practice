@@ -1,14 +1,10 @@
-import { Box, Button, Card, Flex, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Card, Flex } from '@chakra-ui/react'
 import { Outlet, useRouter } from '@tanstack/react-router'
-import FixedButton from '../../components/buttons/FixedButton'
-import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import { RoutePathEnum } from '../../dto/route-paths'
 
 const HomePage: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-
   const router = useRouter() // TODO: 我的路由，在拉成 service???
 
   return (
@@ -24,6 +20,7 @@ const HomePage: React.FC = () => {
         <Flex as="main" flex={1} py={4} justify={'left'}>
           {/* sidebar */}
           <Box w={{ base: '20%', md: '20%' }} bg="gray.100">
+            {/* TODO: 做側選單的 menu */}
             <Button
               onClick={() => {
                 router.navigate({
@@ -55,16 +52,6 @@ const HomePage: React.FC = () => {
             >
               <Outlet />
             </Card>
-          </Box>
-          <Box>
-            <FixedButton onClick={onOpen} />
-            <ConfirmDialog
-              isOpen={isOpen}
-              onConfirm={onClose}
-              onClose={onClose}
-              confirmTitle={'新增一筆 note'}
-              confirmMessage={'是否新增一筆 note?'}
-            ></ConfirmDialog>
           </Box>
         </Flex>
 
