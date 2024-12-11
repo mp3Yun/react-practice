@@ -1,12 +1,13 @@
 import { Box, Button, Card, Flex } from '@chakra-ui/react'
-import { Outlet, useRouter } from '@tanstack/react-router'
+import { Outlet } from '@tanstack/react-router'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import { RoutePathEnum } from '../../dto/route-paths'
+import SidebarList, {
+  renderRoutes,
+} from './components/sidebarItems/SidebarList'
 
 const HomePage: React.FC = () => {
-  const router = useRouter() // TODO: 我的路由，在拉成 service???
-
   return (
     <>
       <Flex
@@ -16,30 +17,12 @@ const HomePage: React.FC = () => {
       >
         <Header />
 
-        {/* main */}
         <Flex as="main" flex={1} py={4} justify={'left'}>
           {/* sidebar */}
           <Box w={{ base: '20%', md: '20%' }} bg="gray.100">
-            {/* TODO: 做側選單的 menu */}
-            <Button
-              onClick={() => {
-                router.navigate({
-                  to: RoutePathEnum.Home,
-                })
-              }}
-            >
-              home
-            </Button>
-            <Button
-              onClick={() => {
-                router.navigate({
-                  to: RoutePathEnum.Button,
-                })
-              }}
-            >
-              button
-            </Button>
+            <SidebarList />
           </Box>
+
           {/* main content */}
           <Box flex={1} p={4} alignItems={'center'} justifyContent={'center'}>
             <Card

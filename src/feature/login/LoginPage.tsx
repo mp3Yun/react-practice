@@ -1,21 +1,27 @@
-import { Button } from '@chakra-ui/react'
-import { Outlet, useRouter } from '@tanstack/react-router'
+import { Button, Flex, Text } from '@chakra-ui/react'
+import { useRouter } from '@tanstack/react-router'
 
 const LoginPage: React.FC = () => {
-  const router = useRouter() // TODO: 我的路由，在拉成 service???
+  const router = useRouter()
   return (
-    <div>
-      登入頁面
+    <Flex
+      direction={'column'}
+      alignItems={'center'}
+      justifyContent={'center'}
+      height={'100vh'}
+    >
+      <Text fontSize={'3xl'}>practice-chakra</Text>
       <Button
+        mt={4}
         onClick={() => {
           router.navigate({
             to: '/home',
           })
         }}
       >
-        登入
+        start
       </Button>
-    </div>
+    </Flex>
   )
 }
 

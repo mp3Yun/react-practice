@@ -8,7 +8,6 @@ const ButtonIdPage: React.FC = () => {
   const { postId } = useParams({ strict: false })
 
   const params = useLocation()
-  console.error('99-params', params)
 
   let context
   let element
