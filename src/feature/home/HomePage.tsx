@@ -1,12 +1,9 @@
-import { useDisclosure, Flex, Box, Button, Card } from '@chakra-ui/react'
+import { Box, Button, Card, Flex, useDisclosure } from '@chakra-ui/react'
 import { Outlet, useRouter } from '@tanstack/react-router'
 import FixedButton from '../../components/buttons/FixedButton'
 import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
-import ExpandableTextCard from '../../components/expandableTextCards/ExpandableTextCard'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import expandableTextDataSet from '../../dataSet/expandableText-data'
-import { ChakraIcons, createIcon, SvgIcons } from '../../utils/icons-utils'
 import { RoutePathEnum } from '../../dto/route-paths'
 
 const HomePage: React.FC = () => {
@@ -14,8 +11,6 @@ const HomePage: React.FC = () => {
 
   const router = useRouter() // TODO: 我的路由，在拉成 service???
 
-  // 我的模擬資料
-  const expandableTextData = [...expandableTextDataSet]
   return (
     <>
       <Flex

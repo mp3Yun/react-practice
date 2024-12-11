@@ -1,9 +1,11 @@
 import { Box } from '@chakra-ui/react'
 import ExpandableTextCard from '../../components/expandableTextCards/ExpandableTextCard'
-import expandableTextData from '../../dataSet/expandableText-data'
+import expandableTextDataSet from '../../dataSet/expandableText-data'
 import { ChakraIcons, createIcon, SvgIcons } from '../../utils/icons-utils'
 
 const MainPage: React.FC = () => {
+  // 我的模擬資料
+  const expandableTextData = [...expandableTextDataSet]
   return (
     <>
       {/* icon 測試區 */}
