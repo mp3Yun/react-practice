@@ -51,9 +51,8 @@ const HomePage: React.FC = () => {
               sx={{
                 '--scrollbar-max-height': 'calc(100vh - 160px)',
               }} // 動態設置 CSS 變數
+              minHeight={'80vh'}
             >
-              {/* TODO: 我的路由測試區 */}
-              <h1>main content</h1>
               <Outlet />
             </Card>
           </Box>
