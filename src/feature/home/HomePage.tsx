@@ -1,11 +1,8 @@
-import { Box, Button, Card, Flex } from '@chakra-ui/react'
+import { Box, Card, Flex } from '@chakra-ui/react'
 import { Outlet } from '@tanstack/react-router'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import { RoutePathEnum } from '../../dto/route-paths'
-import SidebarList, {
-  renderRoutes,
-} from './components/sidebarItems/SidebarList'
+import SidebarList from './components/sidebarItems/SidebarList'
 
 const HomePage: React.FC = () => {
   return (

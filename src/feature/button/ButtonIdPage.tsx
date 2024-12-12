@@ -1,13 +1,11 @@
 import { Box } from '@chakra-ui/react'
-import { useLocation, useParams } from '@tanstack/react-router'
-import MovableButton from '../../components/buttons/MovableButton'
+import { useParams } from '@tanstack/react-router'
 import DraggableButton from '../../components/buttons/DraggableButton'
+import MovableButton from '../../components/buttons/MovableButton'
 
 const ButtonIdPage: React.FC = () => {
-  // 透過 url 傳參數
+  // 透過 url 傳參數 (包含使用 search 的參數)
   const { postId } = useParams({ strict: false })
-
-  const params = useLocation()
 
   let context
   let element
