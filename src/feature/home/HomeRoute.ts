@@ -2,12 +2,12 @@ import { createRoute } from '@tanstack/react-router'
 import { RoutePathEnum, routePathMaps } from '../../dto/route-paths'
 import { Route } from '../../routes/__root'
 import { buttonRouteTree } from '../button/buttonRoute'
-import { mainRoute } from '../main/mainRoute'
 import {
   carouselRoute,
   carouselRouteTree,
   imageCarouselRoute,
 } from '../carousel/carouselRoute'
+import { mainRoute } from '../main/mainRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -23,7 +23,7 @@ export const homeRouteTree = homeRoute.addChildren([
   // button module
   buttonRouteTree,
   // 輪播圖
-  // carouselRouteTree,
-  carouselRoute,
-  imageCarouselRoute,
+  carouselRouteTree,
+  // carouselRoute,
+  // imageCarouselRoute,
 ])

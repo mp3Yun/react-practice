@@ -18,7 +18,7 @@ export enum RoutePathEnum {
   ButtonId = '/home/button/$postId',
   ButtonDetail = '/home/button/detail',
   Carousel = '/home/carousel',
-  ImageCarousel = '/home/carousel/imageCarousel',
+  ImageCarousel = '/home/imageCarousel',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
