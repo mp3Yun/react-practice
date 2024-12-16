@@ -40,13 +40,13 @@ const ButtonDetailPage: React.FC = () => {
     },
   ]
   return (
-    <NestedComponent title="Button Detail Page">
+    <NestedComponent>
       <div> 按鈕顏色 </div>
 
-      <Flex mt={4} gap={2}>
+      <Flex direction={'row'} wrap="wrap" gap={2} my={4}>
         {buttonList.map((item, index) => (
           <React.Fragment key={index}>
-            <Box flex="1">
+            <Box flex="1 1 80px">
               <>
                 <div> {item.title} </div>
                 <Button bg={item.bgColor} size={'sm'}>
@@ -54,29 +54,15 @@ const ButtonDetailPage: React.FC = () => {
                 </Button>
               </>
             </Box>
-            {index === 5 && (
-              <Box flex="1">
-                <>
-                  <div> {item.title} </div>
-                  <Button key={index} bg={item.bgColor} size={'sm'}>
-                    Button
-                  </Button>
-                </>
-              </Box>
-            )}
+            {index === 4 && <Box flexBasis="100%" />}
           </React.Fragment>
         ))}
       </Flex>
 
       <div> 圓形按鈕 </div>
-      <Flex mt={4} direction={'row'} gap={2}>
+      <Flex my={4} direction={'row'} gap={2} alignItems={'center'}>
         {circleButtonList.map((item, index) => (
-          <Box
-            key={index}
-            gap={4}
-            alignItems={'center'}
-            justifyItems={'center'}
-          >
+          <Box flex="1 1 80px" key={index}>
             <div>
               {item.title} <br></br>
               <CircleButton
