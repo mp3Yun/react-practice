@@ -1,6 +1,8 @@
 import ButtonDetailPage from '../feature/button/ButtonDetailPage'
 import ButtonIdPage from '../feature/button/ButtonIdPage'
 import ButtonPage from '../feature/button/ButtonPage'
+import CarouselPage from '../feature/carousel/CarouselPage'
+import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
@@ -15,6 +17,8 @@ export enum RoutePathEnum {
   Button = '/home/button',
   ButtonId = '/home/button/$postId',
   ButtonDetail = '/home/button/detail',
+  Carousel = '/home/carousel',
+  ImageCarousel = '/home/carousel/imageCarousel',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -27,6 +31,7 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   [RoutePathEnum.Main]: {
     component: MainPage,
   },
+  // button module
   [RoutePathEnum.Button]: {
     component: ButtonPage,
   },
@@ -35,5 +40,12 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.ButtonDetail]: {
     component: ButtonDetailPage,
+  },
+  // carousel module
+  [RoutePathEnum.Carousel]: {
+    component: CarouselPage,
+  },
+  [RoutePathEnum.ImageCarousel]: {
+    component: ImageCarouselPage,
   },
 }

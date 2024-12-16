@@ -3,6 +3,11 @@ import { RoutePathEnum, routePathMaps } from '../../dto/route-paths'
 import { Route } from '../../routes/__root'
 import { buttonRouteTree } from '../button/buttonRoute'
 import { mainRoute } from '../main/mainRoute'
+import {
+  carouselRoute,
+  carouselRouteTree,
+  imageCarouselRoute,
+} from '../carousel/carouselRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -12,4 +17,13 @@ export const homeRoute = createRoute({
 })
 
 // 建立路由樹
-export const homeRouteTree = homeRoute.addChildren([mainRoute, buttonRouteTree])
+export const homeRouteTree = homeRoute.addChildren([
+  // home 主頁面
+  mainRoute,
+  // button module
+  buttonRouteTree,
+  // 輪播圖
+  // carouselRouteTree,
+  carouselRoute,
+  imageCarouselRoute,
+])
