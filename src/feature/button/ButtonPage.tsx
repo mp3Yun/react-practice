@@ -46,7 +46,7 @@ const ButtonPage: React.FC = () => {
             goto button detail
           </Button>
         </Flex>
-        <NestedComponent title="Button 子組件">
+        <NestedComponent title="Button 明細頁">
           <Outlet />
         </NestedComponent>
       </NestedComponent>

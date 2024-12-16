@@ -1,10 +1,20 @@
-import { Button } from '@chakra-ui/react'
+import { Button, ButtonProps } from '@chakra-ui/react'
+import { AllIcons, ChakraIcons, createIcon } from '../../utils/icons-utils'
 
-interface Props {
+interface Props extends ButtonProps {
+  colorScheme?: string
+  boxSize?: number
+  icon: AllIcons
   onClick?: () => void
 }
 
-const CircleButton: React.FC<Props> = ({ onClick }) => {
+const CircleButton: React.FC<Props> = ({
+  colorScheme,
+  boxSize,
+  onClick,
+  icon,
+  ...props
+}) => {
   return (
     <Button
       alignItems={'center'}
@@ -14,9 +24,13 @@ const CircleButton: React.FC<Props> = ({ onClick }) => {
       height={'32px'}
       padding="0"
       variant={'gray'}
+      {...props}
       onClick={onClick}
     >
-      {/* TODO: 讓 icon 可以是變動的 */}
+      {createIcon(icon, {
+        boxSize: boxSize || 5,
+        color: colorScheme,
+      })}
     </Button>
   )
 }
