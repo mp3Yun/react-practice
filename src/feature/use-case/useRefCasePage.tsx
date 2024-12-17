@@ -12,7 +12,7 @@ const UseRefCase1: React.FC = () => {
     setCount(count + 1)
   }
   return (
-    <Box>
+    <Box p={4} sx={{ '& > *': { my: 2 } }} className="show-border">
       <Box flex={1}>使用 useRef 儲存狀態</Box>
       <Box flex={1}>點擊次數：{count}</Box>
       <Box flex={1}>當前渲染儲存的值: {rerenderCountRef.current}</Box>
@@ -21,12 +21,53 @@ const UseRefCase1: React.FC = () => {
   )
 }
 
+// sample 2
+const UseRefCase2: React.FC = () => {
+  const [seconds, setSeconds] = useState(0)
+  const timeRef = useRef<number | null>(null)
+
+  const startTimer = () => {
+    if (!timeRef.current) {
+      timeRef.current = setInterval(() => {
+        setSeconds((prevSeconds) => prevSeconds + 1)
+      }, 1000)
+    }
+  }
+
+  const stopTimer = () => {
+    clearInterval(timeRef.current ?? 0)
+    timeRef.current = null
+  }
+
+  return (
+    <Box
+      p={4}
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      className="show-border"
+    >
+      <Box>
+        <h2>使用 useRef 儲存計時器</h2>
+      </Box>
+      <Box>
+        <p>時間：{seconds} 秒</p>
+      </Box>
+      <Button onClick={startTimer}>開始計時</Button>
+      <Button onClick={stopTimer}>停止計時</Button>
+    </Box>
+  )
+}
+
 const UseRefCasePage: React.FC = () => {
   return (
-    <Flex dir="clou" my={8}>
-      useRef 特性
-      <NestedComponent title="範例一">
-        <UseRefCase1></UseRefCase1>
+    <Flex dir="column" my={2}>
+      <NestedComponent title="useRef 特性">
+        <NestedComponent title="範例一">
+          <UseRefCase1></UseRefCase1>
+        </NestedComponent>
+
+        <NestedComponent title="範例二">
+          <UseRefCase2></UseRefCase2>
+        </NestedComponent>
       </NestedComponent>
     </Flex>
   )
