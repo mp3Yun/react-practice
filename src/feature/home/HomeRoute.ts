@@ -8,6 +8,8 @@ import {
   imageCarouselRoute,
 } from '../carousel/carouselRoute'
 import { mainRoute } from '../main/mainRoute'
+import { videoRoute } from '../video/videoRoute'
+import { useCaseRouteTree } from '../use-case/useCaseRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -24,6 +26,8 @@ export const homeRouteTree = homeRoute.addChildren([
   buttonRouteTree,
   // 輪播圖
   carouselRouteTree,
-  // carouselRoute,
-  // imageCarouselRoute,
+  // video module
+  videoRoute,
+  // usecase module
+  useCaseRouteTree,
 ])

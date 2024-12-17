@@ -6,6 +6,8 @@ import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
+import UseRefCasePage from '../feature/use-case/useRefCasePage'
+import VideoPage from '../feature/video/VideoPage'
 import RouteConfigDto from './route-config.dto'
 
 // 跳頁路徑，要使用絕對路徑
@@ -19,6 +21,8 @@ export enum RoutePathEnum {
   ButtonDetail = '/home/button/detail',
   Carousel = '/home/carousel',
   ImageCarousel = '/home/imageCarousel',
+  Video = '/home/video',
+  UseCase = '/home/useCase',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -47,5 +51,13 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.ImageCarousel]: {
     component: ImageCarouselPage,
+  },
+  // video module
+  [RoutePathEnum.Video]: {
+    component: VideoPage,
+  },
+  // use case module
+  [RoutePathEnum.UseCase]: {
+    component: UseRefCasePage,
   },
 }
