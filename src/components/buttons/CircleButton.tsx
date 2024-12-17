@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from '@chakra-ui/react'
-import { AllIcons, ChakraIcons, createIcon } from '../../utils/icons-utils'
+import { AllIcons, createIcon } from '../../utils/icons-utils'
 
 interface Props extends ButtonProps {
   colorScheme?: string

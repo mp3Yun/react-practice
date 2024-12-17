@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({
       bgColor={`${bgColor}`}
       boxShadow={'0px 4px 4px rgba(0, 0, 0, 0.25)'}
       mb={'4'}
-      minWidth={'70%'}
+      minWidth={'100%'}
       minHeight={'100%'}
     >
       {children}
