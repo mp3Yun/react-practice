@@ -2,14 +2,10 @@ import { createRoute } from '@tanstack/react-router'
 import { RoutePathEnum, routePathMaps } from '../../dto/route-paths'
 import { Route } from '../../routes/__root'
 import { buttonRouteTree } from '../button/buttonRoute'
-import {
-  carouselRoute,
-  carouselRouteTree,
-  imageCarouselRoute,
-} from '../carousel/carouselRoute'
+import { carouselRouteTree } from '../carousel/carouselRoute'
 import { mainRoute } from '../main/mainRoute'
-import { videoRoute } from '../video/videoRoute'
 import { useCaseRouteTree } from '../use-case/useCaseRoute'
+import { videoRoute } from '../video/videoRoute'
 
 // 創建路由
 export const homeRoute = createRoute({

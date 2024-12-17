@@ -1,9 +1,12 @@
 import { Box, Flex } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import SquareButton from '../../../components/buttons/SquareButton'
 import Card from '../../../components/Card'
 import { ChakraIcons, createIcon } from '../../../utils/icons-utils'
 
+const DragBlock: React.FC = () => {
+  return <></>
+}
 const Favorites: React.FC = () => {
   const favoritesList = [
     { id: 1, text: 'A', path: '/' },
@@ -33,27 +36,38 @@ const Favorites: React.FC = () => {
     { id: 25, text: 'Y', path: '/' },
     { id: 26, text: 'Z', path: '/' },
   ]
+  const [isEditing, setIsEditing] = useState(false)
   return (
     <Flex>
       <Card bgColor={'gray.100'}>
         <Box textAlign={'right'}>
-          <button onClick={() => {}}>
-            {createIcon(ChakraIcons.Edit, {
+          <button
+            onClick={() => {
+              setIsEditing(!isEditing)
+            }}
+          >
+            {createIcon(!isEditing ? ChakraIcons.Edit : ChakraIcons.Check, {
               boxSize: 6,
               color: 'oceanGreenBlue.500',
             })}
           </button>
         </Box>
-        <Box>
-          {favoritesList.map((item) => (
-            <SquareButton
-              key={item.id}
-              text={item.text}
-              m={2}
-              bg={'secondary.300'}
-            ></SquareButton>
-          ))}
-        </Box>
+        {!isEditing ? (
+          <>
+            <Box>
+              {favoritesList.map((item) => (
+                <SquareButton
+                  key={item.id}
+                  text={item.text}
+                  m={2}
+                  bg={'secondary.300'}
+                ></SquareButton>
+              ))}
+            </Box>
+          </>
+        ) : (
+          <DragBlock></DragBlock>
+        )}
       </Card>
     </Flex>
   )

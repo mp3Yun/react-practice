@@ -1,4 +1,10 @@
-import { AddIcon, DeleteIcon, EditIcon, InfoIcon } from '@chakra-ui/icons'
+import {
+  AddIcon,
+  CheckIcon,
+  DeleteIcon,
+  EditIcon,
+  InfoIcon,
+} from '@chakra-ui/icons'
 import React from 'react'
 import ReactIcon from '../assets/react.svg'
 
@@ -7,6 +13,7 @@ export enum ChakraIcons {
   Delete = 'Delete',
   Edit = 'Edit',
   Info = 'Info',
+  Check = 'Check',
 }
 
 export enum SvgIcons {
@@ -20,6 +27,7 @@ const iconMap: Record<AllIcons, React.ElementType | string> = {
   [ChakraIcons.Delete]: DeleteIcon,
   [ChakraIcons.Edit]: EditIcon,
   [ChakraIcons.Info]: InfoIcon,
+  [ChakraIcons.Check]: CheckIcon,
   [SvgIcons.React]: ReactIcon,
 }
 
