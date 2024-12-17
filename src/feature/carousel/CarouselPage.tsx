@@ -1,8 +1,9 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import { Center, Flex } from '@chakra-ui/layout'
 import { Image } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import NestedComponent from '../../components/NestedComponent'
+import { useTimer } from 'react-timer-hook'
 
 const CarouselPage: React.FC = () => {
   const imageList = [
@@ -13,14 +14,43 @@ const CarouselPage: React.FC = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
+  // 初始化逾期時間
+  const [expiryTimestamp, setExpiryTimestamp] = useState(() => {
+    const newExpiryTimestamp = new Date()
+    newExpiryTimestamp.setSeconds(newExpiryTimestamp.getSeconds() + 5) // 5 seconds
+    return newExpiryTimestamp
+  })
+
+  const { restart } = useTimer({
+    expiryTimestamp,
+    onExpire: () => {
+      console.log('onExpire triggered')
+      goNext()
+    },
+  })
+
   const goNext = () => {
-    // TODO: 好像有點怪怪的
+    console.log('goNext', expiryTimestamp)
     setCurrentIndex((prev) => (prev + 1) % imageList.length)
+    const timestamp = new Date()
+    timestamp.setSeconds(timestamp.getSeconds() + 5)
+    setExpiryTimestamp(timestamp)
+    restart(timestamp) // not work
   }
 
   const goPrev = () => {
-    setCurrentIndex((prev) => (prev - 1) % imageList.length)
+    console.log('goPrev', expiryTimestamp)
+    setCurrentIndex((prev) => (prev - 1 + imageList.length) % imageList.length)
+    const timestamp = new Date()
+    timestamp.setSeconds(timestamp.getSeconds() + 5)
+    setExpiryTimestamp(timestamp)
+    restart(timestamp) // not work
   }
+
+  // work
+  // useEffect(() => {
+  //   restart(expiryTimestamp)
+  // }, [expiryTimestamp])
 
   return (
     <Flex>
