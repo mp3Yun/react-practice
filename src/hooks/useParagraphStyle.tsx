@@ -37,7 +37,7 @@ export const ParagraphStyleProvider = ({
 
   // 動態取得字體大小
   const getFontSizeByLevel = (level: number) => {
-    const originalFontSize = 3 // 原始字體大小
+    const originalFontSize = 2.75 // 原始字體大小
     const fontSize = originalFontSize - 0.25 * (originalFontSize / level)
     return `${fontSize}rem`
   }

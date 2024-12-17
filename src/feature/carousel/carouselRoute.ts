@@ -10,13 +10,6 @@ export const carouselRoute = createRoute({
 })
 
 // image carousel page // 被歸在子模組底下
-// export const imageCarouselRoute = createRoute({
-//   getParentRoute: () => carouselRoute,
-//   path: '/imageCarousel', // 定義路由的 path
-//   component: routePathMaps[RoutePathEnum.ImageCarousel].component, // 定義該路由的對應組件
-// })
-
-// image carousel page // 被歸在子模組底下
 export const imageCarouselRoute = createRoute({
   getParentRoute: () => homeRoute,
   path: '/imageCarousel', // 定義路由的 path
