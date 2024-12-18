@@ -1,6 +1,5 @@
 /* 更改 pagination 的點樣式 */
 .swiper-pagination-bullet {
-  background-color: #ccc; /* 預設點的顏色 */
   width: 12px; /* 調整點的寬度 */
   height: 12px; /* 調整點的高度 */
   opacity: 0.5; /* 點的透明度 */
@@ -9,7 +8,6 @@
 }
 
 .swiper-pagination-bullet-active {
-	background-color: blue; /* 預設點的顏色 */
   transform: scale(1.5); /* 當前點放大效果 */
   opacity: 1; /* 當前點全透明效果 */
 }
@@ -19,11 +17,29 @@
   bottom: 20px; /* 距離底部的距離 */
 }
 
-
-
 .custom-swiper .swiper-pagination-bullet {
-  background-color: var(--chakra-colors-primary-100);
+  background-color: var(--chakra-colors-primary-200);
 }
 .custom-swiper .swiper-pagination-bullet-active {
   background-color: var(--chakra-colors-primary-400);
 }
+
+/** swiper navigation */
+/* 覆蓋 Swiper 的 navigation 樣式 */
+.swiper-button-next,
+.swiper-button-prev {
+  color: var(--chakra-colors-gray-400); /* 使用 Chakra UI 的變數 */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  color: var(--chakra-colors-gray-600);
+}
+
+

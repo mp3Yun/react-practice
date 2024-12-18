@@ -5,6 +5,7 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import './imageCarouselSwiper.css' // 確保載入自訂樣式
+import NestedComponent from '../../components/NestedComponent'
 
 const ImageCarouselPage: React.FC = () => {
   const imageList = [
@@ -14,41 +15,43 @@ const ImageCarouselPage: React.FC = () => {
   ]
 
   return (
-    <Swiper
-      className="custom-swiper"
-      modules={[Pagination, Navigation]}
-      spaceBetween={20}
-      slidesPerView={1}
-      pagination={{ clickable: true }}
-      navigation
-      style={{
-        width: '600px',
-        height: '400px',
-      }}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
-    >
-      {imageList.map((item, index) => (
-        <SwiperSlide
-          key={index}
-          style={{ width: '100%', height: '100%', alignContent: 'center' }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              textAlign: 'center',
-            }}
+    <NestedComponent title="swiper 應用">
+      <Swiper
+        className="custom-swiper"
+        modules={[Pagination, Navigation]}
+        spaceBetween={20}
+        slidesPerView={1}
+        pagination={{ clickable: true }}
+        navigation
+        style={{
+          width: '600px',
+          height: '400px',
+        }}
+        onSlideChange={() => console.log('slide change')}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {imageList.map((item, index) => (
+          <SwiperSlide
+            key={index}
+            style={{ width: '100%', height: '100%', alignContent: 'center' }}
           >
-            <img
-              src={item}
-              alt={`Image ${index}`}
-              style={{ objectFit: 'cover' }}
-            />
-          </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                textAlign: 'center',
+              }}
+            >
+              <img
+                src={item}
+                alt={`Image ${index}`}
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </NestedComponent>
   )
 }
 
