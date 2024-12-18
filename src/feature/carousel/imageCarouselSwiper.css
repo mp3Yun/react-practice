@@ -1,0 +1,29 @@
+/* 更改 pagination 的點樣式 */
+.swiper-pagination-bullet {
+  background-color: #ccc; /* 預設點的顏色 */
+  width: 12px; /* 調整點的寬度 */
+  height: 12px; /* 調整點的高度 */
+  opacity: 0.5; /* 點的透明度 */
+  margin: 0 5px; /* 點之間的間距 */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+	background-color: blue; /* 預設點的顏色 */
+  transform: scale(1.5); /* 當前點放大效果 */
+  opacity: 1; /* 當前點全透明效果 */
+}
+
+/* pagination 容器位置 */
+.swiper-pagination {
+  bottom: 20px; /* 距離底部的距離 */
+}
+
+
+
+.custom-swiper .swiper-pagination-bullet {
+  background-color: var(--chakra-colors-primary-100);
+}
+.custom-swiper .swiper-pagination-bullet-active {
+  background-color: var(--chakra-colors-primary-400);
+}
