@@ -3,6 +3,7 @@ import ButtonIdPage from '../feature/button/ButtonIdPage'
 import ButtonPage from '../feature/button/ButtonPage'
 import CarouselPage from '../feature/carousel/CarouselPage'
 import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
+import FormPage from '../feature/form/FormPage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
@@ -23,6 +24,7 @@ export enum RoutePathEnum {
   ImageCarousel = '/home/imageCarousel',
   Video = '/home/video',
   UseCase = '/home/useCase',
+  Form = '/home/form',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -59,5 +61,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   // use case module
   [RoutePathEnum.UseCase]: {
     component: UseRefCasePage,
+  },
+  // form module
+  [RoutePathEnum.Form]: {
+    component: FormPage,
   },
 }
