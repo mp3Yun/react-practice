@@ -1,24 +1,9 @@
 import { Box, Flex } from '@chakra-ui/react'
-import {
-  closestCenter,
-  DndContext,
-  DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core'
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-} from '@dnd-kit/sortable'
 import React, { useState } from 'react'
 import SquareButton from '../../../components/buttons/SquareButton'
 import Card from '../../../components/Card'
-import { ChakraIcons, createIcon } from '../../../utils/icons-utils'
 import DragBlock from '../../../components/dragDrop/DragBlock'
+import { ChakraIcons, createIcon } from '../../../utils/icons-utils'
 
 interface FavoritesItem {
   id: number
@@ -26,6 +11,18 @@ interface FavoritesItem {
   path: string
 }
 
+const CustomButton = <T extends { id: number; text: string }>({
+  item,
+}: {
+  item: T
+}) => (
+  <SquareButton
+    text={item.text}
+    m={1}
+    _hover={{ bg: 'primary.300' }}
+    _active={{ bg: 'primary.500', transform: 'scale(0.95)' }}
+  ></SquareButton>
+)
 const Favorites: React.FC = () => {
   const favoritesList: FavoritesItem[] = [
     { id: 1, text: 'A', path: '/' },
@@ -58,8 +55,8 @@ const Favorites: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [items, setItems] = useState(favoritesList)
 
-  const handleCheckClick = (items: FavoritesItem[]) => {
-    setItems(items)
+  const handleDragEnd = (items: FavoritesItem[]) => {
+    setItems([...items])
   }
 
   return (
@@ -80,7 +77,7 @@ const Favorites: React.FC = () => {
         {!isEditing ? (
           <>
             <Box>
-              {favoritesList.map((item) => (
+              {items.map((item) => (
                 <SquareButton
                   key={item.id}
                   text={item.text}
@@ -91,7 +88,11 @@ const Favorites: React.FC = () => {
             </Box>
           </>
         ) : (
-          <DragBlock data={items} onDragEndEvent={handleCheckClick}></DragBlock>
+          <DragBlock
+            data={items}
+            onDragEndEvent={handleDragEnd}
+            CustomComponent={CustomButton}
+          ></DragBlock>
         )}
       </Card>
     </Flex>
