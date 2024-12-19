@@ -6,7 +6,7 @@ import { carouselRouteTree } from '../carousel/carouselRoute'
 import { mainRoute } from '../main/mainRoute'
 import { useCaseRouteTree } from '../use-case/useCaseRoute'
 import { videoRoute } from '../video/videoRoute'
-import { formRoute } from '../form/formRoute'
+import { formCustomInputRoute, formRoute } from '../form/formRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -29,4 +29,5 @@ export const homeRouteTree = homeRoute.addChildren([
   useCaseRouteTree,
   // form module
   formRoute,
+  formCustomInputRoute,
 ])

@@ -3,6 +3,7 @@ import ButtonIdPage from '../feature/button/ButtonIdPage'
 import ButtonPage from '../feature/button/ButtonPage'
 import CarouselPage from '../feature/carousel/CarouselPage'
 import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
+import FormCustomInputPage from '../feature/form/FormCustomInputPage'
 import FormPage from '../feature/form/FormPage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
@@ -25,6 +26,7 @@ export enum RoutePathEnum {
   Video = '/home/video',
   UseCase = '/home/useCase',
   Form = '/home/form',
+  FormCustomInput = '/home/formCustomInput',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -65,5 +67,8 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   // form module
   [RoutePathEnum.Form]: {
     component: FormPage,
+  },
+  [RoutePathEnum.FormCustomInput]: {
+    component: FormCustomInputPage,
   },
 }

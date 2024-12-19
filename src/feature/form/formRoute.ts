@@ -7,3 +7,9 @@ export const formRoute = createRoute({
   path: '/form', // 定義路由的 path
   component: routePathMaps[RoutePathEnum.Form].component, // 定義該路由的對應組件
 })
+
+export const formCustomInputRoute = createRoute({
+  getParentRoute: () => homeRoute,
+  path: '/formCustomInput', // 定義路由的 path
+  component: routePathMaps[RoutePathEnum.FormCustomInput].component, // 定義該路由的對應組件
+})
