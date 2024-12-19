@@ -22,7 +22,6 @@ const FormInput = <TFieldValues extends FieldValues>({
   name,
   control,
   rules,
-  iconInfo,
   inputProps,
 }: FormInputProps<TFieldValues>) => {
   const {
@@ -30,16 +29,14 @@ const FormInput = <TFieldValues extends FieldValues>({
     fieldState: { error },
   } = useController({ name, control, rules })
 
-  console.log('99-error', error)
+  console.log('FormInput-error', error)
   return (
     <Box my={2}>
-      {/* TODO icon */}
       <Text>
         {isRequired && <span style={{ color: 'red' }}>*</span>}
         {label}
       </Text>
       <Input {...inputProps} {...field}></Input>
-      {/* TODO icon */}
       {error?.message && (
         <Box color="red">
           <Text>{error.message}</Text>
