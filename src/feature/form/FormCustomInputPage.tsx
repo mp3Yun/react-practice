@@ -6,6 +6,9 @@ import { Button } from '@chakra-ui/react'
 interface FormValues {
   userAccount: string
   pwd: string
+  roleInfo: {
+    role: string
+  }
 }
 const FormCustomInputPage: React.FC = () => {
   const { handleSubmit, control } = useForm<FormValues>()
@@ -28,6 +31,13 @@ const FormCustomInputPage: React.FC = () => {
           isRequired={true}
           label="密碼"
           rules={{ required: '請輸入密碼' }}
+        ></FormInput>
+        <FormInput<FormValues>
+          control={control}
+          name="roleInfo.role"
+          isRequired={true}
+          label="角色"
+          rules={{ required: '請輸入角色' }}
         ></FormInput>
         <Button type="submit">登入</Button>
       </form>

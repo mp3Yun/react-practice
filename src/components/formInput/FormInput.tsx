@@ -1,6 +1,11 @@
 import { Box, Input, InputProps, Text } from '@chakra-ui/react'
 import { AllIcons } from '../../utils/icons-utils'
-import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
+import {
+  FieldPath,
+  FieldValues,
+  useController,
+  UseControllerProps,
+} from 'react-hook-form'
 
 interface IconInfoProps {
   icon: AllIcons
@@ -29,7 +34,7 @@ const FormInput = <TFieldValues extends FieldValues>({
     fieldState: { error },
   } = useController({ name, control, rules })
 
-  console.log('FormInput-error', error)
+  // console.log('FormInput-error', error)
   return (
     <Box my={2}>
       <Text>
