@@ -5,9 +5,15 @@ interface NestedComponentProps {
   level?: number // 當前層級
   children: React.ReactNode
   title?: string
+  className?: string
 }
 
-const NestedComponent = ({ level, children, title }: NestedComponentProps) => {
+const NestedComponent = ({
+  level,
+  children,
+  title,
+  className,
+}: NestedComponentProps) => {
   const nodesLevel = React.Children.toArray(children).map((child) => {
     React.isValidElement(child) && child.type === 'div'
   })
@@ -16,7 +22,7 @@ const NestedComponent = ({ level, children, title }: NestedComponentProps) => {
   const fontSize = getFontSizeByLevel(level)
 
   return (
-    <div>
+    <div className={className}>
       <p style={{ ...style, fontSize }}>{title}</p>
       {children}
     </div>
