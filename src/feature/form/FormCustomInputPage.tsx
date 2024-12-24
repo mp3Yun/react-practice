@@ -1,7 +1,7 @@
-import { Form, FormProvider, useForm, useFormContext } from 'react-hook-form'
+import { Box, Button } from '@chakra-ui/react'
+import { FormProvider, useForm, useFormContext } from 'react-hook-form'
 import NestedComponent from '../../components/NestedComponent'
 import FormInput from '../../components/formInput/FormInput'
-import { Box, Button } from '@chakra-ui/react'
 
 interface FormValues {
   userAccount: string
@@ -57,8 +57,9 @@ const FormCustomInputPage: React.FC = () => {
     </>
   )
 }
+export default FormCustomInputPage
 
-// 表單中的表單 sample 2 useForm hook
+// ============ 表單中的表單 sample 2 useForm hook =========== //
 interface FormSample2 {
   name: string
   age: string
@@ -135,7 +136,7 @@ const FormOfForm: React.FC = () => {
   )
 }
 
-// 表單中的表單 sample3 useFormContext hook
+// =========== 表單中的表單 sample3 useFormContext hook =========== //
 
 // 獨立的子表單
 const EmailsForm: React.FC = () => {
@@ -208,5 +209,3 @@ const FormOfFormUseFormContext: React.FC = () => {
     </FormProvider>
   )
 }
-
-export default FormCustomInputPage

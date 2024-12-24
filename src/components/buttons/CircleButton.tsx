@@ -5,7 +5,7 @@ interface Props extends ButtonProps {
   colorScheme?: string
   boxSize?: number
   icon: AllIcons
-  onClick?: () => void
+  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const CircleButton: React.FC<Props> = ({

@@ -13,3 +13,14 @@ export const formCustomInputRoute = createRoute({
   path: '/formCustomInput', // 定義路由的 path
   component: routePathMaps[RoutePathEnum.FormCustomInput].component, // 定義該路由的對應組件
 })
+
+export const formUseFieldArrayRoute = createRoute({
+  getParentRoute: () => homeRoute,
+  path: '/formUseFieldArray', // 定義路由的 path
+  component: routePathMaps[RoutePathEnum.FormUseFieldArray].component, // 定義該路由的對應組件
+})
+
+export const formTreeRoute = formRoute.addChildren([
+  formCustomInputRoute,
+  formUseFieldArrayRoute,
+])
