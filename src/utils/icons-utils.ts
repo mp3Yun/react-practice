@@ -4,6 +4,7 @@ import {
   DeleteIcon,
   EditIcon,
   InfoIcon,
+  MinusIcon,
 } from '@chakra-ui/icons'
 import React from 'react'
 import ReactIcon from '../assets/react.svg'
@@ -14,6 +15,7 @@ export enum ChakraIcons {
   Edit = 'Edit',
   Info = 'Info',
   Check = 'Check',
+  MinusIcon = 'MinusIcon',
 }
 
 export enum SvgIcons {
@@ -24,6 +26,7 @@ export type AllIcons = ChakraIcons | SvgIcons
 // 定義 iconMap
 const iconMap: Record<AllIcons, React.ElementType | string> = {
   [ChakraIcons.Add]: AddIcon,
+  [ChakraIcons.MinusIcon]: MinusIcon,
   [ChakraIcons.Delete]: DeleteIcon,
   [ChakraIcons.Edit]: EditIcon,
   [ChakraIcons.Info]: InfoIcon,
