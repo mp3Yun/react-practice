@@ -1,4 +1,4 @@
-import { Form, FormProvider, useForm } from 'react-hook-form'
+import { Form, FormProvider, useForm, useFormContext } from 'react-hook-form'
 import NestedComponent from '../../components/NestedComponent'
 import FormInput from '../../components/formInput/FormInput'
 import { Box, Button } from '@chakra-ui/react'
@@ -44,14 +44,21 @@ const FormCustomInputPage: React.FC = () => {
         </form>
       </NestedComponent>
       <br />
-      <NestedComponent title="Form > Form" className="show-border">
+      <NestedComponent title="[UseForm] Form > Form" className="show-border">
         <FormOfForm></FormOfForm>
+      </NestedComponent>
+      <br></br>
+      <NestedComponent
+        title="[UseFormContext] Form > Form"
+        className="show-border"
+      >
+        <FormOfFormUseFormContext></FormOfFormUseFormContext>
       </NestedComponent>
     </>
   )
 }
 
-// 表單中的表單 sample 2
+// 表單中的表單 sample 2 useForm hook
 interface FormSample2 {
   name: string
   age: string
@@ -92,21 +99,18 @@ const FormOfForm: React.FC = () => {
     <FormProvider {...userFormMethods}>
       <form onSubmit={userFormMethods.handleSubmit(handleUserFormSubmit)}>
         <FormInput<FormSample2>
-          control={userFormMethods.control}
           name="name"
           isRequired={true}
           label="姓名"
           rules={{ required: '請輸入姓名' }}
         ></FormInput>
         <FormInput<FormSample2>
-          control={userFormMethods.control}
           name="age"
           isRequired={true}
           label="年齡"
           rules={{ required: '請輸入年齡' }}
         ></FormInput>
         <FormInput<FormSample2>
-          control={userFormMethods.control}
           name="telephone"
           isRequired={true}
           label="電話"
@@ -126,6 +130,80 @@ const FormOfForm: React.FC = () => {
             提交電子郵件
           </Button>
         </form>
+      </Box>
+    </FormProvider>
+  )
+}
+
+// 表單中的表單 sample3 useFormContext hook
+
+// 獨立的子表單
+const EmailsForm: React.FC = () => {
+  const { setValue, getValues } = useFormContext<FormSample2>()
+  const handleEmailsSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log('emails form event =>', event)
+    // 更新父表單值
+    const emailValue = getValues('emails.email1') || ''
+    setValue('emails', { email1: emailValue })
+  }
+
+  return (
+    <form onSubmit={handleEmailsSubmit}>
+      <FormInput<FormSample2>
+        name="emails.email1"
+        label="電子郵件一"
+        isRequired={true}
+        rules={{ required: '請輸入電子郵件' }}
+      />
+      <Button type="submit" mt={4}>
+        提交電子郵件
+      </Button>
+    </form>
+  )
+}
+const FormOfFormUseFormContext: React.FC = () => {
+  const userFormMethods = useForm<FormSample2>({
+    defaultValues: {
+      name: '',
+      age: '',
+      telephone: '',
+      emails: {
+        email1: '',
+      },
+    },
+  })
+
+  const handleUserFormSubmit = (data: FormSample2) => {
+    console.log('user form data', data)
+  }
+  return (
+    <FormProvider {...userFormMethods}>
+      <form onSubmit={userFormMethods.handleSubmit(handleUserFormSubmit)}>
+        <FormInput<FormSample2>
+          name="name"
+          isRequired={true}
+          label="姓名"
+          rules={{ required: '請輸入姓名' }}
+        />
+        <FormInput<FormSample2>
+          name="age"
+          isRequired={true}
+          label="年齡"
+          rules={{ required: '請輸入年齡' }}
+        />
+        <FormInput<FormSample2>
+          name="telephone"
+          isRequired={true}
+          label="電話"
+          rules={{ required: '請輸入電話' }}
+        />
+        <Button type="submit">確認</Button>
+      </form>
+
+      {/* 子表單 */}
+      <Box mt={4} borderWidth="1px" p={4} borderRadius="md">
+        <EmailsForm />
       </Box>
     </FormProvider>
   )
