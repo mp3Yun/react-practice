@@ -10,10 +10,17 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react'
-import { useState } from 'react'
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import {
+  FormProvider,
+  useFieldArray,
+  useForm,
+  useFormContext,
+} from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
 import CartoonCharacterInfo from './components/CartoonCharacterInfo'
+import FormGuard from '../../guards/FormGuard'
+import { useDirtyForm } from '../../hooks/DirtyFormContext'
 
 export interface GroupInfo {
   name: string
@@ -29,6 +36,7 @@ interface Member {
   gender: string
 }
 const SampleFormUseFieldArray: React.FC = () => {
+  const { setIsDirty } = useDirtyForm()
   const groupFormMethods = useForm<GroupInfo>({
     defaultValues: {
       name: '名偵探柯南',
@@ -41,7 +49,7 @@ const SampleFormUseFieldArray: React.FC = () => {
     },
   })
 
-  const { watch, control } = groupFormMethods
+  const { watch, control, formState } = groupFormMethods
 
   // 每一列的資料
   const { fields, append, remove, update } = useFieldArray({
@@ -72,8 +80,16 @@ const SampleFormUseFieldArray: React.FC = () => {
     setTabIndex(index - 1)
   }
 
+  // 檢查表單是否為 dirty
+  const isDirty = Object.keys(formState.dirtyFields).length > 0
+
+  useEffect(() => {
+    setIsDirty(isDirty)
+  }, [isDirty])
+
   return (
     <>
+      <FormGuard></FormGuard>
       <Flex
         direction="column"
         align="flex-start"

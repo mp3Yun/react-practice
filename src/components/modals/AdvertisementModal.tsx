@@ -5,14 +5,13 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  useDisclosure,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
+import { Swiper as SwiperClass } from 'swiper' // 引入 Swiper 類型
+import { Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import image1 from '../../assets/images/image1.webp'
 import image2 from '../../assets/images/image2.webp'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination } from 'swiper/modules'
-import { Swiper as SwiperClass } from 'swiper' // 引入 Swiper 類型
 
 interface Props {
   isOpen: boolean
