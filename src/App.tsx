@@ -4,13 +4,16 @@ import { router } from './routes/routes'
 import customTheme from './theme.ts'
 import { StrictMode } from 'react'
 import { ParagraphStyleProvider } from './hooks/useParagraphStyle.tsx'
+import { AuthProvider } from './hooks/AuthContext.tsx'
 
 function App() {
   return (
     <StrictMode>
       <ChakraProvider theme={customTheme}>
         <ParagraphStyleProvider>
-          <RouterProvider router={router} />
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
         </ParagraphStyleProvider>
       </ChakraProvider>
     </StrictMode>

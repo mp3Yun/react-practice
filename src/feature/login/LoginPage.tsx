@@ -1,7 +1,9 @@
 import { Button, Flex, Text } from '@chakra-ui/react'
 import { useRouter } from '@tanstack/react-router'
+import { useAuth } from '../../hooks/AuthContext'
 
 const LoginPage: React.FC = () => {
+  const { setIsLogin } = useAuth()
   const router = useRouter()
   return (
     <Flex
@@ -14,6 +16,7 @@ const LoginPage: React.FC = () => {
       <Button
         mt={4}
         onClick={() => {
+          setIsLogin(true)
           router.navigate({
             to: '/home',
           })

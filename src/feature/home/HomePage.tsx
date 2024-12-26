@@ -3,8 +3,23 @@ import { Outlet } from '@tanstack/react-router'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import SidebarList from './components/sidebarItems/SidebarList'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../../hooks/AuthContext'
+import AdvertisementModal from '../../components/modals/AdvertisementModal'
 
 const HomePage: React.FC = () => {
+  // 取得登入結果
+  const { isLogin } = useAuth()
+  // 廣告popup控制
+  const [isModalOpen, setMoalOpen] = useState(false)
+
+  // 使用 useEffect 處理 modal 的開關，避免無限渲染
+  useEffect(() => {
+    if (isLogin) {
+      setMoalOpen(true)
+    }
+  }, [isLogin]) // 依賴 isLogin 變化
+
   return (
     <>
       <Flex
@@ -37,6 +52,11 @@ const HomePage: React.FC = () => {
 
         <Footer />
       </Flex>
+      {/* 顯示廣告 Modal  [方法一] */}
+      <AdvertisementModal
+        isOpen={isModalOpen}
+        onClose={() => setMoalOpen(false)}
+      />
     </>
   )
 }
