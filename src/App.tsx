@@ -5,7 +5,6 @@ import { AuthProvider } from './hooks/AuthContext.tsx'
 import { ParagraphStyleProvider } from './hooks/useParagraphStyle.tsx'
 import { router } from './routes/routes'
 import customTheme from './theme.ts'
-import { DirtyFormProvider } from './hooks/DirtyFormContext.tsx'
 
 function App() {
   return (
@@ -13,9 +12,7 @@ function App() {
       <ChakraProvider theme={customTheme}>
         <ParagraphStyleProvider>
           <AuthProvider>
-            <DirtyFormProvider>
-              <RouterProvider router={router} />
-            </DirtyFormProvider>
+            <RouterProvider router={router} />
           </AuthProvider>
         </ParagraphStyleProvider>
       </ChakraProvider>

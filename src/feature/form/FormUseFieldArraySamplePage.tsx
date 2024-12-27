@@ -10,12 +10,10 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react'
-import { useBlocker } from '@tanstack/react-router'
 import { useState } from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
-import FormGuard from '../../guards/FormGuard'
-import { useDirtyForm } from '../../hooks/DirtyFormContext'
+import { useFormLeaveGuard } from '../../hooks/FormGuardContext'
 import CartoonCharacterInfo from './components/CartoonCharacterInfo'
 
 export interface GroupInfo {
@@ -32,20 +30,21 @@ interface Member {
   gender: string
 }
 const SampleFormUseFieldArray: React.FC = () => {
-  const { setIsDirty } = useDirtyForm()
+  const defaultValues: GroupInfo = {
+    name: '名偵探柯南',
+    leader: '江戶川柯南',
+    target: '100萬美元的五稜星',
+    members: [
+      { id: 0, name: '江戶川柯南', age: 7, gender: '男' },
+      { id: 1, name: '毛利小五郎', age: 43, gender: '男' },
+    ],
+  }
+
   const groupFormMethods = useForm<GroupInfo>({
-    defaultValues: {
-      name: '名偵探柯南',
-      leader: '江戶川柯南',
-      target: '100萬美元的五稜星',
-      members: [
-        { id: 0, name: '江戶川柯南', age: 7, gender: '男' },
-        { id: 1, name: '毛利小五郎', age: 43, gender: '男' },
-      ],
-    },
+    defaultValues: defaultValues,
   })
 
-  const { watch, control, formState } = groupFormMethods
+  const { watch, control, formState, reset } = groupFormMethods
 
   // 每一列的資料
   const { fields, append, remove, update } = useFieldArray({
@@ -53,8 +52,16 @@ const SampleFormUseFieldArray: React.FC = () => {
     name: 'members',
   })
 
+  const { setIsDirty } = useFormLeaveGuard()
+
   const handleGroupFormSubmit = (data: GroupInfo) => {
     console.log('user form data', data)
+
+    // not work -> useFieldArray 底下的狀態還是錯誤的
+    // reset()
+
+    // correct way
+    reset(defaultValues)
   }
 
   const [tabIndex, setTabIndex] = useState(0)
@@ -76,24 +83,8 @@ const SampleFormUseFieldArray: React.FC = () => {
     setTabIndex(index - 1)
   }
 
-  // 檢查表單是否為 dirty
-  const isDirty = Object.keys(formState.dirtyFields).length > 0
-
-  const { proceed, status } = useBlocker({
-    shouldBlockFn: ({ next }) => {
-      if (isDirty) {
-        return true
-      }
-      return false
-    },
-    withResolver: true,
-  })
-
   return (
     <>
-      {status === 'blocked' && (
-        <FormGuard isDirty={isDirty} onCheck={proceed}></FormGuard>
-      )}
       <Flex
         direction="column"
         align="flex-start"
@@ -116,6 +107,10 @@ const SampleFormUseFieldArray: React.FC = () => {
           <FormProvider {...groupFormMethods}>
             <Box>{watch('name')}</Box>
             <form
+              // 檢查表單是否為 dirty
+              onChange={() =>
+                setIsDirty(Object.keys(formState.dirtyFields).length > 0)
+              }
               onSubmit={groupFormMethods.handleSubmit(handleGroupFormSubmit)}
             >
               <Flex direction="row" width="100%">

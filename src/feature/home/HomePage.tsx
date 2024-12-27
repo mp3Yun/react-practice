@@ -6,6 +6,7 @@ import SidebarList from './components/sidebarItems/SidebarList'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../../hooks/AuthContext'
 import AdvertisementModal from '../../components/modals/AdvertisementModal'
+import { FormGuardProvider } from '../../hooks/FormGuardContext'
 
 const HomePage: React.FC = () => {
   // 取得登入結果
@@ -45,7 +46,9 @@ const HomePage: React.FC = () => {
               }} // 動態設置 CSS 變數
               minHeight={'80vh'}
             >
-              <Outlet />
+              <FormGuardProvider>
+                <Outlet />
+              </FormGuardProvider>
             </Card>
           </Box>
         </Flex>

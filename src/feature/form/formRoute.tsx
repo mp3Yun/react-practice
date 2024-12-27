@@ -1,12 +1,6 @@
-import { createRoute, RouteContext } from '@tanstack/react-router'
-import { routePathMaps, RoutePathEnum } from '../../dto/route-paths'
+import { createRoute } from '@tanstack/react-router'
+import { RoutePathEnum, routePathMaps } from '../../dto/route-paths'
 import { homeRoute } from '../home/homeRoute'
-
-// Define a type for the context
-interface NavigationContext {
-  isDirty: boolean
-  confirmLeave: () => Promise<boolean>
-}
 
 export const formRoute = createRoute({
   getParentRoute: () => homeRoute,
