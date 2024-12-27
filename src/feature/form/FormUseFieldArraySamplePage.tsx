@@ -10,17 +10,13 @@ import {
   TabPanels,
   Tabs,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
-import {
-  FormProvider,
-  useFieldArray,
-  useForm,
-  useFormContext,
-} from 'react-hook-form'
+import { useBlocker } from '@tanstack/react-router'
+import { useState } from 'react'
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
-import CartoonCharacterInfo from './components/CartoonCharacterInfo'
 import FormGuard from '../../guards/FormGuard'
 import { useDirtyForm } from '../../hooks/DirtyFormContext'
+import CartoonCharacterInfo from './components/CartoonCharacterInfo'
 
 export interface GroupInfo {
   name: string
@@ -83,13 +79,21 @@ const SampleFormUseFieldArray: React.FC = () => {
   // 檢查表單是否為 dirty
   const isDirty = Object.keys(formState.dirtyFields).length > 0
 
-  useEffect(() => {
-    setIsDirty(isDirty)
-  }, [isDirty])
+  const { proceed, status } = useBlocker({
+    shouldBlockFn: ({ next }) => {
+      if (isDirty) {
+        return true
+      }
+      return false
+    },
+    withResolver: true,
+  })
 
   return (
     <>
-      <FormGuard></FormGuard>
+      {status === 'blocked' && (
+        <FormGuard isDirty={isDirty} onCheck={proceed}></FormGuard>
+      )}
       <Flex
         direction="column"
         align="flex-start"
