@@ -27,8 +27,8 @@ export enum RoutePathEnum {
   Video = '/home/video',
   UseCase = '/home/useCase',
   Form = '/home/form',
-  FormCustomInput = '/home/formCustomInput',
-  FormUseFieldArray = '/home/formUseFieldArray',
+  FormCustomInput = '/home/form/customInput',
+  FormUseFieldArray = '/home/form/useFieldArray',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {

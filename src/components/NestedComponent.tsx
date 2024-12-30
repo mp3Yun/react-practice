@@ -8,6 +8,7 @@ interface NestedComponentProps {
   children: React.ReactNode
   title?: string
   className?: string
+  isOpen?: boolean
 }
 
 const NestedComponent = ({
@@ -15,6 +16,7 @@ const NestedComponent = ({
   children,
   title,
   className,
+  isOpen,
 }: NestedComponentProps) => {
   const nodesLevel = React.Children.toArray(children).map((child) => {
     React.isValidElement(child) && child.type === 'div'
@@ -23,7 +25,7 @@ const NestedComponent = ({
   const { style, getFontSizeByLevel } = useParagraphStyle()
   const fontSize = getFontSizeByLevel(level)
 
-  const [isExpanded, setIsExpanded] = React.useState(false)
+  const [isExpanded, setIsExpanded] = React.useState(isOpen)
 
   return (
     <div className={className}>

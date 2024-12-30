@@ -46,9 +46,7 @@ const HomePage: React.FC = () => {
               }} // 動態設置 CSS 變數
               minHeight={'80vh'}
             >
-              <FormGuardProvider>
-                <Outlet />
-              </FormGuardProvider>
+              <Outlet />
             </Card>
           </Box>
         </Flex>
