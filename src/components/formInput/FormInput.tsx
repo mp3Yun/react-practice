@@ -34,7 +34,8 @@ const FormInput = <TFieldValues extends FieldValues>({
     field,
     fieldState: { error },
   } = useController({ name, control, rules })
-
+  // console.log('Field Info:', field)
+  // console.error(name, '- error =>', error)
   return (
     <Box my={2}>
       <Text>

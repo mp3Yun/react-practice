@@ -1,4 +1,4 @@
-function flattenObject(
+export function flattenObject(
   obj: any,
   parentKey = '',
   result: Record<string, any> = {}

@@ -4,7 +4,7 @@ import Stepper from './Stepper'
 
 interface StepperProps {
   // 每個步驟內容
-  children: ReactNode[]
+  children: ReactNode
   // 當前步驟，由父層控制
   currentStep: number
   // 總步驟數
@@ -32,7 +32,7 @@ const StepperModule = ({
     <Box>
       <Stepper currentStep={currentStep} totalSteps={totalSteps} />
       {/* 當前步驟內容 */}
-      <Box style={{ marginTop: '1rem' }}>{children[currentStep]}</Box>
+      <Box style={{ marginTop: '1rem' }}>{children}</Box>
       {/* 控制按鈕 */}
       <Box mt={4} display="flex" justifyContent="space-between">
         <Button
