@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import StepperModule from '../../components/steppers/StepperModule'
-import { Box, Text } from '@chakra-ui/react'
-import { FormProvider, useForm } from 'react-hook-form'
+import { Box, Button, Text } from '@chakra-ui/react'
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
 import { validateForm } from '../../utils/form-utils'
 
@@ -25,7 +25,7 @@ const step1FormData = {
   telephone: '',
 }
 const step2FormData = {
-  address: [],
+  address: [''],
   familys: {
     member1: '',
     member2: '',
@@ -33,18 +33,29 @@ const step2FormData = {
   email: '',
 }
 type FormStep1 = typeof step1FormData
-type FormStep2 = typeof step2FormData
+type FormStep2 = {
+  address: string[]
+  familys: {
+    member1: string
+    member2: string
+  }
+  email: string
+}
 const FormStepsPage: React.FC = () => {
   // 用於存儲每個步驟的數據
-  const [step1Data, setStep1Data] = useState<FormStep1 | null>(null)
-  const [step2Data, setStep2Data] = useState<FormStep2 | null>(null)
+  const [step1Data, setStep1Data] = useState<FormStep1>(step1FormData)
+  const [step2Data, setStep2Data] = useState<FormStep2>(step2FormData)
   const [currentIndex, setCurretnIndex] = useState(0)
   // 分別控制各表單
   const form1methods = useForm<FormStep1>({
-    defaultValues: step1Data || step1FormData,
+    defaultValues: step1Data,
   })
   const form2methods = useForm<FormStep2>({
-    defaultValues: step2Data || step2FormData,
+    defaultValues: step2Data,
+  })
+  const { fields, append, remove } = useFieldArray<FormStep2>({
+    control: form2methods.control,
+    name: 'address', // 地址對應的陣列名稱
   })
 
   const handleStepValidation = async (step: number) => {
@@ -133,13 +144,35 @@ const FormStepsPage: React.FC = () => {
         <Box>
           <h3>Step 2</h3>
           <form name="step2">
-            <FormInput<FormStep2>
-              control={form2methods.control}
-              name="address"
-              isRequired={true}
-              label="地址"
-              rules={{ required: '請輸入地址' }}
-            ></FormInput>
+            <Box my={2}>
+              {fields.map((field, index) => (
+                <Box key={field.id}>
+                  <FormInput<FormStep2>
+                    control={form2methods.control}
+                    name={`address.${index}`}
+                    label={`地址 ${index + 1}`}
+                    isRequired={true}
+                    rules={{ required: '請輸入地址' }}
+                  />
+                  <Button
+                    onClick={() => remove(index)}
+                    colorScheme="red"
+                    size="sm"
+                  >
+                    刪除
+                  </Button>
+                </Box>
+              ))}
+
+              <Button
+                onClick={() => append([])} // 新增一個空地址
+                colorScheme="blue"
+                mt={4}
+              >
+                新增地址
+              </Button>
+            </Box>
+
             <FormInput<FormStep2>
               control={form2methods.control}
               name="familys.member1"
