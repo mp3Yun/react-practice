@@ -30,18 +30,22 @@ const step2FormData = {
     member1: '',
     member2: '',
   },
+  email: '',
 }
 type FormStep1 = typeof step1FormData
 type FormStep2 = typeof step2FormData
 const FormStepsPage: React.FC = () => {
+  // 用於存儲每個步驟的數據
+  const [step1Data, setStep1Data] = useState<FormStep1 | null>(null)
+  const [step2Data, setStep2Data] = useState<FormStep2 | null>(null)
+  const [currentIndex, setCurretnIndex] = useState(0)
+  // 分別控制各表單
   const form1methods = useForm<FormStep1>({
-    defaultValues: step1FormData,
+    defaultValues: step1Data || step1FormData,
   })
   const form2methods = useForm<FormStep2>({
-    defaultValues: step2FormData,
+    defaultValues: step2Data || step2FormData,
   })
-
-  const [currentIndex, setCurretnIndex] = useState(0)
 
   const handleStepValidation = async (step: number) => {
     switch (step) {
@@ -63,6 +67,15 @@ const FormStepsPage: React.FC = () => {
       handleStepValidation(step).then((isValid) => {
         console.log('handleSubmit isValid', isValid)
         if (isValid) {
+          if (step === 1) {
+            // 儲存步驟一的數據
+            setStep1Data(form1methods.getValues())
+            form1methods.reset(step1FormData)
+          } else if (step === 2) {
+            // 儲存步驟二的數據
+            setStep2Data(form2methods.getValues())
+            form2methods.reset(step2FormData)
+          }
           setCurretnIndex(step)
         }
       })
@@ -140,6 +153,13 @@ const FormStepsPage: React.FC = () => {
               isRequired={true}
               label="家人2"
               rules={{ required: '請輸入家人2' }}
+            ></FormInput>
+            <FormInput<FormStep2>
+              control={form2methods.control}
+              name="email"
+              isRequired={true}
+              label="信箱"
+              rules={{ required: '請輸入信箱' }}
             ></FormInput>
           </form>
         </Box>
