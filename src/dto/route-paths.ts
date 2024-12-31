@@ -6,6 +6,7 @@ import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
 import FormCustomInputPage from '../feature/form/FormCustomInputPage'
 import FormPage from '../feature/form/FormPage'
 import FormStepsPage from '../feature/form/FormStepsPage'
+import FormSteps2Page from '../feature/form/FormStepsPage2'
 import SampleFormUseFieldArray from '../feature/form/FormUseFieldArraySamplePage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
@@ -31,6 +32,7 @@ export enum RoutePathEnum {
   FormCustomInput = '/home/form/customInput',
   FormUseFieldArray = '/home/form/useFieldArray',
   FormSteps = '/home/form/steps',
+  FormSteps2 = '/home/form/steps2',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -80,5 +82,8 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.FormSteps]: {
     component: FormStepsPage,
+  },
+  [RoutePathEnum.FormSteps2]: {
+    component: FormSteps2Page,
   },
 }
