@@ -17,6 +17,15 @@ const myFormData = {
     member2: '',
   },
 }
+type FormStep1 = typeof step1FormData
+type FormStep2 = {
+  address: { id: number; value: string }[]
+  familys: {
+    member1: string
+    member2: string
+  }
+  email: string
+}
 // 我將此份表單，拆成2步驟來填資料
 const step1FormData = {
   name: '',
@@ -24,23 +33,15 @@ const step1FormData = {
   age: '',
   telephone: '',
 }
-const step2FormData = {
-  address: [''],
+const step2FormData: FormStep2 = {
+  address: [{ id: 1, value: '烏拉拉' }],
   familys: {
     member1: '',
     member2: '',
   },
   email: '',
 }
-type FormStep1 = typeof step1FormData
-type FormStep2 = {
-  address: string[]
-  familys: {
-    member1: string
-    member2: string
-  }
-  email: string
-}
+
 const FormStepsPage: React.FC = () => {
   // 用於存儲每個步驟的數據
   const [step1Data, setStep1Data] = useState<FormStep1>(step1FormData)
@@ -53,10 +54,12 @@ const FormStepsPage: React.FC = () => {
   const form2methods = useForm<FormStep2>({
     defaultValues: step2Data,
   })
-  const { fields, append, remove } = useFieldArray<FormStep2>({
+  const { fields, append, remove } = useFieldArray({
     control: form2methods.control,
     name: 'address', // 地址對應的陣列名稱
   })
+
+  console.log('fields', fields)
 
   const handleStepValidation = async (step: number) => {
     switch (step) {
@@ -149,7 +152,7 @@ const FormStepsPage: React.FC = () => {
                 <Box key={field.id}>
                   <FormInput<FormStep2>
                     control={form2methods.control}
-                    name={`address.${index}`}
+                    name={`address.${index}.value`}
                     label={`地址 ${index + 1}`}
                     isRequired={true}
                     rules={{ required: '請輸入地址' }}
@@ -165,8 +168,9 @@ const FormStepsPage: React.FC = () => {
               ))}
 
               <Button
-                onClick={() => append([])} // 新增一個空地址
+                onClick={() => append({ id: fields.length, value: '' })} // 新增一個空地址
                 colorScheme="blue"
+                size="sm"
                 mt={4}
               >
                 新增地址

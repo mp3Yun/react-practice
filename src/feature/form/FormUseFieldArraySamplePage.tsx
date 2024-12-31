@@ -11,7 +11,12 @@ import {
   Tabs,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
+import {
+  FormProvider,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
 import { useFormLeaveGuard } from '../../hooks/FormGuardContext'
 import CartoonCharacterInfo from './components/CartoonCharacterInfo'
@@ -171,8 +176,48 @@ const SampleFormUseFieldArray: React.FC = () => {
           </FormProvider>
         </Box>
       </Flex>
+
+      <Flex mt={4}>
+        <MyForm></MyForm>
+      </Flex>
     </>
   )
 }
 
 export default SampleFormUseFieldArray
+interface FormValues {
+  items: string[] // 預設為 string[] 類型 TODO: 注意: 不能夠為 string[], 一定要是 object[]
+}
+
+const MyForm = () => {
+  // 顯式定義 defaultValues 的類型
+  const { control, register, handleSubmit } = useForm<FormValues>({
+    defaultValues: {
+      items: ['預設資料'], // 預設為空陣列
+    },
+  })
+
+  // 顯式指定 'items' 的類型為 string[]
+  const { fields, append } = useFieldArray({
+    control,
+    name: 'items', // 設置 fieldArray 的 name
+  })
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    console.log(data)
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      {fields.map((item, index) => (
+        <div key={item.id}>
+          <input {...register(`items.${index}`)} defaultValue={item} />
+        </div>
+      ))}
+      <button type="button" onClick={() => append('')}>
+        新增項目
+      </button>
+      <button type="submit">提交</button>
+    </form>
+  )
+}
