@@ -6,6 +6,7 @@ import {
   useController,
   UseControllerProps,
 } from 'react-hook-form'
+import ErrorMessage from './ErrorMessage'
 
 interface IconInfoProps {
   icon: AllIcons
@@ -34,7 +35,6 @@ const FormInput = <TFieldValues extends FieldValues>({
     fieldState: { error },
   } = useController({ name, control, rules })
 
-  // console.log('FormInput-error', error)
   return (
     <Box my={2}>
       <Text>
@@ -42,11 +42,7 @@ const FormInput = <TFieldValues extends FieldValues>({
         {label}
       </Text>
       <Input {...inputProps} {...field}></Input>
-      {error?.message && (
-        <Box color="red">
-          <Text>{error.message}</Text>
-        </Box>
-      )}
+      <ErrorMessage message={error?.message} />
     </Box>
   )
 }
