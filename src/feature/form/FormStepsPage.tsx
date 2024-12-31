@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import StepperModule from '../../components/steppers/StepperModule'
 import { Box, Text } from '@chakra-ui/react'
 import { FormProvider, useForm } from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
+import { validateForm } from '../../utils/form-utils'
 
 // 假設我的所有表單資料如下:
 const myFormData = {
@@ -30,138 +31,133 @@ const step2FormData = {
     member2: '',
   },
 }
-interface FormData {
-  step1: typeof step1FormData
-  step2: typeof step2FormData
-  step3: object
-}
+type FormStep1 = typeof step1FormData
+type FormStep2 = typeof step2FormData
 const FormStepsPage: React.FC = () => {
-  const defaultForm = {
-    step1: step1FormData,
-    step2: step2FormData,
-    step3: {}, // for show all form data
-  }
-  const methods = useForm<FormData>({
-    defaultValues: defaultForm,
+  const form1methods = useForm<FormStep1>({
+    defaultValues: step1FormData,
+  })
+  const form2methods = useForm<FormStep2>({
+    defaultValues: step2FormData,
   })
 
-  const [currentIndex, setCurretnIndex] = useState(1)
+  const [currentIndex, setCurretnIndex] = useState(0)
 
-  const handleSubmit = (step: number) => {
+  const handleStepValidation = async (step: number) => {
     switch (step) {
-      case 1:
-        methods.handleSubmit(handleStep1Submit)()
-        setCurretnIndex(step)
-        break
-      case 2:
-        methods.handleSubmit(handleStep2Submit)()
-        setCurretnIndex(step)
-        break
+      case 1: {
+        return validateForm(form1methods)
+      }
+      case 2: {
+        console.log('step2 data form2methods', form2methods.getValues())
+        return validateForm(form2methods)
+      }
       default:
-        break
+        return true // 默認返回 true
     }
   }
 
-  const handleStep1Submit = (data: FormData) => {
-    console.log('Form Data Submitted:', data)
-    // 你可以選擇根據需求來設定每個步驟的資料
-    methods.setValue('step1', data.step1)
-  }
-
-  const handleStep2Submit = (data: FormData) => {
-    console.log('Form Data Submitted:', data)
-    // 你可以選擇根據需求來設定每個步驟的資料
-    methods.setValue('step2', data.step2)
+  const handleSubmit = (step: number, stepAction: 'next' | 'prev' = 'next') => {
+    if (stepAction === 'next') {
+      console.log('handleSubmit step', step)
+      handleStepValidation(step).then((isValid) => {
+        console.log('handleSubmit isValid', isValid)
+        if (isValid) {
+          setCurretnIndex(step)
+        }
+      })
+    } else if (currentIndex !== 0) {
+      setCurretnIndex(step)
+    }
   }
 
   return (
-    <FormProvider {...methods}>
-      <StepperModule
-        initialStep={currentIndex}
-        onStepChange={(step, action) => {
-          console.log('onStepChange', step, action)
-        }}
-        onStepValidation={async (step, action) => {
-          handleSubmit(step)
-          const tmpStep = `step${step}` as unknown as keyof FormData
-          const result = await methods.trigger(tmpStep)
-          console.error('onStepValidation step check', result)
-          return result
-        }}
-      >
+    <StepperModule
+      currentStep={currentIndex}
+      totalSteps={3}
+      onNext={() => handleSubmit(currentIndex + 1, 'next')}
+      onPrevious={() => handleSubmit(currentIndex - 1, 'prev')}
+      isNextDisabled={currentIndex === 2}
+      isPreviousDisabled={currentIndex === 0}
+    >
+      <FormProvider {...form1methods}>
         <Box>
           <h3>Step 1</h3>
           <form name="step1">
-            <FormInput<FormData>
-              control={methods.control}
-              name="step1.name"
+            <FormInput<FormStep1>
+              control={form1methods.control}
+              name="name"
               isRequired={true}
               label="姓名"
               rules={{ required: '請輸入姓名' }}
             ></FormInput>
-            <FormInput<FormData>
-              control={methods.control}
-              name="step1.gender"
+            <FormInput<FormStep1>
+              control={form1methods.control}
+              name="gender"
               isRequired={true}
               label="性別"
               rules={{ required: '請輸入性別' }}
             ></FormInput>
-            <FormInput<FormData>
-              control={methods.control}
-              name="step1.age"
+            <FormInput<FormStep1>
+              control={form1methods.control}
+              name="age"
               isRequired={true}
               label="年齡"
               rules={{ required: '請輸入年齡' }}
             ></FormInput>
-            <FormInput<FormData>
-              control={methods.control}
-              name="step1.telephone"
+            <FormInput<FormStep1>
+              control={form1methods.control}
+              name="telephone"
               isRequired={true}
               label="電話"
               rules={{ required: '請輸入電話' }}
             ></FormInput>
           </form>
         </Box>
+      </FormProvider>
+
+      <FormProvider {...form2methods}>
         <Box>
           <h3>Step 2</h3>
           <form name="step2">
-            <FormInput<FormData>
-              control={methods.control}
-              name="step2.address"
+            <FormInput<FormStep2>
+              control={form2methods.control}
+              name="address"
               isRequired={true}
               label="地址"
               rules={{ required: '請輸入地址' }}
             ></FormInput>
-            <FormInput<FormData>
-              control={methods.control}
-              name="step2.familys.member1"
+            <FormInput<FormStep2>
+              control={form2methods.control}
+              name="familys.member1"
               isRequired={true}
               label="家人1"
               rules={{ required: '請輸入家人1' }}
             ></FormInput>
-            <FormInput<FormData>
-              control={methods.control}
-              name="step2.familys.member2"
+            <FormInput<FormStep2>
+              control={form2methods.control}
+              name="familys.member2"
               isRequired={true}
               label="家人2"
               rules={{ required: '請輸入家人2' }}
             ></FormInput>
           </form>
         </Box>
+      </FormProvider>
+
+      <Box>
+        <h3>Step 3</h3>
         <Box>
-          <h3>Step 3</h3>
-          <Box>
-            {/* {Object.entries(flattenObject(methods.getValues()) || {}).map(
+          {/* {Object.entries(flattenObject(methods.getValues()) || {}).map(
               (value: any, index: number) => (
                 <Box key={index}>
                   <Text>{value}</Text>
                 </Box>
               )
             )} */}
-          </Box>
         </Box>
-      </StepperModule>
-    </FormProvider>
+      </Box>
+    </StepperModule>
   )
 }
 
