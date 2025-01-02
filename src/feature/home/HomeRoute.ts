@@ -11,6 +11,7 @@ import {
   formRoute,
   formTreeRoute,
 } from '../form/formRoute'
+import { chartRoute } from '../chart/chartRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -33,4 +34,6 @@ export const homeRouteTree = homeRoute.addChildren([
   useCaseRouteTree,
   // form module
   formTreeRoute,
+  // chart module
+  chartRoute,
 ])

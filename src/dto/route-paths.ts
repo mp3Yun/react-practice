@@ -14,6 +14,7 @@ import MainPage from '../feature/main/MainPage'
 import UseRefCasePage from '../feature/use-case/useRefCasePage'
 import VideoPage from '../feature/video/VideoPage'
 import RouteConfigDto from './route-config.dto'
+import ChartPage from '../feature/chart/ChartPage'
 
 // 跳頁路徑，要使用絕對路徑
 export enum RoutePathEnum {
@@ -33,6 +34,7 @@ export enum RoutePathEnum {
   FormUseFieldArray = '/home/form/useFieldArray',
   FormSteps = '/home/form/steps',
   FormSteps2 = '/home/form/steps2',
+  Chart = '/home/chart',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -85,5 +87,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.FormSteps2]: {
     component: FormSteps2Page,
+  },
+  // chart module
+  [RoutePathEnum.Chart]: {
+    component: ChartPage,
   },
 }
