@@ -37,25 +37,38 @@ const TablePage: React.FC = () => {
     setSortState((prev) => {
       // 找出先前是否已有該欄的排序條件
       const prevFieldState = prev.find((s) => s.field === field)
+      let newSortState: SortState[] = []
       if (prevFieldState) {
         // 表示已存在該排序條件，切換排序狀態
-        return prev
+        newSortState = prev
           .map((s) => {
             if (s.field === field) {
               // 只改變那一欄的切換排序狀態
               if (prevFieldState.order === 'ASC') {
                 return { ...s, order: 'DESC' }
               } else if (prevFieldState.order === 'DESC') {
-                return null
+                // return null
+                return { ...s, order: 'CANCEL' }
               }
             }
             return s
           })
-          .filter((s) => s !== null) as SortState[]
+          .filter((s) => s !== null && s.order !== 'CANCEL') as SortState[]
       } else {
         // 表示不存在該排序條件，新增排序條件
-        return [...prev, { field, order: 'ASC' }]
+        newSortState = [...prev, { field, order: 'ASC' }]
       }
+
+      // 處理畫面的呈現 (原本寫在 useEffect 中的)
+      const sortTerms: SortTerm<(typeof originalData)[0]>[] = newSortState.map(
+        (s) => ({
+          fieldName: s.field as keyof (typeof originalData)[0],
+          isASC: s.order === 'ASC',
+        })
+      )
+      setData(sortByCustomCondition(originalData, sortTerms))
+
+      return newSortState
     })
   }
 
@@ -65,31 +78,6 @@ const TablePage: React.FC = () => {
     if (!sort || sort.order === 'CANCEL') return undefined
     return sort.order === 'ASC' ? <ArrowUpIcon /> : <ArrowDownIcon />
   }
-
-  // 處理多重條件排序
-  const getSortedData = () => {
-    if (sortState.length === 0) return originalData
-
-    // 將條件轉為排序條件
-    const sortTerms: SortTerm<(typeof originalData)[0]>[] = sortState.map(
-      (s) => {
-        return {
-          fieldName: s.field as keyof (typeof originalData)[0],
-          isASC: s.order === 'ASC',
-        }
-      }
-    )
-
-    return sortByCustomCondition(originalData, sortTerms)
-  }
-
-  // 重新渲染畫面
-  useEffect(() => {
-    console.log('重新渲染畫面-新的條件', sortState)
-    const tmpSortData = getSortedData()
-    console.log('重新渲染畫面', tmpSortData)
-    setData(tmpSortData)
-  }, [sortState])
 
   return (
     <TableContainer>
