@@ -1,7 +1,6 @@
 import { Box, Button } from '@chakra-ui/react'
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import FormInput from '../../../components/formInput/FormInput'
-import { BaseFormStepField } from '../class/BaseFormStepField'
 
 export type FormStep2 = {
   address: { id: number; value: string }[]
@@ -70,14 +69,31 @@ const Step1Form: React.FC = () => {
           name="family.member2"
           isRequired={true}
           label="家人2"
-          rules={{ required: '請輸入家人2' }}
+          rules={{
+            required: '請輸入家人2',
+            validate: (value) => {
+              if (typeof value === 'string') {
+                return (
+                  value.startsWith('A') ||
+                  'Username must start with the letter A'
+                )
+              }
+              return 'Invalid input type' // Handle other types gracefully
+            },
+          }}
         ></FormInput>
         <FormInput<FormStep2>
           control={formMethods.control}
           name="email"
           isRequired={true}
           label="信箱"
-          rules={{ required: '請輸入信箱' }}
+          rules={{
+            required: '請輸入信箱',
+            pattern: {
+              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+              message: 'Please enter a valid email address',
+            },
+          }}
         ></FormInput>
       </form>
     </Box>

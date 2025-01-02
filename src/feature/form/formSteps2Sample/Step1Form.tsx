@@ -51,7 +51,9 @@ const step1FieldMapping: Step1FormFieldMapping = {
     fieldInfo: {
       name: 'telephone',
       label: '電話',
-      rules: { required: '請輸入電話' },
+      rules: {
+        required: '請輸入電話',
+      },
       isRequired: true,
     },
   },
