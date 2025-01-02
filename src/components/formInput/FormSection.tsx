@@ -1,22 +1,23 @@
-import { FieldValues } from 'react-hook-form'
+import { FieldValues, UseFormReturn } from 'react-hook-form'
 import FormInput from './FormInput'
+import { BaseFormStepField } from '../../feature/form/class/BaseFormStepField'
 
 const FormSection = <TFieldValues extends FieldValues>({
   formMethods,
   fields,
 }: {
-  formMethods: any
-  fields: { name: string; label: string; rules: any }[]
+  formMethods: UseFormReturn<TFieldValues>
+  fields: BaseFormStepField<TFieldValues>[]
 }) => (
   <>
-    {fields.map((field) => (
+    {fields.map((item) => (
       <FormInput
-        key={field.name}
+        key={item.fieldKey}
         control={formMethods.control}
-        name={field.name}
-        label={field.label}
-        rules={field.rules}
-        isRequired
+        name={item.fieldInfo.name}
+        label={item.fieldInfo.label}
+        rules={item.fieldInfo.rules}
+        isRequired={item.fieldInfo.isRequired}
       />
     ))}
   </>
