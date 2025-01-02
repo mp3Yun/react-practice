@@ -10,6 +10,7 @@ import {
   Td,
   Tfoot,
   IconButton,
+  Box,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { sortByCustomCondition, SortTerm } from '../../utils/array-utils'
@@ -81,6 +82,9 @@ const TablePage: React.FC = () => {
 
   return (
     <TableContainer>
+      <Box>
+        <h3>請點擊欄位名稱來進行多條件的排序</h3>
+      </Box>
       <Table variant="striped" colorScheme="teal">
         <TableCaption>Imperial to metric conversion factors</TableCaption>
         <Thead>
