@@ -51,3 +51,37 @@ export function flattenArrayByKey(key: string, input: any[]): any[] {
 
   return result
 }
+
+export interface SortTerm<T> {
+  fieldName: Partial<keyof T>
+  isASC: boolean // 升冪: true, 降冪: false
+}
+
+export function sortByCustomCondition<T>(
+  arrayList: T[],
+  sortTerms: SortTerm<T>[]
+): T[] {
+  const array = arrayList.sort((a, b) => {
+    for (let i = 0; i < sortTerms.length; i++) {
+      const fieldA = a[sortTerms[i].fieldName]
+      const fieldB = b[sortTerms[i].fieldName]
+
+      // 如果字段相等，繼續檢查下一個條件
+      if (fieldA === fieldB && i < sortTerms.length - 1) {
+        continue // 跳過當前條件，進入下一個條件
+      } else {
+        // 判斷是否升冪或降冪
+        if (fieldA < fieldB) {
+          return sortTerms[i].isASC ? -1 : 1
+        }
+        if (fieldA > fieldB) {
+          return sortTerms[i].isASC ? 1 : -1
+        }
+        return 0 // 字段相等，繼續檢查下一個條件
+      }
+    }
+    return 0 // 如果所有條件都相等，則返回 0
+  })
+
+  return array
+}
