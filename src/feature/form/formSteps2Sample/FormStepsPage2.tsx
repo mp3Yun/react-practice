@@ -54,18 +54,10 @@ const FormSteps2Page: React.FC = () => {
       })
     } else if (currentIndex !== 0) {
       setCurretnIndex(step)
+      if (step1Data) form1methods.reset(step1Data)
+      if (step2Data) form2methods.reset(step2Data)
     }
   }
-
-  useEffect(() => {
-    // 重新渲染畫面，取得先前的值
-    console.log('currentIndex', currentIndex)
-    if (currentIndex === 0 && step1Data) {
-      form1methods.reset(step1Data)
-    } else if (currentIndex === 1 && step2Data) {
-      form2methods.reset(step2Data)
-    }
-  }, [currentIndex])
 
   return (
     <StepperModule
