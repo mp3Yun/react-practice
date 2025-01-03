@@ -35,7 +35,6 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
       >,
     })
   )
-  console.error('formMethods', formMethods)
 
   const setStepData = (step: number, data: Partial<TFieldValues[number]>) => {
     setStepDataState((prev) => {

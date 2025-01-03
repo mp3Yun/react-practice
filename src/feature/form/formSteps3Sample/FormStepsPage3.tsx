@@ -22,6 +22,7 @@ const FormSteps3Page: React.FC = () => {
     { defaultValues: { ...step1FormData, ...step2FormData } },
   ]
   const [currentStepData, setCurrentStep] = useState(stepInfos[0])
+  const [isAllStepsCompleted, setIsAllStepsCompleted] = useState(false)
   const currentStep = currentStepData.index
 
   const onStepChange = (step: number) => {
@@ -39,8 +40,6 @@ const FormSteps3Page: React.FC = () => {
       // 加入檢查驗證
       const checkValidation = await validateForm(formMethods)
       if (!checkValidation) return
-      console.log('currentStep', currentStep)
-      console.log('formMethods', formMethods.getValues())
       setStepData(currentStep, formMethods.getValues())
       setCurrentStep((prev) => stepInfos[prev.index + 1])
     }
@@ -59,15 +58,16 @@ const FormSteps3Page: React.FC = () => {
       totalSteps={stepInfos}
       onNext={() => {
         if (currentStep === 2) {
-          setCurrentStep({ ...currentStepData, status: 'completed' })
+          setIsAllStepsCompleted(true)
           alert('送出表單')
         } else {
           nextStep()
         }
       }}
       onPrevious={() => prevStep()}
-      isNextDisabled={currentStep === 2}
+      isNextDisabled={currentStep === 3}
       isPreviousDisabled={currentStep === 0}
+      isAllStepsCompleted={isAllStepsCompleted}
     >
       {currentStep === 0 && (
         <FormProvider {...formMethods}>

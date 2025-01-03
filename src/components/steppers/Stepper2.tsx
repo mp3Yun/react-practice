@@ -10,17 +10,32 @@ import {
   StepStatus,
   StepTitle,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStepper } from '../../hooks/UseStepper'
 import { StepperInfo } from './Stepper'
-
 interface Props {
   currentStep: StepperInfo
   totalSteps: StepperInfo[]
+  isAllStepsCompleted: boolean
 }
 
-const Stepper2: React.FC<Props> = ({ currentStep, totalSteps }) => {
-  const { activeStep, steps } = useStepper(currentStep, totalSteps)
+const Stepper2: React.FC<Props> = ({
+  currentStep,
+  totalSteps,
+  isAllStepsCompleted,
+}) => {
+  const { activeStep, steps, setActiveStep } = useStepper(
+    currentStep,
+    totalSteps
+  )
+
+  useEffect(() => {
+    if (isAllStepsCompleted) {
+      setActiveStep(currentStep.index + 1)
+      console.log('Received Next button click from parent!')
+    }
+  }, [isAllStepsCompleted])
+
   return (
     <ChakraStepper size="lg" index={activeStep}>
       {steps.map((step, index) => (
@@ -28,7 +43,8 @@ const Stepper2: React.FC<Props> = ({ currentStep, totalSteps }) => {
           <StepIndicator>
             <StepStatus
               complete={
-                currentStep.status === 'completed' ? (
+                currentStep.status === 'completed' &&
+                currentStep.index === activeStep ? (
                   <StepIcon />
                 ) : (
                   <StepNumber />
