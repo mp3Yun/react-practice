@@ -15,7 +15,7 @@ import React, { useEffect } from 'react'
 
 interface Props {
   currentStep: number | StepperInfo
-  totalSteps: number
+  totalSteps: number | StepperInfo[]
 }
 
 export interface StepperInfo {
@@ -26,20 +26,25 @@ export interface StepperInfo {
 
 const Stepper: React.FC<Props> = ({ currentStep, totalSteps }) => {
   const stepIsObject = typeof currentStep === 'object'
-  const steps = Array.from({ length: totalSteps }, (_, index) => index + 1).map(
-    (item) => {
-      if (typeof currentStep === 'object') {
-        return {
-          title: currentStep.title,
-          description: currentStep.description,
-        }
-      }
+
+  const totalStepsIsObject =
+    Array.isArray(totalSteps) && typeof totalSteps[0] === 'object'
+  const steps = Array.from(
+    { length: Array.isArray(totalSteps) ? totalSteps.length : totalSteps },
+    (_, index) => index + 1
+  ).map((item) => {
+    if (typeof currentStep === 'object' && totalStepsIsObject) {
+      const tmpStep = totalSteps.find((step) => step.index === item - 1)
       return {
-        title: `Step ${item}`,
-        description: `This is step ${item}`,
+        title: tmpStep?.title || `Step ${item}`,
+        description: tmpStep?.description || `This is step ${item}`,
       }
     }
-  )
+    return {
+      title: `Step ${item}`,
+      description: `This is step ${item}`,
+    }
+  })
   const { activeStep, setActiveStep } = useSteps({
     index: stepIsObject ? currentStep.index : currentStep,
     count: steps.length,

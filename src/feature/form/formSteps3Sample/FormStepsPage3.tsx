@@ -1,29 +1,61 @@
 import { Box, Text } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
-import StepperModule from '../../../components/steppers/StepperModule'
-import { useMultiStepForm } from '../../../hooks/UseMultiStepForm'
-import Step1Form, { step1FormData } from './Step1Form'
-import Step2Form, { step2FormData } from './Step2Form'
-import { flattenObject } from '../../../utils/object-utils'
+import StepperFormModule from '../../../components/steppers/StepperFormModule'
+import { StepProps, useMultiStepForm2 } from '../../../hooks/UseMultiStepForm2'
 import { flattenArray } from '../../../utils/array-utils'
+import { validateForm } from '../../../utils/form-utils'
+import { flattenObject } from '../../../utils/object-utils'
+import Step1Form, { FormStep1, step1FormData } from './Step1Form'
+import Step2Form, { FormStep2, step2FormData } from './Step2Form'
 
 const FormSteps3Page: React.FC = () => {
-  const steps = [
-    { defaultValues: step1FormData },
-    { defaultValues: step2FormData },
-    { defaultValues: { ...step1FormData, ...step2FormData } },
+  const steps: StepProps<FormStep1 | FormStep2>[] = [
+    {
+      stepInfo: { index: 0, title: '步驟一', description: '個人資料' },
+      defaultValues: step1FormData,
+    },
+    {
+      stepInfo: { index: 1, title: '步驟二', description: '連略資料' },
+      defaultValues: step2FormData,
+    },
+    {
+      stepInfo: { index: 2, title: '步驟三', description: '確認資料' },
+      defaultValues: { ...step1FormData, ...step2FormData },
+    },
   ]
-  const { currentStep, stepData, formMethods, nextStep, prevStep } =
-    useMultiStepForm(steps)
+  const [currentStepData, setCurrentStep] = useState(steps[0].stepInfo)
+  const currentStep = currentStepData.index
+  const { stepData, setStepData, formMethods } = useMultiStepForm2(
+    steps,
+    currentStep,
+    setCurrentStep
+  )
+
+  const nextStep = async () => {
+    if (currentStep < steps.length - 1) {
+      // 加入檢查驗證
+      const checkValidation = await validateForm(formMethods)
+      if (!checkValidation) return
+      setStepData(currentStep, formMethods.getValues())
+      setCurrentStep((prev) => steps[prev.index + 1].stepInfo)
+    }
+  }
+
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setStepData(currentStep, formMethods.getValues())
+      setCurrentStep((prev) => steps[prev.index - 1].stepInfo)
+    }
+  }
 
   return (
-    <StepperModule
-      currentStep={currentStep}
-      totalSteps={steps.length}
+    <StepperFormModule
+      currentStep={currentStepData}
+      totalSteps={steps.map((step) => step.stepInfo)}
       onNext={() => {
         if (currentStep === 2) {
-          alert('最後一步')
+          // TODO: 變更步驟的狀態
         } else {
           nextStep()
         }
@@ -71,7 +103,14 @@ const FormSteps3Page: React.FC = () => {
           </Box>
         </Box>
       )}
-    </StepperModule>
+
+      {/* TODO: */}
+      {/* {currentStep === 3 && (
+        <Box>
+          <h3>完成作業</h3>
+        </Box>
+      )} */}
+    </StepperFormModule>
   )
 }
 
