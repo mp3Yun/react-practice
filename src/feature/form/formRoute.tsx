@@ -33,9 +33,17 @@ export const formSteps2Route = createRoute({
   component: routePathMaps[RoutePathEnum.FormSteps2].component, // 定義該路由的對應組件
 })
 
+// 優化-步驟控制
+export const formSteps3Route = createRoute({
+  getParentRoute: () => formRoute,
+  path: '/steps3', // 定義路由的 path
+  component: routePathMaps[RoutePathEnum.FormSteps3].component, // 定義該路由的對應組件
+})
+
 export const formTreeRoute = formRoute.addChildren([
   formCustomInputRoute,
   formUseFieldArrayRoute,
   formStepsRoute,
   formSteps2Route,
+  formSteps3Route,
 ])

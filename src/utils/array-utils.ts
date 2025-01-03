@@ -3,7 +3,7 @@
  * [ 'address', [{ "id": 1, "value": "烏拉拉" }, { "id": 2, "value": "拉拉烏" }]]
  *
  * output data:
- * [ key, "烏拉拉", "拉拉烏" ]
+ * [ "address", "烏拉拉", "拉拉烏" ]
  * @param input
  * @returns
  */

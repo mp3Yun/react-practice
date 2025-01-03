@@ -3,19 +3,20 @@ import ButtonIdPage from '../feature/button/ButtonIdPage'
 import ButtonPage from '../feature/button/ButtonPage'
 import CarouselPage from '../feature/carousel/CarouselPage'
 import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
+import ChartPage from '../feature/chart/ChartPage'
 import FormCustomInputPage from '../feature/form/FormCustomInputPage'
 import FormPage from '../feature/form/FormPage'
-import FormStepsPage from '../feature/form/FormStepsPage'
 import FormSteps2Page from '../feature/form/formSteps2Sample/FormStepsPage2'
+import FormSteps3Page from '../feature/form/formSteps3Sample/FormStepsPage3'
+import FormStepsPage from '../feature/form/FormStepsPage'
 import SampleFormUseFieldArray from '../feature/form/FormUseFieldArraySamplePage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
+import TablePage from '../feature/table/TablePage'
 import UseRefCasePage from '../feature/use-case/useRefCasePage'
 import VideoPage from '../feature/video/VideoPage'
 import RouteConfigDto from './route-config.dto'
-import ChartPage from '../feature/chart/ChartPage'
-import TablePage from '../feature/table/TablePage'
 
 // 跳頁路徑，要使用絕對路徑
 export enum RoutePathEnum {
@@ -35,6 +36,7 @@ export enum RoutePathEnum {
   FormUseFieldArray = '/home/form/useFieldArray',
   FormSteps = '/home/form/steps',
   FormSteps2 = '/home/form/steps2',
+  FormSteps3 = '/home/form/steps3',
   Chart = '/home/chart',
   Table = '/home/table',
 }
@@ -89,6 +91,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.FormSteps2]: {
     component: FormSteps2Page,
+  },
+  [RoutePathEnum.FormSteps3]: {
+    component: FormSteps3Page,
   },
   // chart module
   [RoutePathEnum.Chart]: {
