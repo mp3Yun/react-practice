@@ -22,6 +22,7 @@ export interface StepperInfo {
   index: number
   title: string
   description: string
+  status?: 'completed' | 'active' | 'pending' // 新增的 step status 屬性
 }
 
 const Stepper: React.FC<Props> = ({ currentStep, totalSteps }) => {

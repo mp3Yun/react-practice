@@ -1,6 +1,7 @@
 import { Box, Button } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
-import Stepper, { StepperInfo } from './Stepper'
+import { StepperInfo } from './Stepper'
+import Stepper2 from './Stepper2'
 
 interface StepperFormProps {
   // 每個步驟內容
@@ -30,7 +31,7 @@ const StepperFormModule = ({
 }: StepperFormProps) => {
   return (
     <Box>
-      <Stepper currentStep={currentStep} totalSteps={totalSteps} />
+      <Stepper2 currentStep={currentStep} totalSteps={totalSteps} />
       {/* 當前步驟內容 */}
       <Box style={{ marginTop: '1rem' }}>{children}</Box>
       {/* 控制按鈕 */}

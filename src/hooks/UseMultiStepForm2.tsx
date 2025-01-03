@@ -1,6 +1,10 @@
 import { useState } from 'react'
-import { FieldValues, useForm, UseFormReturn } from 'react-hook-form'
-import { StepperInfo } from '../components/steppers/Stepper'
+import {
+  DefaultValues,
+  FieldValues,
+  useForm,
+  UseFormReturn,
+} from 'react-hook-form'
 
 interface MultiStepFormProps<TFieldValues extends readonly FieldValues[]> {
   currentStep: number
@@ -12,21 +16,26 @@ interface MultiStepFormProps<TFieldValues extends readonly FieldValues[]> {
 }
 
 export interface StepProps<TFieldValues extends FieldValues> {
-  stepInfo: StepperInfo
   defaultValues: TFieldValues
 }
 export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
   steps: StepProps<TFieldValues[number]>[],
   currentStep: number,
-  onStepChange: (step: StepperInfo) => void
+  onStepChange: (step: number) => void
 ): MultiStepFormProps<TFieldValues> {
   const [stepData, setStepDataState] = useState<
     Partial<TFieldValues[number]>[]
   >(steps.map((step) => step.defaultValues))
 
-  const currentStepData =
-    stepData[currentStep] || steps[currentStep].defaultValues
-  const formMethods = useForm<TFieldValues[number]>(currentStepData)
+  // 為每個步驟創建獨立的 formMethods
+  const formMethods = steps.map((step, index) =>
+    useForm<TFieldValues[number]>({
+      defaultValues: (stepData[index] || step.defaultValues) as DefaultValues<
+        TFieldValues[number]
+      >,
+    })
+  )
+  console.error('formMethods', formMethods)
 
   const setStepData = (step: number, data: Partial<TFieldValues[number]>) => {
     setStepDataState((prev) => {
@@ -38,20 +47,22 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
 
   const resetStep = (step: number) => {
     if (step >= 0 && step < steps.length) {
-      formMethods.reset(steps[step].defaultValues)
+      formMethods[step].reset(steps[step].defaultValues)
       setStepData(step, steps[step].defaultValues)
     }
   }
 
   const resetAll = () => {
     setStepDataState(steps.map((step) => step.defaultValues))
-    formMethods.reset(steps[0].defaultValues)
-    onStepChange(steps[0].stepInfo)
+    formMethods.forEach((form, index) => {
+      form.reset(steps[index].defaultValues)
+    })
+    onStepChange(0)
   }
 
   return {
     currentStep,
-    formMethods,
+    formMethods: formMethods[currentStep],
     stepData,
     setStepData,
     resetStep,
