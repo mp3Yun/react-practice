@@ -42,8 +42,8 @@ const FormSteps3Page: React.FC = () => {
       // 加入檢查驗證
       const checkValidation = await validateForm(formMethods)
       if (!checkValidation) return
-      console.log('currentStep', currentStep)
-      console.log('formMethods', formMethods.getValues())
+      // console.log('currentStep', currentStep)
+      // console.log('formMethods', formMethods.getValues())
       setStepData(currentStep, formMethods.getValues())
       setCurrentStep((prev) => stepInfos[prev.index + 1])
     }
@@ -66,6 +66,27 @@ const FormSteps3Page: React.FC = () => {
     onClose()
   }
 
+  const renderAllData = (data: any) => {
+    return Object.entries(flattenObject(data)).map(([key, value], index) => (
+      <Box key={index}>
+        {Array.isArray(value) ? (
+          flattenArray(value).map((item, idx) => (
+            <Text key={idx}>
+              {key}: {item}
+            </Text>
+          ))
+        ) : (
+          <Text>
+            {key}: {value}
+          </Text>
+        )}
+      </Box>
+    ))
+  }
+
+  const isCompletedAllData =
+    currentStep === 3 && currentStepData.status === 'completed' ? false : true
+
   return (
     <>
       <StepperFormModule
@@ -82,16 +103,8 @@ const FormSteps3Page: React.FC = () => {
         onPrevious={() => prevStep()}
         isNextDisabled={currentStep === 2}
         isPreviousDisabled={currentStep === 0}
-        isShowNextButton={
-          currentStep === 3 && currentStepData.status === 'completed'
-            ? false
-            : true
-        }
-        isShowPreviousButton={
-          currentStep === 3 && currentStepData.status === 'completed'
-            ? false
-            : true
-        }
+        isShowNextButton={isCompletedAllData}
+        isShowPreviousButton={isCompletedAllData}
       >
         {currentStep === 0 && (
           <FormProvider {...formMethods}>
@@ -109,28 +122,7 @@ const FormSteps3Page: React.FC = () => {
           (currentStep === 3 && currentStepData.status !== 'completed')) && (
           <Box>
             <h3>Step 3</h3>
-            <Box>
-              {Object.entries(
-                flattenObject({
-                  ...stepData[0],
-                  ...stepData[1],
-                }) || {}
-              ).map(([key, value], index: number) => (
-                <Box key={index}>
-                  {Array.isArray(value) ? (
-                    flattenArray(value).map((item, index) => (
-                      <Text key={index}>
-                        {key}:{item}
-                      </Text>
-                    ))
-                  ) : (
-                    <Text>
-                      {key}:{value}
-                    </Text>
-                  )}
-                </Box>
-              ))}
-            </Box>
+            <Box>{renderAllData({ ...stepData[0], ...stepData[1] })}</Box>
           </Box>
         )}
 
@@ -164,28 +156,7 @@ const FormSteps3Page: React.FC = () => {
           confirmTitle={'確認資料'}
           confirmMessage={'所有資料皆正確嗎?'}
         >
-          <Box>
-            {Object.entries(
-              flattenObject({
-                ...stepData[0],
-                ...stepData[1],
-              }) || {}
-            ).map(([key, value], index: number) => (
-              <Box key={index}>
-                {Array.isArray(value) ? (
-                  flattenArray(value).map((item, index) => (
-                    <Text key={index}>
-                      {key}:{item}
-                    </Text>
-                  ))
-                ) : (
-                  <Text>
-                    {key}:{value}
-                  </Text>
-                )}
-              </Box>
-            ))}
-          </Box>
+          <Box>{renderAllData({ ...stepData[0], ...stepData[1] })}</Box>
         </ConfirmDialog>
       </Box>
     </>

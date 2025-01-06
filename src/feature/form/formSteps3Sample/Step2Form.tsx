@@ -27,8 +27,6 @@ const Step1Form: React.FC = () => {
     name: 'address', // 地址對應的陣列名稱
   })
 
-  console.log('v3 fields', fields)
-
   return (
     <Box>
       <h3>Step 2</h3>
