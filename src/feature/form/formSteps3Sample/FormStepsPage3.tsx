@@ -142,8 +142,7 @@ const FormSteps3Page: React.FC = () => {
             <Box mt={4}>
               <Button
                 onClick={() => {
-                  setCurrentStep(stepInfos[0])
-                  // resetAll() TODO: 循環了 Orz
+                  resetAll()
                 }}
               >
                 回到表單
