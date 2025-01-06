@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   DefaultValues,
   FieldValues,
   useForm,
   UseFormReturn,
 } from 'react-hook-form'
+import { useFormLeaveGuard } from './FormGuardContext'
 
 interface MultiStepFormProps<TFieldValues extends readonly FieldValues[]> {
   currentStep: number
@@ -13,6 +14,7 @@ interface MultiStepFormProps<TFieldValues extends readonly FieldValues[]> {
   setStepData: (step: number, data: Partial<TFieldValues[number]>) => void
   resetStep: (step: number) => void
   resetAll: () => void
+  isAnyFormDirty: boolean // 新增檢查是否有任何表單是髒的狀態
 }
 
 export interface StepProps<TFieldValues extends FieldValues> {
@@ -35,7 +37,6 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
       >,
     })
   )
-  console.error('formMethods', formMethods)
 
   const setStepData = (step: number, data: Partial<TFieldValues[number]>) => {
     setStepDataState((prev) => {
@@ -55,10 +56,30 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
   const resetAll = () => {
     setStepDataState(steps.map((step) => step.defaultValues))
     formMethods.forEach((form, index) => {
-      form.reset(steps[index].defaultValues)
+      form.reset(steps[index].defaultValues, {
+        keepDirty: false,
+      })
     })
-    onStepChange(0)
   }
+
+  const isAnyFormDirty = formMethods.some((form) => {
+    return form.formState.isDirty
+  })
+
+  // 離開表單時，檢查是否有未異動的資料
+  const { setIsDirty } = useFormLeaveGuard()
+
+  // 監控髒污狀態的變化並更新 useFormLeaveGuard
+  const prevIsAnyFormDirty = useRef(isAnyFormDirty)
+  useEffect(() => {
+    if (isAnyFormDirty !== prevIsAnyFormDirty.current) {
+      // 更新狀態
+      setIsDirty(isAnyFormDirty)
+    }
+
+    // 更新 ref 的值
+    prevIsAnyFormDirty.current = isAnyFormDirty
+  }, [isAnyFormDirty, setIsDirty])
 
   return {
     currentStep,
@@ -67,5 +88,6 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
     setStepData,
     resetStep,
     resetAll,
+    isAnyFormDirty,
   }
 }

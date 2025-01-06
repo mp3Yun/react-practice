@@ -1,7 +1,4 @@
 import { Box, useDisclosure } from '@chakra-ui/react'
-import ExpandableTextCard from '../../components/expandableTextCards/ExpandableTextCard'
-import expandableTextDataSet from '../../dataSet/expandableText-data'
-import { ChakraIcons, createIcon, SvgIcons } from '../../utils/icons-utils'
 import FixedButton from '../../components/buttons/FixedButton'
 import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
 import Favorites from './components/Favorites'

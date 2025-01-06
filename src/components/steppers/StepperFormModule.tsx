@@ -1,4 +1,4 @@
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Button, Flex } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
 import { StepperInfo } from './Stepper'
 import Stepper2 from './Stepper2'
@@ -18,6 +18,10 @@ interface StepperFormProps {
   isNextDisabled?: boolean
   // 是否禁用 "Previous" 按鈕
   isPreviousDisabled?: boolean
+  // 是否顯示 "Next" 按鈕
+  isShowNextButton?: boolean
+  // 是否顯示 "Previous" 按鈕
+  isShowPreviousButton?: boolean
 }
 
 const StepperFormModule = ({
@@ -28,29 +32,35 @@ const StepperFormModule = ({
   onPrevious,
   isNextDisabled = false,
   isPreviousDisabled = false,
+  isShowNextButton = true,
+  isShowPreviousButton = true,
 }: StepperFormProps) => {
   return (
     <Box>
       <Stepper2 currentStep={currentStep} totalSteps={totalSteps} />
       {/* 當前步驟內容 */}
-      <Box style={{ marginTop: '1rem' }}>{children}</Box>
+      <Box style={{ marginTop: '1rem', flex: 1 }}>{children}</Box>
       {/* 控制按鈕 */}
-      <Box mt={4} display="flex" justifyContent="space-between">
-        <Button
-          onClick={onPrevious}
-          disabled={isPreviousDisabled || currentStep.index === 0}
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={onNext}
-          disabled={
-            isNextDisabled || currentStep.index === totalSteps.length - 1
-          }
-        >
-          Next
-        </Button>
-      </Box>
+      <Flex mt={4} justifyContent="space-between">
+        {isShowPreviousButton && (
+          <Button
+            onClick={onPrevious}
+            disabled={isPreviousDisabled || currentStep.index === 0}
+          >
+            Previous
+          </Button>
+        )}
+        {isShowNextButton && (
+          <Button
+            onClick={onNext}
+            disabled={
+              isNextDisabled || currentStep.index === totalSteps.length - 1
+            }
+          >
+            Next
+          </Button>
+        )}
+      </Flex>
     </Box>
   )
 }
