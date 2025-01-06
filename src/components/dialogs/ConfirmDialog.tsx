@@ -8,9 +8,9 @@ import {
   AlertDialogOverlay,
   Button,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 
-interface Props {
+interface Props extends PropsWithChildren {
   isOpen: boolean
   onConfirm: () => void
   onClose: () => void
@@ -28,6 +28,7 @@ const ConfirmDialog: React.FC<Props> = (props) => {
     confirmMessage,
     confirmText,
     cancelText,
+    children,
   } = props
   const cancelRef = React.useRef<HTMLButtonElement | null>(null)
   return (
@@ -44,7 +45,10 @@ const ConfirmDialog: React.FC<Props> = (props) => {
         <AlertDialogContent>
           <AlertDialogHeader>{confirmTitle}</AlertDialogHeader>
           <AlertDialogCloseButton />
-          <AlertDialogBody>{confirmMessage}</AlertDialogBody>
+          <AlertDialogBody>
+            {children}
+            {confirmMessage}
+          </AlertDialogBody>
           <AlertDialogFooter>
             <Button variant={'primary'} onClick={onConfirm}>
               {confirmText || '確認'}

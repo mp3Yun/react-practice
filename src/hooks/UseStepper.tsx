@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { StepperInfo } from '../components/steppers/Stepper'
 
 export const useStepper = (
