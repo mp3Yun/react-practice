@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   DefaultValues,
   FieldValues,
   useForm,
   UseFormReturn,
 } from 'react-hook-form'
+import { useFormLeaveGuard } from './FormGuardContext'
 
 interface MultiStepFormProps<TFieldValues extends readonly FieldValues[]> {
   currentStep: number
@@ -57,11 +58,21 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
     formMethods.forEach((form, index) => {
       form.reset(steps[index].defaultValues)
     })
+    // TODO: resetAll() 之後，還是 popup 離開訊息視窗了， why?
   }
 
+  // TODO: ? 在使用 useMemo 效能會更好?
   const isAnyFormDirty = formMethods.some((form) => {
     return form.formState.dirtyFields
   })
+
+  // 離開表單時，檢查是否有未異動的資料
+  const { setIsDirty } = useFormLeaveGuard()
+
+  // 監控髒污狀態的變化並更新 useFormLeaveGuard
+  useEffect(() => {
+    setIsDirty(isAnyFormDirty)
+  }, [isAnyFormDirty, setIsDirty])
 
   return {
     currentStep,

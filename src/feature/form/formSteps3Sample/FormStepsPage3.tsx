@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Grid, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { FormProvider } from 'react-hook-form'
 import ConfirmDialog from '../../../components/dialogs/ConfirmDialog'
@@ -10,7 +10,6 @@ import { validateForm } from '../../../utils/form-utils'
 import { flattenObject } from '../../../utils/object-utils'
 import Step1Form, { step1FormData } from './Step1Form'
 import Step2Form, { step2FormData } from './Step2Form'
-import { useFormLeaveGuard } from '../../../hooks/FormGuardContext'
 
 const FormSteps3Page: React.FC = () => {
   const stepInfos: StepperInfo[] = [
@@ -30,8 +29,11 @@ const FormSteps3Page: React.FC = () => {
     setCurrentStep(stepInfos[step])
   }
 
-  const { stepData, setStepData, formMethods, resetAll, isAnyFormDirty } =
-    useMultiStepForm2(steps, currentStep, onStepChange)
+  const { stepData, setStepData, formMethods, resetAll } = useMultiStepForm2(
+    steps,
+    currentStep,
+    onStepChange
+  )
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -86,9 +88,6 @@ const FormSteps3Page: React.FC = () => {
   const isCompletedAllData =
     currentStep === 3 && currentStepData.status === 'completed' ? false : true
 
-  // 離開表單時，檢查是否有未異動的資料
-  const { setIsDirty } = useFormLeaveGuard()
-
   return (
     <>
       <StepperFormModule
@@ -110,7 +109,7 @@ const FormSteps3Page: React.FC = () => {
       >
         {currentStep === 0 && (
           <FormProvider {...formMethods}>
-            <form onChange={() => setIsDirty(isAnyFormDirty)}>
+            <form>
               <Step1Form></Step1Form>
             </form>
           </FormProvider>
@@ -118,7 +117,7 @@ const FormSteps3Page: React.FC = () => {
 
         {currentStep === 1 && (
           <FormProvider {...formMethods}>
-            <Step2Form setIsDirty={setIsDirty}></Step2Form>
+            <Step2Form></Step2Form>
           </FormProvider>
         )}
 
