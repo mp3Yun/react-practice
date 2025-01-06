@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   DefaultValues,
   FieldValues,
@@ -62,7 +62,6 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
     })
   }
 
-  // TODO: ? 在使用 useMemo 效能會更好?
   const isAnyFormDirty = formMethods.some((form) => {
     return form.formState.isDirty
   })
@@ -70,9 +69,16 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
   // 離開表單時，檢查是否有未異動的資料
   const { setIsDirty } = useFormLeaveGuard()
 
-  // 監控髒污狀態的變化並更新 useFormLeaveGuard TODO: 使用了 useEffect 這樣是好的嗎?
+  // 監控髒污狀態的變化並更新 useFormLeaveGuard
   useEffect(() => {
-    setIsDirty(isAnyFormDirty)
+    const prevIsAnyFormDirty = useRef(isAnyFormDirty)
+    if (isAnyFormDirty !== prevIsAnyFormDirty.current) {
+      // 更新狀態
+      setIsDirty(isAnyFormDirty)
+    }
+
+    // 更新 ref 的值
+    prevIsAnyFormDirty.current = isAnyFormDirty
   }, [isAnyFormDirty, setIsDirty])
 
   return {
