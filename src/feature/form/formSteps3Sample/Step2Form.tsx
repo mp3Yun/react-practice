@@ -20,7 +20,10 @@ export const step2FormData: FormStep2 = {
   email: '',
 }
 
-const Step1Form: React.FC = () => {
+interface Props {
+  setIsDirty?: (isDirty: boolean) => void
+}
+const Step1Form: React.FC<Props> = ({ setIsDirty }) => {
   const formMethods = useFormContext<FormStep2>()
   const { fields, append, remove } = useFieldArray({
     control: formMethods.control,
@@ -30,7 +33,10 @@ const Step1Form: React.FC = () => {
   return (
     <Box>
       <h3>Step 2</h3>
-      <form name="step2">
+      <form
+        name="step2"
+        onChange={() => setIsDirty?.(formMethods.formState.isDirty)}
+      >
         <Box my={2}>
           {fields.map((field, index) => (
             <Box key={field.id}>

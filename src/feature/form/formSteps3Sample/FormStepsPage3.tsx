@@ -10,6 +10,7 @@ import { validateForm } from '../../../utils/form-utils'
 import { flattenObject } from '../../../utils/object-utils'
 import Step1Form, { step1FormData } from './Step1Form'
 import Step2Form, { step2FormData } from './Step2Form'
+import { useFormLeaveGuard } from '../../../hooks/FormGuardContext'
 
 const FormSteps3Page: React.FC = () => {
   const stepInfos: StepperInfo[] = [
@@ -29,11 +30,8 @@ const FormSteps3Page: React.FC = () => {
     setCurrentStep(stepInfos[step])
   }
 
-  const { stepData, setStepData, formMethods, resetAll } = useMultiStepForm2(
-    steps,
-    currentStep,
-    onStepChange
-  )
+  const { stepData, setStepData, formMethods, resetAll, isAnyFormDirty } =
+    useMultiStepForm2(steps, currentStep, onStepChange)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -63,6 +61,7 @@ const FormSteps3Page: React.FC = () => {
       description: '',
       status: 'completed',
     })
+    resetAll() // 我這邊重新設定後，為什麼這一頁的離開訊息還是 popup 了?! TODO:
     onClose()
   }
 
@@ -87,6 +86,9 @@ const FormSteps3Page: React.FC = () => {
   const isCompletedAllData =
     currentStep === 3 && currentStepData.status === 'completed' ? false : true
 
+  // 離開表單時，檢查是否有未異動的資料
+  const { setIsDirty } = useFormLeaveGuard()
+
   return (
     <>
       <StepperFormModule
@@ -108,13 +110,15 @@ const FormSteps3Page: React.FC = () => {
       >
         {currentStep === 0 && (
           <FormProvider {...formMethods}>
-            <Step1Form></Step1Form>
+            <form onChange={() => setIsDirty(isAnyFormDirty)}>
+              <Step1Form></Step1Form>
+            </form>
           </FormProvider>
         )}
 
         {currentStep === 1 && (
           <FormProvider {...formMethods}>
-            <Step2Form></Step2Form>
+            <Step2Form setIsDirty={setIsDirty}></Step2Form>
           </FormProvider>
         )}
 
@@ -134,7 +138,7 @@ const FormSteps3Page: React.FC = () => {
             <Box mt={4}>
               <Button
                 onClick={() => {
-                  resetAll()
+                  setCurrentStep(stepInfos[0])
                 }}
               >
                 回到表單

@@ -13,6 +13,7 @@ interface MultiStepFormProps<TFieldValues extends readonly FieldValues[]> {
   setStepData: (step: number, data: Partial<TFieldValues[number]>) => void
   resetStep: (step: number) => void
   resetAll: () => void
+  isAnyFormDirty: boolean // 新增檢查是否有任何表單是髒的狀態
 }
 
 export interface StepProps<TFieldValues extends FieldValues> {
@@ -56,8 +57,11 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
     formMethods.forEach((form, index) => {
       form.reset(steps[index].defaultValues)
     })
-    onStepChange(0)
   }
+
+  const isAnyFormDirty = formMethods.some((form) => {
+    return form.formState.dirtyFields
+  })
 
   return {
     currentStep,
@@ -66,5 +70,6 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
     setStepData,
     resetStep,
     resetAll,
+    isAnyFormDirty,
   }
 }

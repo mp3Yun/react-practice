@@ -184,6 +184,7 @@ const SampleFormUseFieldArray: React.FC = () => {
   )
 }
 
+// 錯誤的範例
 export default SampleFormUseFieldArray
 interface FormValues {
   items: string[] // 預設為 string[] 類型 TODO: 注意: 不能夠為 string[], 一定要是 object[]

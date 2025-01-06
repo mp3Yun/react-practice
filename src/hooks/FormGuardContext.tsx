@@ -30,16 +30,16 @@ export const FormGuardProvider: React.FC<PropsWithChildren> = ({
 
   const confirmLeave = () => {
     console.log('proceed', proceed)
-    if (proceed === undefined) return
-    proceed()
-    setModalOpen(false)
-    setIsDirty(false) // 還原狀態
+    if (proceed) {
+      proceed()
+      setModalOpen(false)
+      setIsDirty(false) // 初始狀態
+    }
   }
 
   const cancelLeave = () => {
     console.log('cancel')
     setModalOpen(false)
-    setIsDirty(false) // 還原狀態
   }
 
   return (
