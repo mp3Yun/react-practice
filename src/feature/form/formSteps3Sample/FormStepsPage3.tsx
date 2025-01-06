@@ -59,8 +59,15 @@ const FormSteps3Page: React.FC = () => {
       totalSteps={stepInfos}
       onNext={() => {
         if (currentStep === 2) {
-          setCurrentStep({ ...currentStepData, status: 'completed' })
-          alert('送出表單')
+          // setCurrentStep({ ...currentStepData, status: 'completed' })
+          setCurrentStep({ ...currentStepData, index: 3 })
+          // TODO: popup 確認彈窗，點擊確認後顯示完成頁
+          // setCurrentStep({
+          //   index: 3,
+          //   title: '',
+          //   description: '',
+          //   status: 'completed',
+          // })
         } else {
           nextStep()
         }
