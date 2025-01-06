@@ -2,7 +2,6 @@ import { Box, Button } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
 import { StepperInfo } from './Stepper'
 import Stepper2 from './Stepper2'
-import { useState } from 'react'
 
 interface StepperFormProps {
   // 每個步驟內容
@@ -19,8 +18,6 @@ interface StepperFormProps {
   isNextDisabled?: boolean
   // 是否禁用 "Previous" 按鈕
   isPreviousDisabled?: boolean
-  // 是否完成所有步驟
-  isAllStepsCompleted?: boolean
 }
 
 const StepperFormModule = ({
@@ -31,16 +28,10 @@ const StepperFormModule = ({
   onPrevious,
   isNextDisabled = false,
   isPreviousDisabled = false,
-  isAllStepsCompleted = false,
 }: StepperFormProps) => {
-  console.error('我是 stepper 模組 isAllStepsCompleted', isAllStepsCompleted)
   return (
     <Box>
-      <Stepper2
-        currentStep={currentStep}
-        totalSteps={totalSteps}
-        isAllStepsCompleted={isAllStepsCompleted}
-      />
+      <Stepper2 currentStep={currentStep} totalSteps={totalSteps} />
       {/* 當前步驟內容 */}
       <Box style={{ marginTop: '1rem' }}>{children}</Box>
       {/* 控制按鈕 */}
@@ -52,10 +43,10 @@ const StepperFormModule = ({
           Previous
         </Button>
         <Button
-          onClick={() => {
-            onNext()
-          }}
-          disabled={isNextDisabled || currentStep.index === totalSteps.length}
+          onClick={onNext}
+          disabled={
+            isNextDisabled || currentStep.index === totalSteps.length - 1
+          }
         >
           Next
         </Button>

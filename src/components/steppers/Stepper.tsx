@@ -1,5 +1,4 @@
 import {
-  background,
   Box,
   Stepper as ChakraStepper,
   Step,
@@ -57,7 +56,7 @@ const Stepper: React.FC<Props> = ({ currentStep, totalSteps }) => {
   }, [currentStep])
 
   return (
-    <ChakraStepper size="lg" index={activeStep} colorScheme={'oceanGreenBlue'}>
+    <ChakraStepper size="lg" index={activeStep}>
       {steps.map((step, index) => (
         <Step key={index}>
           <StepIndicator>
