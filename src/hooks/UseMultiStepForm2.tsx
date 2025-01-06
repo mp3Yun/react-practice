@@ -56,20 +56,21 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
   const resetAll = () => {
     setStepDataState(steps.map((step) => step.defaultValues))
     formMethods.forEach((form, index) => {
-      form.reset(steps[index].defaultValues)
+      form.reset(steps[index].defaultValues, {
+        keepDirty: false,
+      })
     })
-    // TODO: resetAll() 之後，還是 popup 離開訊息視窗了， why?
   }
 
   // TODO: ? 在使用 useMemo 效能會更好?
   const isAnyFormDirty = formMethods.some((form) => {
-    return form.formState.dirtyFields
+    return form.formState.isDirty
   })
 
   // 離開表單時，檢查是否有未異動的資料
   const { setIsDirty } = useFormLeaveGuard()
 
-  // 監控髒污狀態的變化並更新 useFormLeaveGuard
+  // 監控髒污狀態的變化並更新 useFormLeaveGuard TODO: 使用了 useEffect 這樣是好的嗎?
   useEffect(() => {
     setIsDirty(isAnyFormDirty)
   }, [isAnyFormDirty, setIsDirty])
