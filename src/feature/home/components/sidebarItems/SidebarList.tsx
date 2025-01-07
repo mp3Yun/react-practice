@@ -1,17 +1,11 @@
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
   AccordionItem,
-  AccordionPanel,
+  AccordionItemContent,
+  AccordionItemTrigger,
+  AccordionRoot,
   Box,
 } from '@chakra-ui/react'
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useRouter,
-} from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 import React, { useState } from 'react'
 
 type FormattedRoute = {
@@ -75,20 +69,20 @@ const SidebarList: React.FC = () => {
     otherModule && otherModule?.length > 0 ? [home, ...otherModule] : [home]
 
   // 保存展開項目大項-預設為全部收合
-  const [expandedItems, setExpandedItems] = useState<number[]>([-1])
+  const [expandedItems, setExpandedItems] = useState<string[]>(['-1'])
 
   // 渲染子選單
   const renderChildren = (children: FormattedRoute[]) => {
     // 展開狀態管理
     return children.map((child, index) => (
-      <AccordionItem key={index}>
+      <AccordionItem key={index} value={child.path}>
         <h3>
           <Link to={child.path}>
-            <AccordionButton>
+            <AccordionItemTrigger>
               <Box as="span" flex="1" textAlign="left">
                 {child.name}
               </Box>
-            </AccordionButton>
+            </AccordionItemTrigger>
           </Link>
         </h3>
       </AccordionItem>
@@ -96,23 +90,25 @@ const SidebarList: React.FC = () => {
   }
 
   return (
-    <Accordion
+    <AccordionRoot
       bg={'gray.50'}
-      defaultIndex={expandedItems}
-      allowMultiple
+      value={expandedItems}
+      multiple
       flexDir={'row'}
     >
       {menu.map((item, index) => (
-        <AccordionItem key={index}>
+        <AccordionItem key={index} value={item.path}>
           <h2>
             <Link to={item.path}>
-              <AccordionButton
+              <AccordionItemTrigger
                 onClick={() => {
                   if (item.hasChildren) {
-                    if (expandedItems.includes(index)) {
-                      setExpandedItems(expandedItems.filter((i) => i !== index))
+                    if (expandedItems.includes(index.toString())) {
+                      setExpandedItems(
+                        expandedItems.filter((i) => +i !== index)
+                      )
                     } else {
-                      setExpandedItems([...expandedItems, index])
+                      setExpandedItems([...expandedItems, index.toString()])
                     }
                   }
                 }}
@@ -120,18 +116,18 @@ const SidebarList: React.FC = () => {
                 <Box as="span" flex="1" textAlign="left">
                   {item.name}
                 </Box>
-                {item.hasChildren && <AccordionIcon />}
-              </AccordionButton>
+                {/* {item.hasChildren && <AccordionIcon />} TODO: 待確認 */}
+              </AccordionItemTrigger>
             </Link>
           </h2>
           {item.hasChildren && item.children && (
-            <AccordionPanel pb={4}>
+            <AccordionItemContent pb={4}>
               {renderChildren(item.children)}
-            </AccordionPanel>
+            </AccordionItemContent>
           )}
         </AccordionItem>
       ))}
-    </Accordion>
+    </AccordionRoot>
   )
 }
 

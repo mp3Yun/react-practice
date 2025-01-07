@@ -1,6 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
-import { Center, Flex } from '@chakra-ui/layout'
-import { Image } from '@chakra-ui/react'
+import { Center, Flex, Image } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import NestedComponent from '../../components/NestedComponent'
 

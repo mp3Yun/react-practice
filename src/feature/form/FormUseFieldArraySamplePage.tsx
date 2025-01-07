@@ -1,22 +1,8 @@
 // ============ 表單中的陣列 sample ======== //
 
-import {
-  Box,
-  Button,
-  Flex,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '@chakra-ui/react'
+import { Box, Button, Flex, Tabs } from '@chakra-ui/react'
 import { useState } from 'react'
-import {
-  FormProvider,
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-} from 'react-hook-form'
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
 import { useFormLeaveGuard } from '../../hooks/FormGuardContext'
 import CartoonCharacterInfo from './components/CartoonCharacterInfo'
@@ -141,33 +127,27 @@ const SampleFormUseFieldArray: React.FC = () => {
                 </Box>
                 <Box flex="2" ml="4" className="show-border">
                   <Flex direction="row">
-                    <Tabs
-                      variant="enclosed"
-                      width="100%"
-                      onChange={(index) => setTabIndex(index)}
-                      index={tabIndex} // 控制選中的頁籤
-                    >
-                      <TabList>
+                    <Tabs.Root key="line" defaultValue="members" variant="line">
+                      <Tabs.List>
                         {fields.map((field, index) => (
-                          <Tab key={field.id}>
+                          <Tabs.Trigger value={field.id}>
                             {watch(`members.${index}.name`) ||
                               `成員 ${index + 1}`}
-                          </Tab>
+                          </Tabs.Trigger>
                         ))}
-                      </TabList>
-                      <TabPanels width="100%">
-                        {fields.map((field, index) => (
-                          <TabPanel key={field.id} width="100%">
-                            <CartoonCharacterInfo
-                              index={index}
-                              addOne={handleAddOne}
-                              deleteOne={handleDeleteOne}
-                              resetOne={handleDeleteOne}
-                            />
-                          </TabPanel>
-                        ))}
-                      </TabPanels>
-                    </Tabs>
+                      </Tabs.List>
+
+                      {fields.map((field, index) => (
+                        <Tabs.Content value={field.id}>
+                          <CartoonCharacterInfo
+                            index={index}
+                            addOne={handleAddOne}
+                            deleteOne={handleDeleteOne}
+                            resetOne={handleDeleteOne}
+                          />
+                        </Tabs.Content>
+                      ))}
+                    </Tabs.Root>
                   </Flex>
                 </Box>
               </Flex>
@@ -177,48 +157,46 @@ const SampleFormUseFieldArray: React.FC = () => {
         </Box>
       </Flex>
 
-      <Flex mt={4}>
-        <MyForm></MyForm>
-      </Flex>
+      <Flex mt={4}>{/* <MyForm></MyForm> */}</Flex>
     </>
   )
 }
 
 // 錯誤的範例
 export default SampleFormUseFieldArray
-interface FormValues {
-  items: string[] // 預設為 string[] 類型 TODO: 注意: 不能夠為 string[], 一定要是 object[]
-}
+// interface FormValues {
+//   items: string[] // 預設為 string[] 類型 TODO: 注意: 不能夠為 string[], 一定要是 object[]
+// }
 
-const MyForm = () => {
-  // 顯式定義 defaultValues 的類型
-  const { control, register, handleSubmit } = useForm<FormValues>({
-    defaultValues: {
-      items: ['預設資料'], // 預設為空陣列
-    },
-  })
+// const MyForm = () => {
+//   // 顯式定義 defaultValues 的類型
+//   const { control, register, handleSubmit } = useForm<FormValues>({
+//     defaultValues: {
+//       items: ['預設資料'], // 預設為空陣列
+//     },
+//   })
 
-  // 顯式指定 'items' 的類型為 string[]
-  const { fields, append } = useFieldArray({
-    control,
-    name: 'items', // 設置 fieldArray 的 name
-  })
+//   // 顯式指定 'items' 的類型為 string[]
+//   const { fields, append } = useFieldArray({
+//     control,
+//     name: 'items', // 設置 fieldArray 的 name
+//   })
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data)
-  }
+//   const onSubmit: SubmitHandler<FormValues> = (data) => {
+//     console.log(data)
+//   }
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {fields.map((item, index) => (
-        <div key={item.id}>
-          <input {...register(`items.${index}`)} defaultValue={item} />
-        </div>
-      ))}
-      <button type="button" onClick={() => append('')}>
-        新增項目
-      </button>
-      <button type="submit">提交</button>
-    </form>
-  )
-}
+//   return (
+//     <form onSubmit={handleSubmit(onSubmit)}>
+//       {fields.map((item, index) => (
+//         <div key={item.id}>
+//           <input {...register(`items.${index}`)} defaultValue={item} />
+//         </div>
+//       ))}
+//       <button type="button" onClick={() => append('')}>
+//         新增項目
+//       </button>
+//       <button type="submit">提交</button>
+//     </form>
+//   )
+// }

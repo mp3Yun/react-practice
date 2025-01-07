@@ -1,14 +1,11 @@
 import {
   Box,
-  Stepper as ChakraStepper,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
+  Text,
+  StepsCompletedContent,
+  StepsContent,
+  StepsItem,
+  StepsList,
+  StepsRoot,
 } from '@chakra-ui/react'
 import React from 'react'
 import { useStepper } from '../../hooks/UseStepper'
@@ -22,32 +19,26 @@ interface Props {
 const Stepper2: React.FC<Props> = ({ currentStep, totalSteps }) => {
   const { activeStep, steps } = useStepper(currentStep, totalSteps)
   return (
-    <ChakraStepper size="lg" index={activeStep}>
-      {steps.map((step, index) => (
-        <Step key={index}>
-          <StepIndicator>
-            <StepStatus
-              complete={
-                currentStep.status === 'completed' ? (
-                  <StepIcon />
-                ) : (
-                  <StepNumber />
-                )
-              }
-              incomplete={<StepNumber />}
-              active={<StepNumber />}
-            />
-          </StepIndicator>
+    <StepsRoot defaultValue={activeStep} count={steps.length}>
+      <StepsList>
+        {totalSteps.map((step, index) => (
+          <StepsItem key={index} index={index} title={step.title} />
+        ))}
+      </StepsList>
 
-          <Box flexShrink="0">
-            <StepTitle>{step.title}</StepTitle>
-            <StepDescription>{step.description}</StepDescription>
+      {totalSteps.map((step, index) => (
+        <StepsContent key={index} index={index}>
+          <Box>
+            <Text fontSize="xl" mb={4}>
+              {step.title}
+            </Text>
+            <Text>{step.description}</Text>
           </Box>
-
-          <StepSeparator />
-        </Step>
+        </StepsContent>
       ))}
-    </ChakraStepper>
+
+      <StepsCompletedContent>All steps are complete!</StepsCompletedContent>
+    </StepsRoot>
   )
 }
 

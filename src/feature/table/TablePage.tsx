@@ -1,17 +1,5 @@
 import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons'
-import {
-  TableContainer,
-  Table,
-  TableCaption,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  Tfoot,
-  IconButton,
-  Box,
-} from '@chakra-ui/react'
+import { Table, TableCaption, IconButton, Box } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { sortByCustomCondition, SortTerm } from '../../utils/array-utils'
 
@@ -81,61 +69,64 @@ const TablePage: React.FC = () => {
   }
 
   return (
-    <TableContainer>
+    <Box>
       <Box>
         <h3>請點擊欄位名稱來進行多條件的排序</h3>
       </Box>
-      <Table variant="striped" colorScheme="teal">
+      <Table.Root variant="outline" colorScheme="teal">
         <TableCaption>Imperial to metric conversion factors</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>
+        <Table.Header>
+          <Table.Row>
+            <Table.ColumnHeader>
               <IconButton
                 aria-label="Sort To Convert"
                 onClick={() => handleSort('toConvert')}
                 variant="ghost"
-                icon={renderSortIcon('toConvert')}
-              ></IconButton>
+              >
+                {renderSortIcon('toConvert')}
+              </IconButton>
               To convert
-            </Th>
-            <Th>
+            </Table.ColumnHeader>
+            <Table.ColumnHeader>
               <IconButton
                 aria-label="Sort Into"
                 onClick={() => handleSort('into')}
                 variant="ghost"
-                icon={renderSortIcon('into')}
-              ></IconButton>
+              >
+                {renderSortIcon('into')}
+              </IconButton>
               into
-            </Th>
-            <Th isNumeric>
+            </Table.ColumnHeader>
+            <Table.ColumnHeader>
               <IconButton
                 aria-label="Sort Into"
                 onClick={() => handleSort('multiplyBy')}
                 variant="ghost"
-                icon={renderSortIcon('multiplyBy')}
-              ></IconButton>
+              >
+                {renderSortIcon('multiplyBy')}
+              </IconButton>
               multiply by
-            </Th>
-          </Tr>
-        </Thead>
-        <Tbody>
+            </Table.ColumnHeader>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
           {data.map((item, index) => (
-            <Tr key={index}>
-              <Td>{item.toConvert}</Td>
-              <Td>{item.into}</Td>
-              <Td isNumeric>{item.multiplyBy}</Td>
-            </Tr>
+            <Table.Row key={index}>
+              <Table.Cell>{item.toConvert}</Table.Cell>
+              <Table.Cell>{item.into}</Table.Cell>
+              <Table.Cell>{item.multiplyBy}</Table.Cell>
+            </Table.Row>
           ))}
-        </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
-          </Tr>
-        </Tfoot>
-      </Table>
-    </TableContainer>
+        </Table.Body>
+        <Table.Footer>
+          <Table.Row>
+            <Table.Cell>To convert</Table.Cell>
+            <Table.Cell>into</Table.Cell>
+            <Table.Cell>multiply by</Table.Cell>
+          </Table.Row>
+        </Table.Footer>
+      </Table.Root>
+    </Box>
   )
 }
 

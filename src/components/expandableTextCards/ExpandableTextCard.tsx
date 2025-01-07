@@ -1,18 +1,16 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 import {
-  useDisclosure,
-  Text,
-  Button,
-  Flex,
   Box,
-  Stack,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
   BoxProps,
+  Button,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot,
+  Flex,
+  Text,
+  useDisclosure,
 } from '@chakra-ui/react'
 import React from 'react'
 
@@ -27,7 +25,7 @@ const ExpandableTextCard: React.FC<ExpandableTextProps> = ({
   ...boxProps
 }) => {
   const [isExpanded, setIsExpanded] = React.useState(false)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
 
   // 所有行數整理
   const lines = text.split(' ') || []
@@ -48,6 +46,10 @@ const ExpandableTextCard: React.FC<ExpandableTextProps> = ({
     setIsExpanded(!isExpanded)
   }
 
+  const lineHeight = 1.75
+  const lineCount = isExpanded ? maxLines : lines.length
+  const maxHeight = lineHeight * lineCount
+
   return (
     <Box {...boxProps}>
       <Flex
@@ -57,8 +59,8 @@ const ExpandableTextCard: React.FC<ExpandableTextProps> = ({
         padding={2}
       >
         <Text
-          lineHeight={1.75}
-          noOfLines={isExpanded ? maxLines : lines.length}
+          lineHeight={lineHeight}
+          maxHeight={maxHeight}
           dangerouslySetInnerHTML={{ __html: visablePartOneText }}
         ></Text>
         {lines.length > maxLines && (
@@ -72,28 +74,27 @@ const ExpandableTextCard: React.FC<ExpandableTextProps> = ({
         )}
         {isExpanded && (
           <Text
-            lineHeight={1.75}
-            noOfLines={isMoreDataInfo ? undefined : maxLines}
+            lineHeight={lineHeight}
+            maxHeight={maxHeight}
             dangerouslySetInnerHTML={{ __html: visablePartTwoText }}
           ></Text>
         )}
         {isExpanded && isMoreDataInfo && (
-          <Button mt={2} variant={'gray'} onClick={onOpen}>
+          <Button mt={2} variant={'solid'} onClick={onOpen}>
             查看更多
           </Button>
         )}
 
         {/* POPUP 彈窗處理 - 彈出框顯示所有文字 */}
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>完整內容</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
+        <DialogRoot open={open} onOpenChange={onClose}>
+          <DialogContent>
+            <DialogCloseTrigger />
+            <DialogHeader>完整內容</DialogHeader>
+            <DialogBody>
               <Text>{text}</Text>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
+            </DialogBody>
+          </DialogContent>
+        </DialogRoot>
       </Flex>
     </Box>
   )

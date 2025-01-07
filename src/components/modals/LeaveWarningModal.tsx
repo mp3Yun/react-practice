@@ -1,11 +1,12 @@
 import {
   Button,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
+  Dialog,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
 } from '@chakra-ui/react'
 
 interface Props {
@@ -13,15 +14,16 @@ interface Props {
   onCheck: () => void
   onClose: () => void
 }
+
 const LeaveWarningModal: React.FC<Props> = ({ isOpen, onCheck, onClose }) => {
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>未儲存的變更</ModalHeader>
-          <ModalBody>你有未儲存的變更，是否確定離開？</ModalBody>
-          <ModalFooter>
+      <DialogRoot open={isOpen} onOpenChange={onClose}>
+        <DialogContent>
+          <DialogCloseTrigger />
+          <DialogHeader>未儲存的變更</DialogHeader>
+          <DialogBody>你有未儲存的變更，是否確定離開？</DialogBody>
+          <DialogFooter>
             <Button variant="ghost" onClick={onClose}>
               取消
             </Button>
@@ -34,9 +36,9 @@ const LeaveWarningModal: React.FC<Props> = ({ isOpen, onCheck, onClose }) => {
             >
               確定
             </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+          </DialogFooter>
+        </DialogContent>
+      </DialogRoot>
     </>
   )
 }

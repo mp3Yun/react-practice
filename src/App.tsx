@@ -9,7 +9,7 @@ import customTheme from './theme.ts'
 function App() {
   return (
     <StrictMode>
-      <ChakraProvider theme={customTheme}>
+      <ChakraProvider value={customTheme}>
         <ParagraphStyleProvider>
           <AuthProvider>
             <RouterProvider router={router} />

@@ -1,10 +1,10 @@
 import {
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalHeader,
-  ModalOverlay,
+  Box,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogRoot,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import { Swiper as SwiperClass } from 'swiper' // 引入 Swiper 類型
@@ -26,18 +26,21 @@ const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent
-          sx={{
-            maxWidth: '800px', // 設定最大寬度
-            width: '90%', // 百分比寬度
-            height: '500px', // 設定高度
-          }}
+      <DialogRoot open={isOpen} onOpenChange={onClose}>
+        <Box
+          as={DialogContent}
+          maxWidth="800px" // 設定最大寬度
+          width="90%" // 百分比寬度
+          height="500px" // 設定高度
+          // sx={{
+          //   maxWidth: '800px', // 設定最大寬度
+          //   width: '90%', // 百分比寬度
+          //   height: '500px', // 設定高度
+          // }}
         >
-          <ModalHeader>廣告</ModalHeader>
-          <ModalCloseButton></ModalCloseButton>
-          <ModalBody>
+          <DialogHeader>廣告</DialogHeader>
+          <DialogCloseTrigger></DialogCloseTrigger>
+          <DialogBody>
             <Swiper
               className="custom-swiper"
               modules={[Pagination, Navigation, Autoplay]}
@@ -85,9 +88,9 @@ const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
                 </SwiperSlide>
               ))}
             </Swiper>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+          </DialogBody>
+        </Box>
+      </DialogRoot>
     </>
   )
 }

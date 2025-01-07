@@ -1,17 +1,14 @@
+import { Button, Box, Group, Text } from '@chakra-ui/react'
 import {
-  Box,
-  Stepper as ChakraStepper,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  useSteps,
+  StepsRoot,
+  StepsList,
+  StepsItem,
+  StepsContent,
+  StepsPrevTrigger,
+  StepsNextTrigger,
+  StepsCompletedContent,
 } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 interface Props {
   currentStep: number | StepperInfo
@@ -22,7 +19,7 @@ export interface StepperInfo {
   index: number
   title: string
   description: string
-  status?: 'completed' | 'active' | 'pending' // 新增的 step status 屬性
+  status?: 'completed' | 'active' | 'pending'
 }
 
 const Stepper: React.FC<Props> = ({ currentStep, totalSteps }) => {
@@ -46,36 +43,71 @@ const Stepper: React.FC<Props> = ({ currentStep, totalSteps }) => {
       description: `This is step ${item}`,
     }
   })
-  const { activeStep, setActiveStep } = useSteps({
-    index: stepIsObject ? currentStep.index : currentStep,
-    count: steps.length,
-  })
+
+  const [activeStep, setActiveStep] = useState(
+    stepIsObject ? currentStep.index : currentStep
+  )
 
   useEffect(() => {
     setActiveStep(stepIsObject ? currentStep.index : currentStep)
   }, [currentStep])
 
+  // const nextStep = () => {
+  //   if (activeStep < steps.length - 1) {
+  //     setActiveStep(activeStep + 1)
+  //   }
+  // }
+
+  // const prevStep = () => {
+  //   if (activeStep > 0) {
+  //     setActiveStep(activeStep - 1)
+  //   }
+  // }
+
   return (
-    <ChakraStepper size="lg" index={activeStep}>
+    <StepsRoot defaultValue={activeStep} count={steps.length}>
+      <StepsList>
+        {steps.map((step, index) => (
+          <StepsItem key={index} index={index} title={step.title} />
+        ))}
+      </StepsList>
+
       {steps.map((step, index) => (
-        <Step key={index}>
-          <StepIndicator>
-            <StepStatus
-              complete={<StepIcon />}
-              incomplete={<StepNumber />}
-              active={<StepNumber />}
-            />
-          </StepIndicator>
-
-          <Box flexShrink="0">
-            <StepTitle>{step.title}</StepTitle>
-            <StepDescription>{step.description}</StepDescription>
+        <StepsContent key={index} index={index}>
+          <Box>
+            <Text fontSize="xl" mb={4}>
+              {step.title}
+            </Text>
+            <Text>{step.description}</Text>
           </Box>
-
-          <StepSeparator />
-        </Step>
+        </StepsContent>
       ))}
-    </ChakraStepper>
+
+      <StepsCompletedContent>All steps are complete!</StepsCompletedContent>
+
+      {/* <Group spacing={4} mt={4}>
+        <StepsPrevTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={prevStep}
+            isDisabled={activeStep === 0}
+          >
+            Prev
+          </Button>
+        </StepsPrevTrigger>
+        <StepsNextTrigger asChild>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={nextStep}
+            isDisabled={activeStep === steps.length - 1}
+          >
+            Next
+          </Button>
+        </StepsNextTrigger>
+      </Group> */}
+    </StepsRoot>
   )
 }
 

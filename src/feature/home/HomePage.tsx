@@ -1,12 +1,11 @@
-import { Box, Card, Flex } from '@chakra-ui/react'
+import { Box, Flex } from '@chakra-ui/react'
 import { Outlet } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
-import SidebarList from './components/sidebarItems/SidebarList'
-import { useEffect, useState } from 'react'
-import { useAuth } from '../../hooks/AuthContext'
 import AdvertisementModal from '../../components/modals/AdvertisementModal'
-import { FormGuardProvider } from '../../hooks/FormGuardContext'
+import { useAuth } from '../../hooks/AuthContext'
+import SidebarList from './components/sidebarItems/SidebarList'
 
 const HomePage: React.FC = () => {
   // 取得登入結果
@@ -38,16 +37,16 @@ const HomePage: React.FC = () => {
 
           {/* main content */}
           <Box flex={1} p={4} alignItems={'center'} justifyContent={'center'}>
-            <Card
+            <Box
               padding={'1.5rem'}
               className="custom-scrollbar"
-              sx={{
-                '--scrollbar-max-height': 'calc(100vh - 160px)',
-              }} // 動態設置 CSS 變數
+              // sx={{
+              //   '--scrollbar-max-height': 'calc(100vh - 160px)',
+              // }} // 動態設置 CSS 變數 TODO: not work
               minHeight={'80vh'}
             >
               <Outlet />
-            </Card>
+            </Box>
           </Box>
         </Flex>
 

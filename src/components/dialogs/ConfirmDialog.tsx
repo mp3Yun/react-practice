@@ -1,12 +1,12 @@
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogCloseButton,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Button,
+  Dialog,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
 } from '@chakra-ui/react'
 import React, { PropsWithChildren } from 'react'
 
@@ -33,37 +33,28 @@ const ConfirmDialog: React.FC<Props> = (props) => {
   const cancelRef = React.useRef<HTMLButtonElement | null>(null)
   return (
     <>
-      <AlertDialog
-        motionPreset="slideInBottom"
-        leastDestructiveRef={cancelRef}
-        onClose={onClose}
-        isOpen={isOpen}
-        isCentered
+      <DialogRoot
+        open={isOpen}
+        onOpenChange={onClose}
+        motionPreset="slide-in-bottom"
       >
-        <AlertDialogOverlay />
-
-        <AlertDialogContent>
-          <AlertDialogHeader>{confirmTitle}</AlertDialogHeader>
-          <AlertDialogCloseButton />
-          <AlertDialogBody>
+        <DialogContent>
+          <DialogHeader>{confirmTitle}</DialogHeader>
+          <DialogCloseTrigger />
+          <DialogBody>
             {children}
             {confirmMessage}
-          </AlertDialogBody>
-          <AlertDialogFooter>
-            <Button variant={'primary'} onClick={onConfirm}>
+          </DialogBody>
+          <DialogFooter>
+            <Button variant="solid" onClick={onConfirm}>
               {confirmText || '確認'}
             </Button>
-            <Button
-              variant={'secondary'}
-              ref={cancelRef}
-              ml={3}
-              onClick={onClose}
-            >
+            <Button variant="solid" ref={cancelRef} ml={3} onClick={onClose}>
               {cancelText || '取消'}
             </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          </DialogFooter>
+        </DialogContent>
+      </DialogRoot>
     </>
   )
 }
