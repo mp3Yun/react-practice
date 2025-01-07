@@ -6,8 +6,13 @@ import {
   AccordionPanel,
   Box,
 } from '@chakra-ui/react'
-import { Link, useRouter } from '@tanstack/react-router'
-import React from 'react'
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useRouter,
+} from '@tanstack/react-router'
+import React, { useState } from 'react'
 
 type FormattedRoute = {
   id?: number
@@ -69,6 +74,9 @@ const SidebarList: React.FC = () => {
   const menu =
     otherModule && otherModule?.length > 0 ? [home, ...otherModule] : [home]
 
+  // 保存展開項目大項-預設為全部收合
+  const [expandedItems, setExpandedItems] = useState<number[]>([-1])
+
   // 渲染子選單
   const renderChildren = (children: FormattedRoute[]) => {
     // 展開狀態管理
@@ -88,12 +96,27 @@ const SidebarList: React.FC = () => {
   }
 
   return (
-    <Accordion bg={'gray.50'} defaultIndex={[-1]} allowMultiple flexDir={'row'}>
+    <Accordion
+      bg={'gray.50'}
+      defaultIndex={expandedItems}
+      allowMultiple
+      flexDir={'row'}
+    >
       {menu.map((item, index) => (
         <AccordionItem key={index}>
           <h2>
             <Link to={item.path}>
-              <AccordionButton>
+              <AccordionButton
+                onClick={() => {
+                  if (item.hasChildren) {
+                    if (expandedItems.includes(index)) {
+                      setExpandedItems(expandedItems.filter((i) => i !== index))
+                    } else {
+                      setExpandedItems([...expandedItems, index])
+                    }
+                  }
+                }}
+              >
                 <Box as="span" flex="1" textAlign="left">
                   {item.name}
                 </Box>

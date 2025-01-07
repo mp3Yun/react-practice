@@ -1,7 +1,7 @@
 import { Box, Input, Text } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import { FormGuardProvider } from '../../hooks/FormGuardContext'
-import { Outlet, useRouter } from '@tanstack/react-router'
+import { Outlet, useLocation, useRouter } from '@tanstack/react-router'
 import NestedComponent from '../../components/NestedComponent'
 import { useEffect, useState } from 'react'
 
@@ -21,29 +21,16 @@ const FormPage: React.FC = () => {
   console.log(watch('example')) // you can watch individual input by pass the name of the input
   // 查看錯誤訊息
   // console.log('99-errors', errors)
+  const location = useLocation()
 
-  const [isSubPage, setIsSubPage] = useState(false)
-
-  // 取得路由
-  const router = useRouter()
-
-  useEffect(() => {
-    const unsubscribe = router.subscribe('onBeforeNavigate', () => {
-      if (router.state.location.pathname === '/home/form') {
-        setIsSubPage(false)
-      } else {
-        setIsSubPage(true)
-      }
-    })
-
-    return () => {
-      unsubscribe() // 清除訂閱
-    }
-  }, [router])
+  // 動態判斷當前頁面是否為子頁面
+  const isCurrentPathSubPage =
+    location.pathname.startsWith('/home/form') &&
+    location.pathname !== '/home/form'
 
   return (
     <NestedComponent title="表單處理" isOpen={true}>
-      {!isSubPage ? (
+      {!isCurrentPathSubPage ? (
         <form
           onSubmit={handleSubmit((data) => {
             alert(JSON.stringify(data))
