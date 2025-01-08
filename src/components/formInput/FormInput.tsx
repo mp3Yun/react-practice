@@ -28,7 +28,7 @@ const FormInput = <TFieldValues extends FieldValues>({
   control,
   rules,
   inputProps,
-  // onChange,
+  onChange,
   onFocus,
   onKeyDown,
   onBlur,
@@ -37,6 +37,14 @@ const FormInput = <TFieldValues extends FieldValues>({
     field,
     fieldState: { error },
   } = useController({ name, control, rules })
+
+  // 如果有自定義的 onChange，則結合 react-hook-form 的 field.onChange
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e) // 執行自定義的 onChange 邏輯
+    }
+    field.onChange(e) // 保證 react-hook-form 的狀態更新
+  }
   return (
     <Box my={2}>
       <Text>
@@ -46,7 +54,7 @@ const FormInput = <TFieldValues extends FieldValues>({
       <Input
         {...inputProps}
         {...field}
-        // onChange={onChange}
+        onChange={handleOnChange} // 使用自定義的 onChange 處理
         onFocus={onFocus}
         onKeyDown={onKeyDown}
         onBlur={onBlur}

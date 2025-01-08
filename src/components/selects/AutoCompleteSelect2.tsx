@@ -1,7 +1,7 @@
-import { Box, Button, Input, List, Text } from '@chakra-ui/react'
+import { Box, Button, List, Text } from '@chakra-ui/react'
 import { useState } from 'react'
+import { FieldValues } from 'react-hook-form'
 import FormInput, { FormInputProps } from '../formInput/FormInput'
-import { FieldValues, Form } from 'react-hook-form'
 
 interface Props<
   T extends { value: string; label: string },
@@ -23,6 +23,7 @@ const AutoCompleteSelect = <
   const [isFocused, setIsFocused] = useState(false)
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('99-handleSearch:', e.target.value)
     setQueryKeyword(e.target.value)
     const filteredOptions = options.filter((option) =>
       option.label.toLowerCase().includes(e.target.value.toLowerCase())
@@ -31,12 +32,19 @@ const AutoCompleteSelect = <
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    console.log('99-handleKeyDown:', e.key)
+    if (e.key === 'Enter' && showOptions.length > 0) {
       setIsFocused(false)
     } else if (e.key === 'Delete' || e.key === 'Backspace') {
       setQueryKeyword('')
       setShowOptions(options)
     }
+  }
+
+  const handleOptionSelect = (option: T) => {
+    console.log('99-handleOptionSelect:', option)
+    setQueryKeyword(option.label)
+    setIsFocused(false)
   }
 
   const inputProps = {
@@ -55,10 +63,10 @@ const AutoCompleteSelect = <
         onChange={handleSearch}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {
-          console.log('blur')
+          console.log('onBlur')
           setTimeout(() => {
             setIsFocused(false)
-          }, 100)
+          }, 200)
         }}
       ></FormInput>
       {showOptions.length > 0 && isFocused && (
@@ -75,10 +83,7 @@ const AutoCompleteSelect = <
                 color="gray.600"
                 variant="outline"
                 width="100%"
-                onClick={() => {
-                  setQueryKeyword(option.label)
-                  setIsFocused(false)
-                }}
+                onClick={() => handleOptionSelect(option)}
               >
                 <Box flex="1" justifyItems="left">
                   <Text>{option.label}</Text>
