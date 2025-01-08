@@ -69,7 +69,6 @@ const Favorites: React.FC = () => {
             }}
           >
             {createIcon(!isEditing ? ChakraIcons.Edit : ChakraIcons.Check, {
-              boxSize: 6,
               color: 'oceanGreenBlue.500',
             })}
           </button>

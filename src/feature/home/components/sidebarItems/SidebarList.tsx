@@ -5,6 +5,8 @@ import {
   AccordionRoot,
   Box,
 } from '@chakra-ui/react'
+import { SlArrowDown } from 'react-icons/sl'
+import { SlArrowUp } from 'react-icons/sl'
 import { Link, useRouter } from '@tanstack/react-router'
 import React, { useState } from 'react'
 
@@ -75,7 +77,7 @@ const SidebarList: React.FC = () => {
   const renderChildren = (children: FormattedRoute[]) => {
     // 展開狀態管理
     return children.map((child, index) => (
-      <AccordionItem key={index} value={child.path}>
+      <AccordionItem ml="8" key={index} value={child.path}>
         <h3>
           <Link to={child.path}>
             <AccordionItemTrigger>
@@ -92,31 +94,29 @@ const SidebarList: React.FC = () => {
   return (
     <AccordionRoot
       bg={'gray.50'}
-      value={expandedItems}
+      defaultValue={expandedItems}
       multiple
       flexDir={'row'}
+      onValueChange={(expandedItems) => {
+        setExpandedItems(expandedItems.value)
+      }}
     >
       {menu.map((item, index) => (
-        <AccordionItem key={index} value={item.path}>
+        <AccordionItem key={index} value={item.path} ml="4">
           <h2>
             <Link to={item.path}>
-              <AccordionItemTrigger
-                onClick={() => {
-                  if (item.hasChildren) {
-                    if (expandedItems.includes(index.toString())) {
-                      setExpandedItems(
-                        expandedItems.filter((i) => +i !== index)
-                      )
-                    } else {
-                      setExpandedItems([...expandedItems, index.toString()])
-                    }
-                  }
-                }}
-              >
+              <AccordionItemTrigger>
                 <Box as="span" flex="1" textAlign="left">
                   {item.name}
                 </Box>
-                {/* {item.hasChildren && <AccordionIcon />} TODO: 待確認 */}
+                {item.hasChildren &&
+                  (expandedItems.some((i) => {
+                    return item.path.includes(i)
+                  }) ? (
+                    <SlArrowUp />
+                  ) : (
+                    <SlArrowDown />
+                  ))}
               </AccordionItemTrigger>
             </Link>
           </h2>

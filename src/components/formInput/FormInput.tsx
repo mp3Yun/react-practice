@@ -28,7 +28,7 @@ const FormInput = <TFieldValues extends FieldValues>({
   control,
   rules,
   inputProps,
-  onChange,
+  // onChange,
   onFocus,
   onKeyDown,
   onBlur,
@@ -46,7 +46,7 @@ const FormInput = <TFieldValues extends FieldValues>({
       <Input
         {...inputProps}
         {...field}
-        onChange={onChange}
+        // onChange={onChange}
         onFocus={onFocus}
         onKeyDown={onKeyDown}
         onBlur={onBlur}

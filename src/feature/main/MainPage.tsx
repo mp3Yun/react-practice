@@ -4,7 +4,7 @@ import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
 import Favorites from './components/Favorites'
 
 const MainPage: React.FC = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
   // 我的模擬資料
   // const expandableTextData = [...expandableTextDataSet]
   return (
@@ -51,7 +51,7 @@ const MainPage: React.FC = () => {
       <Box>
         <FixedButton onClick={onOpen} />
         <ConfirmDialog
-          isOpen={isOpen}
+          isOpen={open}
           onConfirm={onClose}
           onClose={onClose}
           confirmTitle={'新增一筆 note'}

@@ -35,9 +35,7 @@ const NestedComponent = ({
         </Box>
         <Box alignContent="center" fontSize={'md'}>
           <button onClick={() => setIsExpanded(!isExpanded)}>
-            {createIcon(isExpanded ? ChakraIcons.MinusIcon : ChakraIcons.Add, {
-              boxSize: 6,
-            })}
+            {createIcon(isExpanded ? ChakraIcons.MinusIcon : ChakraIcons.Add)}
           </button>
         </Box>
       </Flex>

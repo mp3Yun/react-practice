@@ -11,7 +11,15 @@ interface FormValues {
   }
 }
 const FormCustomInputPage: React.FC = () => {
-  const { handleSubmit, control } = useForm<FormValues>()
+  const { handleSubmit, control } = useForm<FormValues>({
+    defaultValues: {
+      userAccount: '',
+      pwd: '',
+      roleInfo: {
+        role: '',
+      },
+    },
+  })
   const onSubmit = (data: FormValues) => {
     console.log(data)
   }

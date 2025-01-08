@@ -127,7 +127,11 @@ const SampleFormUseFieldArray: React.FC = () => {
                 </Box>
                 <Box flex="2" ml="4" className="show-border">
                   <Flex direction="row">
-                    <Tabs.Root key="line" defaultValue="members" variant="line">
+                    <Tabs.Root
+                      key="line"
+                      defaultValue={fields[0]?.id}
+                      variant="line"
+                    >
                       <Tabs.List>
                         {fields.map((field, index) => (
                           <Tabs.Trigger value={field.id}>

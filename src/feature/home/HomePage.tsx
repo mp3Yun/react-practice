@@ -42,7 +42,8 @@ const HomePage: React.FC = () => {
               className="custom-scrollbar"
               // sx={{
               //   '--scrollbar-max-height': 'calc(100vh - 160px)',
-              // }} // 動態設置 CSS 變數 TODO: not work
+              // }} // 動態設置 CSS 變數 TODO: not work 傳變數不生效
+              maxHeight={'calc(100vh - 160px)'}
               minHeight={'80vh'}
             >
               <Outlet />
@@ -52,7 +53,7 @@ const HomePage: React.FC = () => {
 
         <Footer />
       </Flex>
-      {/* 顯示廣告 Modal  [方法一] */}
+      {/* 顯示廣告 Modal  [方法一]  TODO: 廣告沒顯示，有問題 */}
       <AdvertisementModal
         isOpen={isModalOpen}
         onClose={() => setMoalOpen(false)}

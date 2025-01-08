@@ -23,12 +23,11 @@ const CircleButton: React.FC<Props> = ({
       width={'32px'}
       height={'32px'}
       padding="0"
-      variant={'gray'}
+      variant={'outline'}
       {...props}
       onClick={onClick}
     >
       {createIcon(icon, {
-        boxSize: boxSize || 5,
         color: colorScheme,
       })}
     </Button>

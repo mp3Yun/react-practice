@@ -1,18 +1,19 @@
 import {
-  Box,
+  DialogBackdrop,
   DialogBody,
   DialogCloseTrigger,
   DialogContent,
   DialogHeader,
   DialogRoot,
+  DialogTrigger,
 } from '@chakra-ui/react'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import { Swiper as SwiperClass } from 'swiper' // 引入 Swiper 類型
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import 'swiper/css' // 引入 Swiper 的 CSS
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import image1 from '../../assets/images/image1.webp'
 import image2 from '../../assets/images/image2.webp'
-import 'swiper/css' // 引入 Swiper 的 CSS
 
 interface Props {
   isOpen: boolean
@@ -21,22 +22,24 @@ interface Props {
 }
 const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
   const img = images && images?.length > 0 ? images : [image1, image2]
-
+  console.error('99-AdvertisementModal-isOpen:', isOpen)
   const swiperRef = useRef<SwiperClass | null>(null) // 這邊的 instance 很重要
 
   return (
     <>
-      <DialogRoot open={isOpen} onOpenChange={onClose}>
-        <Box
-          as={DialogContent}
+      <DialogRoot
+        open={isOpen}
+        onOpenChange={onClose}
+        placement="center"
+        motionPreset="slide-in-bottom"
+        size="cover"
+      >
+        <DialogBackdrop />
+        <DialogTrigger />
+        <DialogContent
           maxWidth="800px" // 設定最大寬度
           width="90%" // 百分比寬度
           height="500px" // 設定高度
-          // sx={{
-          //   maxWidth: '800px', // 設定最大寬度
-          //   width: '90%', // 百分比寬度
-          //   height: '500px', // 設定高度
-          // }}
         >
           <DialogHeader>廣告</DialogHeader>
           <DialogCloseTrigger></DialogCloseTrigger>
@@ -89,7 +92,7 @@ const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
               ))}
             </Swiper>
           </DialogBody>
-        </Box>
+        </DialogContent>
       </DialogRoot>
     </>
   )
