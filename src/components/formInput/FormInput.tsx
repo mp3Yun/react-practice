@@ -16,6 +16,10 @@ export interface FormInputProps<TFieldValues extends FieldValues>
   label?: string
   iconInfo?: IconInfoProps
   inputProps?: InputProps
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 const FormInput = <TFieldValues extends FieldValues>({
   isRequired,
@@ -24,6 +28,10 @@ const FormInput = <TFieldValues extends FieldValues>({
   control,
   rules,
   inputProps,
+  onChange,
+  onFocus,
+  onKeyDown,
+  onBlur,
 }: FormInputProps<TFieldValues>) => {
   const {
     field,
@@ -35,7 +43,14 @@ const FormInput = <TFieldValues extends FieldValues>({
         {isRequired && <span style={{ color: 'red' }}>*</span>}
         {label}
       </Text>
-      <Input {...inputProps} {...field}></Input>
+      <Input
+        {...inputProps}
+        {...field}
+        onChange={onChange}
+        onFocus={onFocus}
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
+      ></Input>
       <ErrorMessage message={error?.message} />
     </Box>
   )
