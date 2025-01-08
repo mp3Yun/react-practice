@@ -16,6 +16,7 @@ export interface FormInputProps<TFieldValues extends FieldValues>
   label?: string
   iconInfo?: IconInfoProps
   inputProps?: InputProps
+  value?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   onFocus?: (e: React.FocusEvent<HTMLInputElement>) => void
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void
@@ -28,6 +29,7 @@ const FormInput = <TFieldValues extends FieldValues>({
   control,
   rules,
   inputProps,
+  value,
   onChange,
   onFocus,
   onKeyDown,
@@ -54,6 +56,7 @@ const FormInput = <TFieldValues extends FieldValues>({
       <Input
         {...inputProps}
         {...field}
+        value={value ?? field.value}
         onChange={handleOnChange} // 使用自定義的 onChange 處理
         onFocus={onFocus}
         onKeyDown={onKeyDown}

@@ -23,7 +23,6 @@ const AutoCompleteSelect = <
   const [isFocused, setIsFocused] = useState(false)
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('99-handleSearch:', e.target.value)
     setQueryKeyword(e.target.value)
     const filteredOptions = options.filter((option) =>
       option.label.toLowerCase().includes(e.target.value.toLowerCase())
@@ -32,7 +31,6 @@ const AutoCompleteSelect = <
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    console.log('99-handleKeyDown:', e.key)
     if (e.key === 'Enter' && showOptions.length > 0) {
       setIsFocused(false)
     } else if (e.key === 'Delete' || e.key === 'Backspace') {
@@ -42,7 +40,6 @@ const AutoCompleteSelect = <
   }
 
   const handleOptionSelect = (option: T) => {
-    console.log('99-handleOptionSelect:', option)
     setQueryKeyword(option.label)
     setIsFocused(false)
   }
@@ -59,11 +56,11 @@ const AutoCompleteSelect = <
     <Box width="20rem" height="5rem">
       <FormInput
         {...inputProps}
+        value={queryKeyword}
         onKeyDown={handleKeyDown}
         onChange={handleSearch}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {
-          console.log('onBlur')
           setTimeout(() => {
             setIsFocused(false)
           }, 200)
