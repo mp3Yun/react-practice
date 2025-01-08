@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 import { Center, Flex, Image } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import NestedComponent from '../../components/NestedComponent'
@@ -25,14 +25,13 @@ const CarouselPage: React.FC = () => {
       <NestedComponent title="Carousel page">
         <Flex mt={4} direction="row" height="65vh" width="75vw" align="center">
           <Center flex="10%" height="100%">
-            <ChevronLeftIcon
-              boxSize={8}
+            <FaChevronLeft
               onClick={() =>
                 setCurrentIndex(
                   (prev) => (prev - 1 + imageList.length) % imageList.length
                 )
               }
-            ></ChevronLeftIcon>
+            ></FaChevronLeft>
           </Center>
           <Center flex="80%" height="100%" width="100%" justifyContent="center">
             <Image
@@ -42,10 +41,7 @@ const CarouselPage: React.FC = () => {
             />
           </Center>
           <Center flex="10%" height="100%">
-            <ChevronRightIcon
-              boxSize={8}
-              onClick={goToNextImage}
-            ></ChevronRightIcon>
+            <FaChevronRight onClick={goToNextImage}></FaChevronRight>
           </Center>
         </Flex>
       </NestedComponent>

@@ -1,6 +1,6 @@
-import { ArrowDownIcon, ArrowUpIcon } from '@chakra-ui/icons'
-import { Table, TableCaption, IconButton, Box } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { Box, IconButton, Table, TableCaption } from '@chakra-ui/react'
+import { useState } from 'react'
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import { sortByCustomCondition, SortTerm } from '../../utils/array-utils'
 
 type SortOrder = 'ASC' | 'DESC' | 'CANCEL'
@@ -65,7 +65,7 @@ const TablePage: React.FC = () => {
   const renderSortIcon = (field: string) => {
     const sort = sortState.find((s) => s.field === field)
     if (!sort || sort.order === 'CANCEL') return undefined
-    return sort.order === 'ASC' ? <ArrowUpIcon /> : <ArrowDownIcon />
+    return sort.order === 'ASC' ? <FaArrowUp /> : <FaArrowDown />
   }
 
   return (

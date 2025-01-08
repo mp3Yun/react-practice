@@ -1,11 +1,8 @@
-import {
-  AddIcon,
-  CheckIcon,
-  DeleteIcon,
-  EditIcon,
-  InfoIcon,
-  MinusIcon,
-} from '@chakra-ui/icons'
+import { GrAdd } from 'react-icons/gr'
+import { FaMinus, FaEdit } from 'react-icons/fa'
+import { MdDelete } from 'react-icons/md'
+import { CiCircleInfo } from 'react-icons/ci'
+import { FaCheck } from 'react-icons/fa'
 import React from 'react'
 import ReactIcon from '../assets/react.svg'
 
@@ -25,12 +22,12 @@ export enum SvgIcons {
 export type AllIcons = ChakraIcons | SvgIcons
 // 定義 iconMap
 const iconMap: Record<AllIcons, React.ElementType | string> = {
-  [ChakraIcons.Add]: AddIcon,
-  [ChakraIcons.MinusIcon]: MinusIcon,
-  [ChakraIcons.Delete]: DeleteIcon,
-  [ChakraIcons.Edit]: EditIcon,
-  [ChakraIcons.Info]: InfoIcon,
-  [ChakraIcons.Check]: CheckIcon,
+  [ChakraIcons.Add]: GrAdd,
+  [ChakraIcons.MinusIcon]: FaMinus,
+  [ChakraIcons.Delete]: MdDelete,
+  [ChakraIcons.Edit]: FaEdit,
+  [ChakraIcons.Info]: CiCircleInfo,
+  [ChakraIcons.Check]: FaCheck,
   [SvgIcons.React]: ReactIcon,
 }
 
@@ -38,7 +35,7 @@ const iconMap: Record<AllIcons, React.ElementType | string> = {
 export type IconTypes = keyof typeof iconMap
 export function createIcon<T extends IconTypes>(
   iconType: T,
-  props?: React.ComponentProps<typeof AddIcon> & {
+  props?: React.ComponentProps<typeof GrAdd> & {
     // 繼承 Chakra Icon 的屬性
     imgProps?: React.ComponentProps<'img'>
   }

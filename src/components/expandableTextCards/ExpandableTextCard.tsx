@@ -1,4 +1,4 @@
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa'
 import {
   Box,
   BoxProps,
@@ -66,9 +66,9 @@ const ExpandableTextCard: React.FC<ExpandableTextProps> = ({
         {lines.length > maxLines && (
           <Box textAlign={'right'}>
             {isExpanded ? (
-              <ChevronUpIcon boxSize={8} onClick={handleExpandClick} />
+              <FaChevronDown onClick={handleExpandClick} />
             ) : (
-              <ChevronDownIcon boxSize={8} onClick={handleExpandClick} />
+              <FaChevronUp onClick={handleExpandClick} />
             )}
           </Box>
         )}
