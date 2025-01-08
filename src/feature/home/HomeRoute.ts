@@ -3,16 +3,13 @@ import { RoutePathEnum, routePathMaps } from '../../dto/route-paths'
 import { Route } from '../../routes/__root'
 import { buttonRouteTree } from '../button/buttonRoute'
 import { carouselRouteTree } from '../carousel/carouselRoute'
+import { chartRoute } from '../chart/chartRoute'
+import { formTreeRoute } from '../form/formRoute'
 import { mainRoute } from '../main/mainRoute'
+import { tableRoute } from '../table/tableRoute'
 import { useCaseRouteTree } from '../use-case/useCaseRoute'
 import { videoRoute } from '../video/videoRoute'
-import {
-  formCustomInputRoute,
-  formRoute,
-  formTreeRoute,
-} from '../form/formRoute'
-import { chartRoute } from '../chart/chartRoute'
-import { tableRoute } from '../table/tableRoute'
+import { settingRoute } from '../setting/settingRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -39,4 +36,6 @@ export const homeRouteTree = homeRoute.addChildren([
   chartRoute,
   // table module
   tableRoute,
+  // setting module
+  settingRoute,
 ])

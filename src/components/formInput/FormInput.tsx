@@ -1,11 +1,6 @@
 import { Box, Input, InputProps, Text } from '@chakra-ui/react'
+import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 import { AllIcons } from '../../utils/icons-utils'
-import {
-  FieldPath,
-  FieldValues,
-  useController,
-  UseControllerProps,
-} from 'react-hook-form'
 import ErrorMessage from './ErrorMessage'
 
 interface IconInfoProps {
