@@ -13,6 +13,7 @@ import SampleFormUseFieldArray from '../feature/form/FormUseFieldArraySamplePage
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
+import SettingPage from '../feature/setting/SettingPage'
 import TablePage from '../feature/table/TablePage'
 import UseRefCasePage from '../feature/use-case/useRefCasePage'
 import VideoPage from '../feature/video/VideoPage'
@@ -39,6 +40,7 @@ export enum RoutePathEnum {
   FormSteps3 = '/home/form/steps3',
   Chart = '/home/chart',
   Table = '/home/table',
+  Setting = '/home/setting',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -102,5 +104,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   // table module
   [RoutePathEnum.Table]: {
     component: TablePage,
+  },
+  // setting module
+  [RoutePathEnum.Setting]: {
+    component: SettingPage,
   },
 }
