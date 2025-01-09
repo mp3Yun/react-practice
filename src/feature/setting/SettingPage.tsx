@@ -1,9 +1,8 @@
 import { Box, Text } from '@chakra-ui/react'
-import AutoCompleteSelect from '../../components/selects/AutoCompleteSelect'
-import AutoCompleteSelect2 from '../../components/selects/AutoCompleteSelect2'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useMemo, useState } from 'react'
+import AutoCompleteSelect from '../../components/selects/AutoCompleteSelect'
+import AutoCompleteSelect2 from '../../components/selects/AutoCompleteSelect2'
 
 interface FormValues {
   language: string

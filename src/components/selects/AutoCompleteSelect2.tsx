@@ -1,8 +1,8 @@
 import { Box, Button, List, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
-import FormInput, { FormInputProps } from '../formInput/FormInput'
 import { translate } from '../../utils/translator'
+import FormInput, { FormInputProps } from '../formInput/FormInput'
 
 interface Props<
   T extends { value: string; label: string },
@@ -43,9 +43,9 @@ const AutoCompleteSelect = <
   }
 
   const handleOptionSelect = (option: T) => {
-    setQueryKeyword(translate(option.label))
     setIsFocused(false)
     if (onChange) onChange(option.value)
+    setQueryKeyword(translate(option.label))
   }
 
   const inputProps = {
