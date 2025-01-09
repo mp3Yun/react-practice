@@ -45,6 +45,10 @@ const AutoCompleteSelect = <
   const handleOptionSelect = (option: T) => {
     setIsFocused(false)
     if (onChange) onChange(option.value)
+    /**
+     *  onChange 依賴於 queryKeyword，那麼這種寫法確保了 setQueryKeyword 在 onChange 之後執行。
+     * 這樣可以保證 onChange 執行時不會依賴舊的狀態，並且可以使用 queryKeyword 的最新值來執行相關邏輯。
+     */
     setQueryKeyword(translate(option.label))
   }
 
