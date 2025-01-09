@@ -2,27 +2,43 @@ import { Box, Text } from '@chakra-ui/react'
 import AutoCompleteSelect from '../../components/selects/AutoCompleteSelect'
 import AutoCompleteSelect2 from '../../components/selects/AutoCompleteSelect2'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
+import { useMemo, useState } from 'react'
 
 interface FormValues {
   language: string
 }
 
+interface FormValues2 {
+  language: string
+}
+
 const SettingPage: React.FC = () => {
+  const { t, i18n } = useTranslation()
   const { control, handleSubmit } = useForm<FormValues>({
     defaultValues: {
       language: '', // 預設值為空
     },
   })
 
+  const { control: control2 } = useForm<FormValues2>({
+    defaultValues: {
+      language: '', // 預設值為空
+    },
+  })
+
   const options = [
-    { value: '1', label: 'Option 1 December 25th' },
-    { value: '2', label: 'Option 2 Loser' },
-    { value: '3', label: 'Option 3 Fate' },
-    { value: '4', label: 'Option 4 One Night' },
-    { value: '5', label: 'Option 5 The Race' },
+    { value: 'en', label: 'english' },
+    { value: 'zh-TW', label: 'traditionalChinese' },
+    { value: 'zh-CN', label: 'simplifiedChinese' },
+    { value: 'ja', label: 'japanese' },
   ]
+
+  const switchLanguage = (lang: string) => {
+    i18n.changeLanguage(lang)
+  }
   return (
-    <Box>
+    <Box width="90%" h="90vh" bg="gray.100" bgColor="white">
       <Text>Setting Page</Text>
       <Box height="fit-content">
         <Text> AutoCompleteSelect test 1</Text>
@@ -38,6 +54,24 @@ const SettingPage: React.FC = () => {
               control,
               name: 'language',
               inputProps: { placeholder: 'Search with react-hook-form' },
+            }}
+          ></AutoCompleteSelect2>
+        </form>
+      </Box>
+
+      <Box className="show-border" padding={4}>
+        <Text fontSize="xl">{t('settingLanguage')}</Text>
+        <form>
+          <AutoCompleteSelect2<(typeof options)[0], FormValues2>
+            options={options}
+            formInputProps={{
+              control: control2,
+              name: 'language',
+              inputProps: { placeholder: t('plzChooseLanguage') },
+            }}
+            onChange={(value) => {
+              // 手動更新選擇的值並觸發表單提交
+              switchLanguage(value || 'zh-TW')
             }}
           ></AutoCompleteSelect2>
         </form>

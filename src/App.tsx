@@ -5,6 +5,7 @@ import { AuthProvider } from './hooks/AuthContext.tsx'
 import { ParagraphStyleProvider } from './hooks/useParagraphStyle.tsx'
 import { router } from './routes/routes'
 import system from './theme.ts'
+import './i18n' // 引入 i18n 設定檔
 
 function App() {
   return (

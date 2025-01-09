@@ -42,6 +42,7 @@ const HomePage: React.FC = () => {
               className="custom-scrollbar"
               css={{ '--scrollbar-max-height': 'calc(100vh - 160px)' }}
               maxHeight="var(--scrollbar-max-height)"
+              bg="white"
             >
               <Outlet />
             </Box>

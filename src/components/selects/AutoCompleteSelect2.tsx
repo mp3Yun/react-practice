@@ -2,6 +2,7 @@ import { Box, Button, List, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
 import FormInput, { FormInputProps } from '../formInput/FormInput'
+import { translate } from '../../utils/translator'
 
 interface Props<
   T extends { value: string; label: string },
@@ -9,6 +10,7 @@ interface Props<
 > {
   options: T[]
   formInputProps: FormInputProps<TFieldValues>
+  onChange?: (value: string) => void
 }
 
 const AutoCompleteSelect = <
@@ -17,6 +19,7 @@ const AutoCompleteSelect = <
 >({
   options,
   formInputProps,
+  onChange,
 }: Props<T, TFieldValues>) => {
   const [queryKeyword, setQueryKeyword] = useState('')
   const [showOptions, setShowOptions] = useState<T[]>(options)
@@ -40,8 +43,9 @@ const AutoCompleteSelect = <
   }
 
   const handleOptionSelect = (option: T) => {
-    setQueryKeyword(option.label)
+    setQueryKeyword(translate(option.label))
     setIsFocused(false)
+    if (onChange) onChange(option.value)
   }
 
   const inputProps = {
@@ -53,7 +57,7 @@ const AutoCompleteSelect = <
   }
 
   return (
-    <Box width="20rem" height="5rem">
+    <Box width="20rem" height="3rem" position="relative">
       <FormInput
         {...inputProps}
         value={queryKeyword}
@@ -67,9 +71,18 @@ const AutoCompleteSelect = <
         }}
       ></FormInput>
       {showOptions.length > 0 && isFocused && (
-        <>
+        <Box
+          position="absolute"
+          top="100%" // 設置下拉選單出現在輸入框下方
+          left={0}
+          right={0}
+          border="1px solid"
+          borderColor="gray.200"
+          borderRadius="md"
+          zIndex="1000" // 確保下拉選單在其他元素上層
+          bg="white" // 設置背景顏色避免被覆蓋
+        >
           <List.Root
-            mt={2}
             border="1px solid"
             borderColor="gray.200"
             borderRadius="md"
@@ -83,12 +96,12 @@ const AutoCompleteSelect = <
                 onClick={() => handleOptionSelect(option)}
               >
                 <Box flex="1" justifyItems="left">
-                  <Text>{option.label}</Text>
+                  <Text>{translate(option.label)}</Text>
                 </Box>
               </Button>
             ))}
           </List.Root>
-        </>
+        </Box>
       )}
     </Box>
   )
