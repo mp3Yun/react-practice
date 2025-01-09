@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react'
+import { Box, Flex, Portal } from '@chakra-ui/react'
 import { Outlet } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import Footer from '../../components/Footer'
@@ -40,11 +40,8 @@ const HomePage: React.FC = () => {
             <Box
               padding={'1.5rem'}
               className="custom-scrollbar"
-              // sx={{
-              //   '--scrollbar-max-height': 'calc(100vh - 160px)',
-              // }} // 動態設置 CSS 變數 TODO: not work 傳變數不生效
-              maxHeight={'calc(100vh - 160px)'}
-              minHeight={'80vh'}
+              css={{ '--scrollbar-max-height': 'calc(100vh - 160px)' }}
+              maxHeight="var(--scrollbar-max-height)"
             >
               <Outlet />
             </Box>
@@ -53,11 +50,24 @@ const HomePage: React.FC = () => {
 
         <Footer />
       </Flex>
-      {/* 顯示廣告 Modal  [方法一]  TODO: 廣告沒顯示，有問題 */}
-      <AdvertisementModal
-        isOpen={isModalOpen}
-        onClose={() => setMoalOpen(false)}
-      />
+      {/* 顯示廣告 Modal  [方法一] */}
+      {isModalOpen && (
+        <Box
+          style={{
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '100%',
+            height: '100%',
+            overflow: 'visible',
+          }}
+        >
+          <AdvertisementModal
+            isOpen={isModalOpen}
+            onClose={() => setMoalOpen(false)}
+          />
+        </Box>
+      )}
     </>
   )
 }

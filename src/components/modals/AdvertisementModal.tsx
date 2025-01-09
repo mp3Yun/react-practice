@@ -32,14 +32,15 @@ const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
         onOpenChange={onClose}
         placement="center"
         motionPreset="slide-in-bottom"
-        size="cover"
       >
-        <DialogBackdrop />
+        <DialogBackdrop zIndex="modal" />
         <DialogTrigger />
         <DialogContent
-          maxWidth="800px" // 設定最大寬度
-          width="90%" // 百分比寬度
-          height="500px" // 設定高度
+          zIndex="modal"
+          // position="relative"
+          maxWidth="800px"
+          width="100%"
+          height="500px"
         >
           <DialogHeader>廣告</DialogHeader>
           <DialogCloseTrigger></DialogCloseTrigger>
