@@ -72,6 +72,7 @@ const SettingPage: React.FC = () => {
               // 手動更新選擇的值並觸發表單提交
               switchLanguage(value || 'zh-TW')
             }}
+            isShowCheck={true}
           ></AutoCompleteSelect2>
         </form>
       </Box>

@@ -1,6 +1,15 @@
-import { Box, Button, List, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  MenuContent,
+  MenuItem,
+  MenuRoot,
+  MenuTrigger,
+  Text,
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
+import { FaCheck } from 'react-icons/fa'
 import { translate } from '../../utils/translator'
 import FormInput, { FormInputProps } from '../formInput/FormInput'
 
@@ -11,6 +20,7 @@ interface Props<
   options: T[]
   formInputProps: FormInputProps<TFieldValues>
   onChange?: (value: string) => void
+  isShowCheck?: boolean
 }
 
 const AutoCompleteSelect = <
@@ -20,6 +30,7 @@ const AutoCompleteSelect = <
   options,
   formInputProps,
   onChange,
+  isShowCheck,
 }: Props<T, TFieldValues>) => {
   const [queryKeyword, setQueryKeyword] = useState('')
   const [showOptions, setShowOptions] = useState<T[]>(options)
@@ -27,9 +38,12 @@ const AutoCompleteSelect = <
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQueryKeyword(e.target.value)
-    const filteredOptions = options.filter((option) =>
-      option.label.toLowerCase().includes(e.target.value.toLowerCase())
-    )
+    const filteredOptions = options.filter((option) => {
+      const translatedLabel = translate(option.label)
+      return translatedLabel
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase())
+    })
     setShowOptions(filteredOptions)
   }
 
@@ -62,51 +76,45 @@ const AutoCompleteSelect = <
 
   return (
     <Box width="20rem" height="3rem" position="relative">
-      <FormInput
-        {...inputProps}
-        value={queryKeyword}
-        onKeyDown={handleKeyDown}
-        onChange={handleSearch}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => {
-          setTimeout(() => {
-            setIsFocused(false)
-          }, 200)
-        }}
-      ></FormInput>
-      {showOptions.length > 0 && isFocused && (
-        <Box
-          position="absolute"
-          top="100%" // 設置下拉選單出現在輸入框下方
-          left={0}
-          right={0}
-          border="1px solid"
-          borderColor="gray.200"
-          borderRadius="md"
-          zIndex="1000" // 確保下拉選單在其他元素上層
-          bg="white" // 設置背景顏色避免被覆蓋
-        >
-          <List.Root
-            border="1px solid"
-            borderColor="gray.200"
-            borderRadius="md"
-          >
-            {showOptions.map((option) => (
-              <Button
-                key={option.value}
-                color="gray.600"
-                variant="outline"
-                width="100%"
-                onClick={() => handleOptionSelect(option)}
-              >
-                <Box flex="1" justifyItems="left">
-                  <Text>{translate(option.label)}</Text>
-                </Box>
-              </Button>
-            ))}
-          </List.Root>
-        </Box>
-      )}
+      <MenuRoot>
+        <MenuTrigger asChild>
+          <Button padding="0" variant="outline" color="gray.600" mt="2">
+            <FormInput
+              {...inputProps}
+              value={queryKeyword}
+              onKeyDown={handleKeyDown}
+              onChange={handleSearch}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => {
+                setTimeout(() => {
+                  setIsFocused(false)
+                }, 200)
+              }}
+            ></FormInput>
+          </Button>
+        </MenuTrigger>
+        <MenuContent>
+          {showOptions.map((option) => (
+            <MenuItem
+              cursor="pointer"
+              _hover={{ bg: 'primary.300' }}
+              key={option.value}
+              value={option.value}
+              justifyContent={'space-between'}
+              onClick={() => handleOptionSelect(option)}
+            >
+              <Text>{translate(option.label)}</Text>
+              <Text>
+                {isShowCheck && queryKeyword === translate(option.label) ? (
+                  <FaCheck />
+                ) : (
+                  ''
+                )}
+              </Text>
+            </MenuItem>
+          ))}
+        </MenuContent>
+      </MenuRoot>
     </Box>
   )
 }
