@@ -31,7 +31,7 @@ const MultipleSelect2 = <
   formInputProps,
   onChange,
 }: Props<T, TFieldValues>) => {
-  const { filteredOptions, selectedValues, handleSearch, handleOptionSelect } =
+  const { filteredOptions, selectedValues, handleOptionSelect } =
     useAutoComplete<T>({ options, multiple: true })
 
   const [isFocused, setIsFocused] = useState(false)
@@ -89,11 +89,7 @@ const MultipleSelect2 = <
           </Box>
         )}
         {selectedValues.length === 0 && (
-          <Input
-            {...inputprops}
-            variant="flushed"
-            onChange={handleSearch}
-          ></Input>
+          <Input {...inputprops} variant="flushed"></Input>
         )}
       </Field>
 
