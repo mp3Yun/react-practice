@@ -47,11 +47,14 @@ const useAutoComplete = <T extends BaseOption>({
     } else {
       setSelectedValues([option.value])
     }
+    setQueryKeyword(translate(option.label)) // 同步輸入框內容
   }
 
   // 清空選擇
   const clearSelection = () => {
     setSelectedValues([])
+    setQueryKeyword('')
+    setFilteredOptions(options)
   }
 
   return {

@@ -12,11 +12,9 @@ import { FieldValues } from 'react-hook-form'
 import { FaCheck } from 'react-icons/fa'
 import { translate } from '../../utils/translator'
 import FormInput, { FormInputProps } from '../formInput/FormInput'
+import useAutoComplete, { BaseOption } from '../../hooks/UseAutoComplete'
 
-interface Props<
-  T extends { value: string; label: string },
-  TFieldValues extends FieldValues,
-> {
+interface Props<T extends BaseOption, TFieldValues extends FieldValues> {
   options: T[]
   formInputProps: FormInputProps<TFieldValues>
   onChange?: (value: string) => void
@@ -24,7 +22,7 @@ interface Props<
 }
 
 const AutoCompleteSelect = <
-  T extends { value: string; label: string },
+  T extends BaseOption,
   TFieldValues extends FieldValues,
 >({
   options,
@@ -32,38 +30,31 @@ const AutoCompleteSelect = <
   onChange,
   isShowCheck,
 }: Props<T, TFieldValues>) => {
-  const [queryKeyword, setQueryKeyword] = useState('')
-  const [showOptions, setShowOptions] = useState<T[]>(options)
+  const {
+    queryKeyword,
+    filteredOptions,
+    handleSearch,
+    handleOptionSelect,
+    clearSelection,
+  } = useAutoComplete<T>({ options, multiple: false })
   const [isFocused, setIsFocused] = useState(false)
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setQueryKeyword(e.target.value)
-    const filteredOptions = options.filter((option) => {
-      const translatedLabel = translate(option.label)
-      return translatedLabel
-        .toLowerCase()
-        .includes(e.target.value.toLowerCase())
-    })
-    setShowOptions(filteredOptions)
-  }
-
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && showOptions.length > 0) {
+    if (e.key === 'Enter' && filteredOptions.length > 0) {
       setIsFocused(false)
     } else if (e.key === 'Delete' || e.key === 'Backspace') {
-      setQueryKeyword('')
-      setShowOptions(options)
+      clearSelection()
     }
   }
 
-  const handleOptionSelect = (option: T) => {
+  const handleOptionSelected = (option: T) => {
     setIsFocused(false)
     if (onChange) onChange(option.value)
     /**
      *  onChange 依賴於 queryKeyword，那麼這種寫法確保了 setQueryKeyword 在 onChange 之後執行。
      * 這樣可以保證 onChange 執行時不會依賴舊的狀態，並且可以使用 queryKeyword 的最新值來執行相關邏輯。
      */
-    setQueryKeyword(translate(option.label))
+    handleOptionSelect(option)
   }
 
   const inputProps = {
@@ -94,14 +85,14 @@ const AutoCompleteSelect = <
           </Button>
         </MenuTrigger>
         <MenuContent>
-          {showOptions.map((option) => (
+          {filteredOptions.map((option) => (
             <MenuItem
               cursor="pointer"
               _hover={{ bg: 'primary.300' }}
               key={option.value}
               value={option.value}
               justifyContent={'space-between'}
-              onClick={() => handleOptionSelect(option)}
+              onClick={() => handleOptionSelected(option)}
             >
               <Text>{translate(option.label)}</Text>
               <Text>
