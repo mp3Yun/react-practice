@@ -7,12 +7,11 @@ import {
   MenuTrigger,
   Text,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { FieldValues } from 'react-hook-form'
 import { FaCheck } from 'react-icons/fa'
 import { translate } from '../../utils/translator'
 import FormInput, { FormInputProps } from '../formInput/FormInput'
-import { useTranslation } from 'react-i18next'
 
 interface Props<
   T extends { value: string; label: string },
@@ -36,7 +35,6 @@ const AutoCompleteSelect = <
   const [queryKeyword, setQueryKeyword] = useState('')
   const [showOptions, setShowOptions] = useState<T[]>(options)
   const [isFocused, setIsFocused] = useState(false)
-  const { i18n } = useTranslation() // 獲取當前語系
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQueryKeyword(e.target.value)
