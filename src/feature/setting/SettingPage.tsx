@@ -5,6 +5,7 @@ import AutoCompleteSelect from '../../components/selects/AutoCompleteSelect'
 import AutoCompleteSelect2 from '../../components/selects/AutoCompleteSelect2'
 import { BaseOption } from '../../hooks/UseAutoComplete'
 import MultipleSelect from '../../components/selects/MultipleSelect'
+import MultipleSelect2 from '../../components/selects/MultipleSelect2'
 
 interface FormValues {
   language: string
@@ -105,6 +106,26 @@ const SettingPage: React.FC = () => {
             handleSubmit3(onSubmit3)()
           }}
         ></MultipleSelect>
+      </Box>
+
+      <Box>
+        <Text> AutoCompleteMultipleSelect</Text>
+        <MultipleSelect2<(typeof fruitsOptions)[0], FormValues3>
+          options={fruitsOptions}
+          formInputProps={{
+            control: control3,
+            name: 'fruits',
+            inputProps: { placeholder: 'pick your favorite fruits' },
+          }}
+          onChange={(values) => {
+            console.log('選擇的項目', values)
+            const selectFruit = fruitsOptions.filter((option) =>
+              values.includes(option.value)
+            ) as BaseOption[]
+            setValue('fruits', [...selectFruit])
+            handleSubmit3(onSubmit3)()
+          }}
+        ></MultipleSelect2>
       </Box>
 
       <Box className="show-border" padding={4}>
