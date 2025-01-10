@@ -134,7 +134,7 @@ const SampleFormUseFieldArray: React.FC = () => {
                     >
                       <Tabs.List>
                         {fields.map((field, index) => (
-                          <Tabs.Trigger value={field.id}>
+                          <Tabs.Trigger key={field.id} value={field.id}>
                             {watch(`members.${index}.name`) ||
                               `成員 ${index + 1}`}
                           </Tabs.Trigger>
@@ -142,7 +142,7 @@ const SampleFormUseFieldArray: React.FC = () => {
                       </Tabs.List>
 
                       {fields.map((field, index) => (
-                        <Tabs.Content value={field.id}>
+                        <Tabs.Content key={field.id} value={field.id}>
                           <CartoonCharacterInfo
                             index={index}
                             addOne={handleAddOne}
