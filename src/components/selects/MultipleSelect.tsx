@@ -47,12 +47,18 @@ const MultipleSelect = <
   }
 
   const handleOptionSelected = (option: T) => {
-    if (onChange) onChange(selectedValues) // TODO: 丟出去的值都還是舊的
-    /**
-     *  onChange 依賴於 queryKeyword，那麼這種寫法確保了 setQueryKeyword 在 onChange 之後執行。
-     * 這樣可以保證 onChange 執行時不會依賴舊的狀態，並且可以使用 queryKeyword 的最新值來執行相關邏輯。
-     */
-    handleOptionSelect(option)
+    const updatedSelectedValues = [...selectedValues]
+    if (updatedSelectedValues.includes(option.value)) {
+      // 移除選項
+      const index = updatedSelectedValues.indexOf(option.value)
+      updatedSelectedValues.splice(index, 1)
+    } else {
+      // 新增選項
+      updatedSelectedValues.push(option.value)
+    }
+
+    handleOptionSelect(option) // 更新狀態
+    if (onChange) onChange(updatedSelectedValues) // 確保丟出最新值
   }
 
   const inputProps = {
@@ -86,7 +92,7 @@ const MultipleSelect = <
                 const selectedOption = options.find(
                   (option) => option.value === value
                 ) as T
-                handleOptionSelect(selectedOption)
+                handleOptionSelected(selectedOption)
               }}
             >
               {translate(value)}
