@@ -33,7 +33,7 @@ i18n
       const fallbacks = [code]
       return fallbacks
     }, // 回退語言
-    debug: true, // 開啟調試模式
+    debug: false, // 開啟調試模式
     interpolation: {
       escapeValue: false, // 防止 HTML 轉義
     },

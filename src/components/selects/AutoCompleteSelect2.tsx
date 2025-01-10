@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  List,
   MenuContent,
   MenuItem,
   MenuRoot,
@@ -19,6 +20,7 @@ interface Props<T extends BaseOption, TFieldValues extends FieldValues> {
   formInputProps: FormInputProps<TFieldValues>
   onChange?: (value: string) => void
   isShowCheck?: boolean
+  useAsButton?: boolean
 }
 
 const AutoCompleteSelect = <
@@ -29,6 +31,7 @@ const AutoCompleteSelect = <
   formInputProps,
   onChange,
   isShowCheck,
+  useAsButton,
 }: Props<T, TFieldValues>) => {
   const {
     queryKeyword,
@@ -66,46 +69,112 @@ const AutoCompleteSelect = <
   }
 
   return (
-    <Box width="20rem" height="3rem" position="relative">
-      <MenuRoot>
-        <MenuTrigger asChild>
-          <Button padding="0" variant="outline" color="gray.600" mt="2">
-            <FormInput
-              {...inputProps}
-              value={queryKeyword}
-              onKeyDown={handleKeyDown}
-              onChange={handleSearch}
-              onFocus={() => setIsFocused(true)}
-              onBlur={() => {
-                setTimeout(() => {
-                  setIsFocused(false)
-                }, 200)
-              }}
-            ></FormInput>
-          </Button>
-        </MenuTrigger>
-        <MenuContent>
-          {filteredOptions.map((option) => (
-            <MenuItem
-              cursor="pointer"
-              _hover={{ bg: 'primary.300' }}
-              key={option.value}
-              value={option.value}
-              justifyContent={'space-between'}
-              onClick={() => handleOptionSelected(option)}
+    <Box width="20rem" height="auto" position="relative">
+      {/* 作為 Button 使用 */}
+      {useAsButton ? (
+        <MenuRoot>
+          <MenuTrigger asChild>
+            <Button padding="0" variant="outline" color="gray.600" mt="2">
+              <FormInput
+                {...inputProps}
+                value={queryKeyword}
+                onKeyDown={handleKeyDown}
+                onChange={handleSearch}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => {
+                  setTimeout(() => {
+                    setIsFocused(false)
+                  }, 200)
+                }}
+              ></FormInput>
+            </Button>
+          </MenuTrigger>
+          <MenuContent>
+            {filteredOptions.map((option) => (
+              <MenuItem
+                cursor="pointer"
+                _hover={{ bg: 'primary.300' }}
+                key={option.value}
+                value={option.value}
+                justifyContent={'space-between'}
+                onClick={() => handleOptionSelected(option)}
+              >
+                <Text>{translate(option.label)}</Text>
+                <Text>
+                  {isShowCheck && queryKeyword === translate(option.label) ? (
+                    <FaCheck />
+                  ) : (
+                    ''
+                  )}
+                </Text>
+              </MenuItem>
+            ))}
+          </MenuContent>
+        </MenuRoot>
+      ) : (
+        <>
+          <FormInput
+            {...inputProps}
+            value={queryKeyword}
+            onKeyDown={handleKeyDown}
+            onChange={handleSearch}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => {
+              setTimeout(() => {
+                setIsFocused(false)
+              }, 200)
+            }}
+          ></FormInput>
+          {isFocused && filteredOptions.length > 0 && (
+            <Box
+              position="relative"
+              top="100%" // 設置下拉選單出現在輸入框下方
+              left={0}
+              right={0}
+              border="1px solid"
+              borderColor="gray.200"
+              borderRadius="md"
+              zIndex="1000" // 確保下拉選單在其他元素上層
+              bg="white" // 設置背景顏色避免被覆蓋
             >
-              <Text>{translate(option.label)}</Text>
-              <Text>
-                {isShowCheck && queryKeyword === translate(option.label) ? (
-                  <FaCheck />
-                ) : (
-                  ''
-                )}
-              </Text>
-            </MenuItem>
-          ))}
-        </MenuContent>
-      </MenuRoot>
+              <List.Root
+                border="1px solid"
+                borderColor="gray.200"
+                borderRadius="md"
+              >
+                {filteredOptions.map((option) => (
+                  <Button
+                    key={option.value}
+                    color="gray.600"
+                    variant="outline"
+                    width="100%"
+                    onClick={() => {
+                      handleOptionSelected(option)
+                    }}
+                  >
+                    <Box
+                      justifyContent="space-between"
+                      display="flex"
+                      alignItems="center"
+                      width="100%"
+                    >
+                      <Text>{translate(option.label)}</Text>
+                      <Text>
+                        {isShowCheck &&
+                        queryKeyword === translate(option.label) ? (
+                          <FaCheck />
+                        ) : (
+                          ''
+                        )}
+                      </Text>
+                    </Box>
+                  </Button>
+                ))}
+              </List.Root>
+            </Box>
+          )}
+        </>
+      )}
     </Box>
   )
 }

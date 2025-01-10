@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import AutoCompleteSelect from '../../components/selects/AutoCompleteSelect'
 import AutoCompleteSelect2 from '../../components/selects/AutoCompleteSelect2'
+import { BaseOption } from '../../hooks/UseAutoComplete'
+import MultipleSelect from '../../components/selects/MultipleSelect'
 
 interface FormValues {
   language: string
@@ -12,6 +14,9 @@ interface FormValues2 {
   language: string
 }
 
+interface FormValues3 {
+  fruits: BaseOption[]
+}
 const SettingPage: React.FC = () => {
   const { t, i18n } = useTranslation()
   const { control, handleSubmit } = useForm<FormValues>({
@@ -26,12 +31,36 @@ const SettingPage: React.FC = () => {
     },
   })
 
+  const {
+    control: control3,
+    watch,
+    handleSubmit: handleSubmit3,
+    setValue, // 用來更新表單值
+  } = useForm<FormValues3>({
+    defaultValues: {
+      fruits: [], // 預設值為空
+    },
+  })
+
   const options = [
     { value: 'en', label: 'english' },
     { value: 'zh-TW', label: 'traditionalChinese' },
     { value: 'zh-CN', label: 'simplifiedChinese' },
     { value: 'ja', label: 'japanese' },
   ]
+
+  const fruitsOptions: BaseOption[] = [
+    { value: 'apple', label: 'Apple' },
+    { value: 'banana', label: 'Banana' },
+    { value: 'cherry', label: 'Cherry' },
+    { value: 'date', label: 'Date' },
+    { value: 'grape', label: 'Grape' },
+  ]
+
+  const onSubmit3 = (data: FormValues3) => {
+    console.log('Form Submitted:', data)
+    // post api
+  }
 
   const switchLanguage = (lang: string) => {
     i18n.changeLanguage(lang)
@@ -58,6 +87,26 @@ const SettingPage: React.FC = () => {
         </form>
       </Box>
 
+      <Box>
+        <Text> AutoCompleteMultipleSelect</Text>
+        <MultipleSelect<(typeof fruitsOptions)[0], FormValues3>
+          options={fruitsOptions}
+          formInputProps={{
+            control: control3,
+            name: 'fruits',
+            inputProps: { placeholder: 'pick your favorite fruits' },
+          }}
+          onChange={(values) => {
+            console.log('選擇的項目', values)
+            const selectFruit = fruitsOptions.filter((option) =>
+              values.includes(option.value)
+            ) as BaseOption[]
+            setValue('fruits', [...selectFruit])
+            handleSubmit3(onSubmit3)()
+          }}
+        ></MultipleSelect>
+      </Box>
+
       <Box className="show-border" padding={4}>
         <Text fontSize="xl">{t('settingLanguage')}</Text>
         <form>
@@ -73,6 +122,7 @@ const SettingPage: React.FC = () => {
               switchLanguage(value || 'zh-TW')
             }}
             isShowCheck={true}
+            useAsButton={true}
           ></AutoCompleteSelect2>
         </form>
       </Box>
