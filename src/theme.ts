@@ -2,8 +2,86 @@ import {
   createSystem,
   defaultConfig,
   defineConfig,
+  defineRecipe,
   mergeConfigs,
 } from '@chakra-ui/react'
+
+/**
+ * 使用食譜的方法:
+ * 1. 需要定義食譜 defineRecipe
+ * 2. 需要時，使用 useRecipe 進行特殊設定
+ */
+const buttonRecipe = defineRecipe({
+  base: {
+    fontWeight: 'bold',
+    borderRadius: 'md',
+    _focus: {
+      boxShadow: 'outline', // 有陰影
+    },
+  },
+  variants: {
+    variant: {
+      primary: { bg: 'primary.500', color: 'white' },
+      secondary: { bg: 'secondary.500', color: 'white' },
+    },
+    size: {
+      lg: {
+        fontSize: 'lg',
+        px: 8,
+        py: 6,
+      },
+      md: {
+        fontSize: 'md',
+        px: 6,
+        py: 4,
+      },
+      sm: {
+        fontSize: 'sm',
+        px: 4,
+        py: 3,
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+    variant: 'primary',
+  },
+})
+
+const inputRecipe = defineRecipe({
+  base: {
+    borderRadius: 'md',
+    _focus: {
+      boxShadow: 'outline', // 有陰影
+    },
+  },
+  variants: {
+    variant: {
+      primary: { bg: 'primary.500', color: 'white' },
+      secondary: { bg: 'secondary.500', color: 'white' },
+    },
+    size: {
+      lg: {
+        fontSize: 'lg',
+        px: 6,
+        py: 4,
+      },
+      md: {
+        fontSize: 'md',
+        px: 5,
+        py: 3,
+      },
+      sm: {
+        fontSize: 'sm',
+        px: 4,
+        py: 2,
+      },
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+})
 
 const theme = defineConfig({
   theme: {
@@ -71,89 +149,10 @@ const theme = defineConfig({
         },
       },
     },
-    // components: {
-    //   Button: {
-    //     baseStyle: {
-    //       fontWeight: 'bold',
-    //       borderRadius: 'md',
-    //       _focus: {
-    //         boxShadow: 'outline', // 有陰影
-    //       },
-    //     },
-    //     size: {
-    //       lg: {
-    //         fontSize: 'lg',
-    //         px: 8,
-    //         py: 6,
-    //       },
-    //       md: {
-    //         fontSize: 'md',
-    //         px: 6,
-    //         py: 4,
-    //       },
-    //       sm: {
-    //         fontSize: 'sm',
-    //         px: 4,
-    //         py: 3,
-    //       },
-    //     },
-    //     variants: {
-    //       primary: {
-    //         bg: 'primary.500',
-    //         color: 'white',
-    //         _hover: {
-    //           bg: 'primary.600',
-    //         },
-    //       },
-    //       secondary: {
-    //         bg: 'secondary.500',
-    //         color: 'white',
-    //         _hover: {
-    //           bg: 'secondary.600',
-    //         },
-    //       },
-    //       gray: {
-    //         bg: 'gray.100',
-    //         color: 'gray.500',
-    //         _hover: {
-    //           bg: 'gray.100',
-    //         },
-    //       },
-    //     },
-    //     defaultProps: {
-    //       size: 'md',
-    //       variant: 'primary',
-    //     },
-    //   },
-    //   Input: {
-    //     baseStyle: {
-    //       borderRadius: 'md',
-    //       _focus: {
-    //         boxShadow: 'outline', // 有陰影
-    //       },
-    //     },
-    //     size: {
-    //       lg: {
-    //         fontSize: 'lg',
-    //         px: 6,
-    //         py: 4,
-    //       },
-    //       md: {
-    //         fontSize: 'md',
-    //         px: 5,
-    //         py: 3,
-    //       },
-    //       sm: {
-    //         fontSize: 'sm',
-    //         px: 4,
-    //         py: 2,
-    //       },
-    //     },
-    //     defaultProps: {
-    //       size: 'md',
-    //     },
-    //   },
-    // },
+    recipes: {
+      button: buttonRecipe,
+      input: inputRecipe,
+    },
   },
   globalCss: {
     '.show-border': {
