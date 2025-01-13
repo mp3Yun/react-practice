@@ -6,7 +6,6 @@ export const validateForm = async <T extends FieldValues>(
   return new Promise((resolve) => {
     methods.handleSubmit(
       (data) => {
-        console.log('Form data:', data)
         resolve(true) // 驗證通過
       },
       () => {

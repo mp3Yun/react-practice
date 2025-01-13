@@ -98,7 +98,6 @@ const SettingPage: React.FC = () => {
             inputProps: { placeholder: 'pick your favorite fruits' },
           }}
           onChange={(values) => {
-            console.log('選擇的項目', values)
             const selectFruit = fruitsOptions.filter((option) =>
               values.includes(option.value)
             ) as BaseOption[]
@@ -118,7 +117,6 @@ const SettingPage: React.FC = () => {
             inputProps: { placeholder: 'pick your favorite fruits' },
           }}
           onChange={(values) => {
-            console.log('選擇的項目', values)
             const selectFruit = fruitsOptions.filter((option) =>
               values.includes(option.value)
             ) as BaseOption[]

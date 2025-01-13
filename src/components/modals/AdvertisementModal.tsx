@@ -22,7 +22,6 @@ interface Props {
 }
 const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
   const img = images && images?.length > 0 ? images : [image1, image2]
-  console.error('99-AdvertisementModal-isOpen:', isOpen)
   const swiperRef = useRef<SwiperClass | null>(null) // 這邊的 instance 很重要
 
   return (
@@ -64,7 +63,6 @@ const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
               onSlideChange={() => console.log('slide change')}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper // 綁定 Swiper 實例
-                console.log(swiper)
               }}
             >
               {img.map((item, index) => (

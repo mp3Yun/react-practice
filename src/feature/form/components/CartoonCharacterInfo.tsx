@@ -22,7 +22,6 @@ const CartoonCharacterInfo: React.FC<Props> = ({
     index: number
   ) => {
     event.preventDefault()
-    console.log('emails form event =>', event)
     // 手動觸發驗證
     const isValid = await trigger([
       `members.${index}.name`,

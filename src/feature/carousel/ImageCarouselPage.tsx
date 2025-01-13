@@ -27,8 +27,8 @@ const ImageCarouselPage: React.FC = () => {
           width: '600px',
           height: '400px',
         }}
-        onSlideChange={() => console.log('slide change')}
-        onSwiper={(swiper) => console.log(swiper)}
+        // onSlideChange={() => console.log('slide change')}
+        // onSwiper={(swiper) => console.log(swiper)}
       >
         {imageList.map((item, index) => (
           <SwiperSlide

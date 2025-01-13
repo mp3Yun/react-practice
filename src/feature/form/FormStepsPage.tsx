@@ -67,7 +67,6 @@ const FormStepsPage: React.FC = () => {
         return validateForm(form1methods)
       }
       case 2: {
-        console.log('step2 data form2methods', form2methods.getValues())
         return validateForm(form2methods)
       }
       default:
@@ -77,9 +76,7 @@ const FormStepsPage: React.FC = () => {
 
   const handleSubmit = (step: number, stepAction: 'next' | 'prev' = 'next') => {
     if (stepAction === 'next') {
-      console.log('handleSubmit step', step)
       handleStepValidation(step).then((isValid) => {
-        console.log('handleSubmit isValid', isValid)
         if (isValid) {
           if (step === 1) {
             // 儲存步驟一的數據
@@ -100,7 +97,6 @@ const FormStepsPage: React.FC = () => {
 
   useEffect(() => {
     // 重新渲染畫面，取得先前的值
-    console.log('currentIndex', currentIndex)
     if (currentIndex === 0 && step1Data) {
       form1methods.reset(step1Data)
     } else if (currentIndex === 1 && step2Data) {

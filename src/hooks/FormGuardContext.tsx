@@ -29,7 +29,6 @@ export const FormGuardProvider: React.FC<PropsWithChildren> = ({
   })
 
   const confirmLeave = () => {
-    console.log('proceed', proceed)
     if (proceed) {
       proceed()
       setModalOpen(false)
@@ -38,7 +37,6 @@ export const FormGuardProvider: React.FC<PropsWithChildren> = ({
   }
 
   const cancelLeave = () => {
-    console.log('cancel')
     setModalOpen(false)
   }
 

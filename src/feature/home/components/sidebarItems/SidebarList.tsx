@@ -57,7 +57,6 @@ const parserRoute = (routes: [string, unknown][]): FormattedRoute[] => {
       }
     })
 
-  console.log(finalRoutes)
   return finalRoutes
 }
 
