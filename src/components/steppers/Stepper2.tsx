@@ -1,14 +1,6 @@
-import {
-  Box,
-  Text,
-  StepsCompletedContent,
-  StepsContent,
-  StepsItem,
-  StepsList,
-  StepsRoot,
-} from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
 import React from 'react'
-import { useStepper } from '../../hooks/UseStepper'
+import { StepsContent, StepsItem, StepsList } from '../ui/steps'
 import { StepperInfo } from './Stepper'
 
 interface Props {
@@ -17,12 +9,11 @@ interface Props {
 }
 
 const Stepper2: React.FC<Props> = ({ currentStep, totalSteps }) => {
-  const { activeStep, steps } = useStepper(currentStep, totalSteps)
   return (
-    <StepsRoot defaultValue={activeStep} count={steps.length}>
+    <Box>
       <StepsList>
         {totalSteps.map((step, index) => (
-          <StepsItem key={index} index={index} title={step.title} />
+          <StepsItem key={index} index={index} title={`step${index + 1}`} />
         ))}
       </StepsList>
 
@@ -36,9 +27,7 @@ const Stepper2: React.FC<Props> = ({ currentStep, totalSteps }) => {
           </Box>
         </StepsContent>
       ))}
-
-      <StepsCompletedContent>All steps are complete!</StepsCompletedContent>
-    </StepsRoot>
+    </Box>
   )
 }
 

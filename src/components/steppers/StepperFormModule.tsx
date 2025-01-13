@@ -1,7 +1,8 @@
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Box, Button, Flex, StepsRoot } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
 import { StepperInfo } from './Stepper'
 import Stepper2 from './Stepper2'
+import { useStepper } from '../../hooks/UseStepper'
 
 interface StepperFormProps {
   // 每個步驟內容
@@ -35,8 +36,9 @@ const StepperFormModule = ({
   isShowNextButton = true,
   isShowPreviousButton = true,
 }: StepperFormProps) => {
+  const { activeStep, steps } = useStepper(currentStep, totalSteps)
   return (
-    <Box>
+    <StepsRoot defaultValue={activeStep} count={steps.length}>
       <Stepper2 currentStep={currentStep} totalSteps={totalSteps} />
       {/* 當前步驟內容 */}
       <Box style={{ marginTop: '1rem', flex: 1 }}>{children}</Box>
@@ -61,7 +63,7 @@ const StepperFormModule = ({
           </Button>
         )}
       </Flex>
-    </Box>
+    </StepsRoot>
   )
 }
 

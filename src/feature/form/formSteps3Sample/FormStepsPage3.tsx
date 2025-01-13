@@ -35,7 +35,7 @@ const FormSteps3Page: React.FC = () => {
     onStepChange
   )
 
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
 
   const nextStep = async () => {
     if (currentStep < steps.length - 1) {
@@ -63,7 +63,7 @@ const FormSteps3Page: React.FC = () => {
       description: '',
       status: 'completed',
     })
-    resetAll() // 我這邊重新設定後，為什麼這一頁的離開訊息還是 popup 了?! TODO:
+    resetAll()
     onClose()
   }
 
@@ -150,7 +150,7 @@ const FormSteps3Page: React.FC = () => {
       {/* 訊息確認窗 */}
       <Box>
         <ConfirmDialog
-          isOpen={isOpen}
+          isOpen={open}
           onConfirm={comfirmDialog}
           onClose={() => {
             setCurrentStep({ ...currentStepData, index: 2 })
