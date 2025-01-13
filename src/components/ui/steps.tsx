@@ -1,6 +1,6 @@
-import { Box, Steps as ChakraSteps } from "@chakra-ui/react"
-import * as React from "react"
-import { LuCheck } from "react-icons/lu"
+import { Box, Steps as ChakraSteps } from '@chakra-ui/react'
+import * as React from 'react'
+import { LuCheck } from 'react-icons/lu'
 
 interface StepInfoProps {
   title?: React.ReactNode
@@ -8,21 +8,22 @@ interface StepInfoProps {
 }
 
 export interface StepsItemProps
-  extends Omit<ChakraSteps.ItemProps, "title">,
+  extends Omit<ChakraSteps.ItemProps, 'title'>,
     StepInfoProps {
   completedIcon?: React.ReactNode
   icon?: React.ReactNode
+  isActive?: boolean
 }
 
 export const StepsItem = React.forwardRef<HTMLDivElement, StepsItemProps>(
   function StepsItem(props, ref) {
-    const { title, description, completedIcon, icon, ...rest } = props
+    const { title, description, completedIcon, isActive, icon, ...rest } = props
     return (
       <ChakraSteps.Item {...rest} ref={ref}>
         <ChakraSteps.Trigger>
           <ChakraSteps.Indicator>
             <ChakraSteps.Status
-              complete={completedIcon || <LuCheck />}
+              complete={completedIcon || isActive || <LuCheck />}
               incomplete={icon || <ChakraSteps.Number />}
             />
           </ChakraSteps.Indicator>
@@ -31,7 +32,7 @@ export const StepsItem = React.forwardRef<HTMLDivElement, StepsItemProps>(
         <ChakraSteps.Separator />
       </ChakraSteps.Item>
     )
-  },
+  }
 )
 
 const StepInfo = (props: StepInfoProps) => {

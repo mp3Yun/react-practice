@@ -18,7 +18,7 @@ const FormPage: React.FC = () => {
     },
   })
 
-  console.log(watch('example')) // you can watch individual input by pass the name of the input
+  // console.log(watch('example')) // you can watch individual input by pass the name of the input
   // 查看錯誤訊息
   // console.log('99-errors', errors)
   const location = useLocation()

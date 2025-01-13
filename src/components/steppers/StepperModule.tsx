@@ -1,7 +1,8 @@
-import { Box, Button } from '@chakra-ui/react'
+import { Box, Button, useSteps } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
 import { StepsItem, StepsList, StepsRoot } from '../ui/steps'
 import { generateArray } from '../../utils/array-utils'
+import { useState } from 'react'
 
 interface StepperProps {
   // 每個步驟內容
@@ -29,13 +30,21 @@ const StepperModule = ({
   isNextDisabled = false,
   isPreviousDisabled = false,
 }: StepperProps) => {
+  const { value, goToNextStep, goToPrevStep } = useSteps({
+    defaultStep: 0, // 設置初始步驟
+  })
   const totalStepsInfo = generateArray(totalSteps)
   return (
     <Box>
       <StepsRoot>
         <StepsList>
           {totalStepsInfo.map((step, index) => (
-            <StepsItem key={index} index={index} title={`Step ${step}`} />
+            <StepsItem
+              key={index}
+              index={index}
+              title={`Step ${step}`}
+              isActive={value === index}
+            />
           ))}
         </StepsList>
         {/* 當前步驟內容 */}

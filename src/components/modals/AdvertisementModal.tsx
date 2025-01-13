@@ -60,7 +60,7 @@ const AdvertisementModal: React.FC<Props> = ({ isOpen, onClose, images }) => {
                 width: '600px',
                 height: '400px',
               }}
-              onSlideChange={() => console.log('slide change')}
+              // onSlideChange={() => console.log('slide change')}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper // 綁定 Swiper 實例
               }}

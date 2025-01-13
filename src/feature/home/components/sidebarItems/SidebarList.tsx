@@ -5,10 +5,9 @@ import {
   AccordionRoot,
   Box,
 } from '@chakra-ui/react'
-import { SlArrowDown } from 'react-icons/sl'
-import { SlArrowUp } from 'react-icons/sl'
 import { Link, useRouter } from '@tanstack/react-router'
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { SlArrowDown, SlArrowUp } from 'react-icons/sl'
 
 type FormattedRoute = {
   id?: number
@@ -71,19 +70,33 @@ const SidebarList: React.FC = () => {
 
   // 保存展開項目大項-預設為全部收合
   const [expandedItems, setExpandedItems] = useState<string[]>(['-1'])
+  console.error('expandedItems info', expandedItems)
+
+  // 根據路由數據生成菜單並初始化展開項目
+  useEffect(() => {
+    if (routesData.length > 0) {
+      const tmpMenu = parserRoute(routesData)
+      const home = tmpMenu.filter((item) => item.path === '/home')[0]
+      const otherModule = home.children
+      const finalMenu =
+        otherModule && otherModule?.length > 0 ? [home, ...otherModule] : [home]
+
+      setMenu(finalMenu)
+    }
+  }, [routesData])
 
   // 渲染子選單
   const renderChildren = (children: FormattedRoute[]) => {
     // 展開狀態管理
     return children.map((child, index) => (
-      <AccordionItem ml="8" key={index} value={child.path}>
+      <AccordionItem m="4" key={index} value={child.path}>
         <h3>
           <Link to={child.path}>
-            <AccordionItemTrigger>
-              <Box as="span" flex="1" textAlign="left">
-                {child.name}
-              </Box>
-            </AccordionItemTrigger>
+            {/* <AccordionItemTrigger> */}
+            <Box as="span" flex="1" textAlign="left">
+              {child.name}
+            </Box>
+            {/* </AccordionItemTrigger> */}
           </Link>
         </h3>
       </AccordionItem>
@@ -92,33 +105,33 @@ const SidebarList: React.FC = () => {
 
   return (
     <AccordionRoot
-      bg={'gray.50'}
+      flexDir="row"
+      bg="gray.50"
       defaultValue={expandedItems}
-      multiple
-      flexDir={'row'}
       onValueChange={(expandedItems) => {
+        console.log('99-我有被點擊沒錯呀..', expandedItems)
         setExpandedItems(expandedItems.value)
       }}
+      multiple
     >
       {menu.map((item, index) => (
         <AccordionItem key={index} value={item.path} ml="4">
-          <h2>
-            <Link to={item.path}>
-              <AccordionItemTrigger>
-                <Box as="span" flex="1" textAlign="left">
-                  {item.name}
-                </Box>
-                {item.hasChildren &&
-                  (expandedItems.some((i) => {
-                    return item.path.includes(i)
-                  }) ? (
-                    <SlArrowUp />
-                  ) : (
-                    <SlArrowDown />
-                  ))}
-              </AccordionItemTrigger>
-            </Link>
-          </h2>
+          <Link to={item.path}>
+            <AccordionItemTrigger>
+              <Box as="span" flex="1" textAlign="left" fontSize="md">
+                {item.name}
+              </Box>
+              {item.hasChildren &&
+                (expandedItems.some((i) => {
+                  console.log('check-my-item=>', item)
+                  return item.path.includes(i)
+                }) ? (
+                  <SlArrowUp />
+                ) : (
+                  <SlArrowDown />
+                ))}
+            </AccordionItemTrigger>
+          </Link>
           {item.hasChildren && item.children && (
             <AccordionItemContent pb={4}>
               {renderChildren(item.children)}
@@ -131,3 +144,10 @@ const SidebarList: React.FC = () => {
 }
 
 export default SidebarList
+
+function setMenu(finalMenu: FormattedRoute[]) {
+  if (finalMenu.length === 0) {
+    // 渲染 Loading 狀態或占位符
+    return <div>Loading...</div>
+  }
+}
