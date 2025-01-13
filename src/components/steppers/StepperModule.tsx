@@ -1,6 +1,7 @@
 import { Box, Button } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
-import Stepper from './Stepper'
+import { StepsItem, StepsList, StepsRoot } from '../ui/steps'
+import { generateArray } from '../../utils/array-utils'
 
 interface StepperProps {
   // 每個步驟內容
@@ -28,26 +29,33 @@ const StepperModule = ({
   isNextDisabled = false,
   isPreviousDisabled = false,
 }: StepperProps) => {
+  const totalStepsInfo = generateArray(totalSteps)
   return (
     <Box>
-      <Stepper currentStep={currentStep} totalSteps={totalSteps} />
-      {/* 當前步驟內容 */}
-      <Box style={{ marginTop: '1rem' }}>{children}</Box>
-      {/* 控制按鈕 */}
-      <Box mt={4} display="flex" justifyContent="space-between">
-        <Button
-          onClick={onPrevious}
-          disabled={isPreviousDisabled || currentStep === 0}
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={onNext}
-          disabled={isNextDisabled || currentStep === totalSteps}
-        >
-          Next
-        </Button>
-      </Box>
+      <StepsRoot>
+        <StepsList>
+          {totalStepsInfo.map((step, index) => (
+            <StepsItem key={index} index={index} title={`Step ${step}`} />
+          ))}
+        </StepsList>
+        {/* 當前步驟內容 */}
+        <Box style={{ marginTop: '1rem' }}>{children}</Box>
+        {/* 控制按鈕 */}
+        <Box mt={4} display="flex" justifyContent="space-between">
+          <Button
+            onClick={onPrevious}
+            disabled={isPreviousDisabled || currentStep === 0}
+          >
+            Previous
+          </Button>
+          <Button
+            onClick={onNext}
+            disabled={isNextDisabled || currentStep === totalSteps}
+          >
+            Next
+          </Button>
+        </Box>
+      </StepsRoot>
     </Box>
   )
 }
