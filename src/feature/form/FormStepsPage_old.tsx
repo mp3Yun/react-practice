@@ -1,4 +1,4 @@
-import { Box, Button, Text } from '@chakra-ui/react'
+import { Box, Button, Text, useSteps } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form'
 import FormInput from '../../components/formInput/FormInput'
@@ -48,8 +48,9 @@ const FormStepsPage: React.FC = () => {
   // 用於存儲每個步驟的數據
   const [step1Data, setStep1Data] = useState<FormStep1 | null>(null)
   const [step2Data, setStep2Data] = useState<FormStep2 | null>(null)
-  const [currentIndex, setCurretnIndex] = useState(0)
-  // 分別控制各表單
+  const { value, goToNextStep, goToPrevStep } = useSteps({
+    defaultStep: 0, // 設置初始步驟
+  })
   const form1methods = useForm<FormStep1>({
     defaultValues: step1Data || step1FormData,
   })
@@ -87,33 +88,33 @@ const FormStepsPage: React.FC = () => {
             setStep2Data(form2methods.getValues())
             form2methods.reset(step2FormData)
           }
-          setCurretnIndex(step)
+          goToNextStep()
         }
       })
-    } else if (currentIndex !== 0) {
-      setCurretnIndex(step)
+    } else if (value !== 0) {
+      goToPrevStep()
     }
   }
 
   useEffect(() => {
     // 重新渲染畫面，取得先前的值
-    if (currentIndex === 0 && step1Data) {
+    if (value === 0 && step1Data) {
       form1methods.reset(step1Data)
-    } else if (currentIndex === 1 && step2Data) {
+    } else if (value === 1 && step2Data) {
       form2methods.reset(step2Data)
     }
-  }, [currentIndex])
+  }, [value])
 
   return (
     <StepperModule
-      currentStep={currentIndex}
+      currentStep={value}
       totalSteps={3}
-      onNext={() => handleSubmit(currentIndex + 1, 'next')}
-      onPrevious={() => handleSubmit(currentIndex - 1, 'prev')}
-      isNextDisabled={currentIndex === 2}
-      isPreviousDisabled={currentIndex === 0}
+      onNext={() => handleSubmit(value + 1, 'next')}
+      onPrevious={() => handleSubmit(value - 1, 'prev')}
+      isNextDisabled={value === 2}
+      isPreviousDisabled={value === 0}
     >
-      {currentIndex === 0 && (
+      {value === 0 && (
         <FormProvider {...form1methods}>
           <Box>
             <h3>Step 1</h3>
@@ -151,7 +152,7 @@ const FormStepsPage: React.FC = () => {
         </FormProvider>
       )}
 
-      {currentIndex === 1 && (
+      {value === 1 && (
         <FormProvider {...form2methods}>
           <Box>
             <h3>Step 2</h3>
@@ -212,7 +213,7 @@ const FormStepsPage: React.FC = () => {
         </FormProvider>
       )}
 
-      {currentIndex === 2 && (
+      {value === 2 && (
         <Box>
           <h3>Step 3</h3>
           <Box>

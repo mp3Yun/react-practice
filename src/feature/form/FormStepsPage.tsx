@@ -110,7 +110,7 @@ const FormStepsPage: React.FC = () => {
       totalSteps={3}
       onNext={() => handleSubmit(currentIndex + 1, 'next')}
       onPrevious={() => handleSubmit(currentIndex - 1, 'prev')}
-      isNextDisabled={currentIndex === 2}
+      isNextDisabled={currentIndex === 4}
       isPreviousDisabled={currentIndex === 0}
     >
       {currentIndex === 0 && (

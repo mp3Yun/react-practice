@@ -1,8 +1,13 @@
-import { Box, Button, useSteps } from '@chakra-ui/react'
+import { Box, Button, Group } from '@chakra-ui/react'
 import { ReactNode } from '@tanstack/react-router'
-import { StepsItem, StepsList, StepsRoot } from '../ui/steps'
 import { generateArray } from '../../utils/array-utils'
-import { useState } from 'react'
+import {
+  StepsItem,
+  StepsList,
+  StepsNextTrigger,
+  StepsPrevTrigger,
+  StepsRoot,
+} from '../ui/steps'
 
 interface StepperProps {
   // 每個步驟內容
@@ -23,47 +28,56 @@ interface StepperProps {
 
 const StepperModule = ({
   children,
-  currentStep = 1,
+  currentStep = 0,
   totalSteps = children.length,
   onNext,
   onPrevious,
   isNextDisabled = false,
   isPreviousDisabled = false,
 }: StepperProps) => {
-  const { value, goToNextStep, goToPrevStep } = useSteps({
-    defaultStep: 0, // 設置初始步驟
-  })
   const totalStepsInfo = generateArray(totalSteps)
+  console.log('99-我是StepperModule ======')
+  console.log('99-currentStep', currentStep)
+  console.log('99-totalSteps', totalSteps)
   return (
     <Box>
-      <StepsRoot>
+      <StepsRoot
+        defaultValue={currentStep}
+        count={totalSteps}
+        step={currentStep}
+        onStepChange={(e) => console.log('onStepChange e', e)}
+      >
         <StepsList>
           {totalStepsInfo.map((step, index) => (
             <StepsItem
               key={index}
               index={index}
               title={`Step ${step}`}
-              isActive={value === index}
+              // isCompleted={currentStep > index}
             />
           ))}
         </StepsList>
         {/* 當前步驟內容 */}
         <Box style={{ marginTop: '1rem' }}>{children}</Box>
         {/* 控制按鈕 */}
-        <Box mt={4} display="flex" justifyContent="space-between">
-          <Button
-            onClick={onPrevious}
-            disabled={isPreviousDisabled || currentStep === 0}
-          >
-            Previous
-          </Button>
-          <Button
-            onClick={onNext}
-            disabled={isNextDisabled || currentStep === totalSteps}
-          >
-            Next
-          </Button>
-        </Box>
+        <Group mt={4} display="flex" justifyContent="space-between">
+          <StepsPrevTrigger asChild>
+            <Button
+              onClick={onPrevious}
+              disabled={isPreviousDisabled || currentStep === 0}
+            >
+              Previous
+            </Button>
+          </StepsPrevTrigger>
+          <StepsNextTrigger asChild>
+            <Button
+              onClick={onNext}
+              disabled={isNextDisabled || currentStep === totalSteps + 1 + 1}
+            >
+              Next
+            </Button>
+          </StepsNextTrigger>
+        </Group>
       </StepsRoot>
     </Box>
   )
