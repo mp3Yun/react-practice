@@ -104,20 +104,19 @@ const SidebarList: React.FC = () => {
   }
 
   return (
-    <AccordionRoot
-      flexDir="row"
-      bg="gray.50"
-      defaultValue={expandedItems}
-      onValueChange={(expandedItems) => {
-        console.log('99-我有被點擊沒錯呀..', expandedItems)
-        setExpandedItems(expandedItems.value)
-      }}
-      multiple
-    >
+    <AccordionRoot flexDir="row" bg="gray.50" value={expandedItems} multiple>
       {menu.map((item, index) => (
         <AccordionItem key={index} value={item.path} ml="4">
           <Link to={item.path}>
-            <AccordionItemTrigger>
+            <AccordionItemTrigger
+              onClick={() => {
+                setExpandedItems((x) =>
+                  x.includes(item.path)
+                    ? x.filter((i) => i !== item.path)
+                    : [...x, item.path]
+                )
+              }}
+            >
               <Box as="span" flex="1" textAlign="left" fontSize="md">
                 {item.name}
               </Box>
