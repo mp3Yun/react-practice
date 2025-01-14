@@ -6,7 +6,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { Link, useRouter } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl'
 
 type FormattedRoute = {
@@ -70,20 +70,6 @@ const SidebarList: React.FC = () => {
 
   // 保存展開項目大項-預設為全部收合
   const [expandedItems, setExpandedItems] = useState<string[]>(['-1'])
-  console.error('expandedItems info', expandedItems)
-
-  // 根據路由數據生成菜單並初始化展開項目
-  useEffect(() => {
-    if (routesData.length > 0) {
-      const tmpMenu = parserRoute(routesData)
-      const home = tmpMenu.filter((item) => item.path === '/home')[0]
-      const otherModule = home.children
-      const finalMenu =
-        otherModule && otherModule?.length > 0 ? [home, ...otherModule] : [home]
-
-      setMenu(finalMenu)
-    }
-  }, [routesData])
 
   // 渲染子選單
   const renderChildren = (children: FormattedRoute[]) => {
@@ -110,11 +96,13 @@ const SidebarList: React.FC = () => {
           <Link to={item.path}>
             <AccordionItemTrigger
               onClick={() => {
-                setExpandedItems((x) =>
-                  x.includes(item.path)
-                    ? x.filter((i) => i !== item.path)
-                    : [...x, item.path]
-                )
+                if (item.hasChildren) {
+                  setExpandedItems((x) =>
+                    x.includes(item.path)
+                      ? x.filter((i) => i !== item.path)
+                      : [...x, item.path]
+                  )
+                }
               }}
             >
               <Box as="span" flex="1" textAlign="left" fontSize="md">
@@ -122,7 +110,6 @@ const SidebarList: React.FC = () => {
               </Box>
               {item.hasChildren &&
                 (expandedItems.some((i) => {
-                  console.log('check-my-item=>', item)
                   return item.path.includes(i)
                 }) ? (
                   <SlArrowUp />
@@ -143,10 +130,3 @@ const SidebarList: React.FC = () => {
 }
 
 export default SidebarList
-
-function setMenu(finalMenu: FormattedRoute[]) {
-  if (finalMenu.length === 0) {
-    // 渲染 Loading 狀態或占位符
-    return <div>Loading...</div>
-  }
-}
