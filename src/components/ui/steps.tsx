@@ -12,18 +12,17 @@ export interface StepsItemProps
     StepInfoProps {
   completedIcon?: React.ReactNode
   icon?: React.ReactNode
-  isActive?: boolean
 }
 
 export const StepsItem = React.forwardRef<HTMLDivElement, StepsItemProps>(
   function StepsItem(props, ref) {
-    const { title, description, completedIcon, isActive, icon, ...rest } = props
+    const { title, description, completedIcon, icon, ...rest } = props
     return (
-      <ChakraSteps.Item {...rest} ref={ref}>
+      <ChakraSteps.Item {...rest} ref={ref} colorPalette="primary">
         <ChakraSteps.Trigger>
           <ChakraSteps.Indicator>
             <ChakraSteps.Status
-              complete={completedIcon || isActive || <LuCheck />}
+              complete={completedIcon || <LuCheck />}
               incomplete={icon || <ChakraSteps.Number />}
             />
           </ChakraSteps.Indicator>

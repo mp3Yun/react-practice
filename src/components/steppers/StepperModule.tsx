@@ -36,9 +36,6 @@ const StepperModule = ({
   isPreviousDisabled = false,
 }: StepperProps) => {
   const totalStepsInfo = generateArray(totalSteps)
-  console.log('99-我是StepperModule ======')
-  console.log('99-currentStep', currentStep)
-  console.log('99-totalSteps', totalSteps)
   return (
     <Box>
       <StepsRoot
@@ -49,12 +46,7 @@ const StepperModule = ({
       >
         <StepsList>
           {totalStepsInfo.map((step, index) => (
-            <StepsItem
-              key={index}
-              index={index}
-              title={`Step ${step}`}
-              // isCompleted={currentStep > index}
-            />
+            <StepsItem key={index} index={index} title={`Step ${step}`} />
           ))}
         </StepsList>
         {/* 當前步驟內容 */}
