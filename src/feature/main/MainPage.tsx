@@ -2,11 +2,22 @@ import { Box, useDisclosure } from '@chakra-ui/react'
 import FixedButton from '../../components/buttons/FixedButton'
 import ConfirmDialog from '../../components/dialogs/ConfirmDialog'
 import Favorites from './components/Favorites'
+import { useLoading } from '../../hooks/LoadingContext'
 
 const MainPage: React.FC = () => {
   const { open, onOpen, onClose } = useDisclosure()
+  const { showLoading, hideLoading } = useLoading()
   // 我的模擬資料
   // const expandableTextData = [...expandableTextDataSet]
+
+  // 模擬異步操作
+  const handleAction = async () => {
+    showLoading()
+    // 模擬異步操作
+    const result = await new Promise((resolve) => setTimeout(resolve, 2000))
+    hideLoading()
+    onOpen()
+  }
   return (
     <>
       {/* 我的最愛 */}
@@ -49,7 +60,7 @@ const MainPage: React.FC = () => {
       ))} */}
 
       <Box>
-        <FixedButton onClick={onOpen} />
+        <FixedButton onClick={handleAction} />
         <ConfirmDialog
           isOpen={open}
           onConfirm={onClose}
