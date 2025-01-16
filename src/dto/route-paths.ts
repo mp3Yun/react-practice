@@ -4,6 +4,7 @@ import ButtonPage from '../feature/button/ButtonPage'
 import CarouselPage from '../feature/carousel/CarouselPage'
 import ImageCarouselPage from '../feature/carousel/ImageCarouselPage'
 import ChartPage from '../feature/chart/ChartPage'
+import ChineseCabbagePage from '../feature/chinese-cabbage/ChineseCabbagePage'
 import FormCustomInputPage from '../feature/form/FormCustomInputPage'
 import FormPage from '../feature/form/FormPage'
 import FormSteps2Page from '../feature/form/formSteps2Sample/FormStepsPage2'
@@ -41,6 +42,7 @@ export enum RoutePathEnum {
   Chart = '/home/chart',
   Table = '/home/table',
   Setting = '/home/setting',
+  ChineseCabbage = '/home/chineseCabbage',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -108,5 +110,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   // setting module
   [RoutePathEnum.Setting]: {
     component: SettingPage,
+  },
+  // chinese cabbage module
+  [RoutePathEnum.ChineseCabbage]: {
+    component: ChineseCabbagePage,
   },
 }

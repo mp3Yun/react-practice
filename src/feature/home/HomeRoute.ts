@@ -10,6 +10,7 @@ import { tableRoute } from '../table/tableRoute'
 import { useCaseRouteTree } from '../use-case/useCaseRoute'
 import { videoRoute } from '../video/videoRoute'
 import { settingRoute } from '../setting/settingRoute'
+import { chineseCabbageRoute } from '../chinese-cabbage/chineseCabbageRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -38,4 +39,6 @@ export const homeRouteTree = homeRoute.addChildren([
   tableRoute,
   // setting module
   settingRoute,
+  // chinese cabbage moudule
+  chineseCabbageRoute,
 ])

@@ -7,6 +7,7 @@ import './i18n' // 引入 i18n 設定檔
 import { router } from './routes/routes'
 import system from './theme.ts'
 import { LoadingProvider } from './hooks/LoadingContext.tsx'
+import { OverlayVisibleProvider } from './hooks/OverlayVisibleContext.tsx'
 
 function App() {
   return (
@@ -14,11 +15,13 @@ function App() {
       <React.Suspense fallback={<div>Loading...</div>}>
         <ChakraProvider value={system}>
           <LoadingProvider>
-            <ParagraphStyleProvider>
-              <AuthProvider>
-                <RouterProvider router={router} />
-              </AuthProvider>
-            </ParagraphStyleProvider>
+            <OverlayVisibleProvider>
+              <ParagraphStyleProvider>
+                <AuthProvider>
+                  <RouterProvider router={router} />
+                </AuthProvider>
+              </ParagraphStyleProvider>
+            </OverlayVisibleProvider>
           </LoadingProvider>
         </ChakraProvider>
       </React.Suspense>
