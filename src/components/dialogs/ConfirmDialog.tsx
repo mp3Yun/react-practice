@@ -38,7 +38,18 @@ const ConfirmDialog: React.FC<Props> = (props) => {
         onOpenChange={onClose}
         motionPreset="slide-in-bottom"
       >
-        <DialogContent>
+        <DialogContent
+          position="fixed" // 固定位置
+          top="50%" // 垂直居中
+          left="50%" // 水平居中
+          transform="translate(-50%, -50%)" // 位移使元素完全置中
+          zIndex="overlay" // 確保在最上層
+          maxWidth="sm" // 可根據需要調整寬度
+          bg="white" // 背景色
+          boxShadow="lg" // 加陰影
+          borderRadius="md" // 邊角圓滑
+          p={4} // 設置內邊距
+        >
           <DialogHeader>{confirmTitle}</DialogHeader>
           <DialogCloseTrigger />
           <DialogBody>

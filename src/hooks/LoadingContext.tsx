@@ -25,7 +25,7 @@ export const LoadingProvider: React.FC<PropsWithChildren> = ({ children }) => {
           left={0}
           width="100vw"
           height="100vh"
-          bg="gray.300"
+          backgroundColor="rgba(0, 0, 0, 0.5)" // 黑色背景，透明度 50%
           display="flex"
           justifyContent="center"
           alignItems="center"
