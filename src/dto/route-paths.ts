@@ -11,6 +11,7 @@ import FormSteps2Page from '../feature/form/formSteps2Sample/FormStepsPage2'
 import FormSteps3Page from '../feature/form/formSteps3Sample/FormStepsPage3'
 import FormStepsPage from '../feature/form/FormStepsPage'
 import SampleFormUseFieldArray from '../feature/form/FormUseFieldArraySamplePage'
+import GamesPage from '../feature/games'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
@@ -43,6 +44,7 @@ export enum RoutePathEnum {
   Table = '/home/table',
   Setting = '/home/setting',
   ChineseCabbage = '/home/chineseCabbage',
+  Games = '/home/games',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -114,5 +116,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   // chinese cabbage module
   [RoutePathEnum.ChineseCabbage]: {
     component: ChineseCabbagePage,
+  },
+  // games module
+  [RoutePathEnum.Games]: {
+    component: GamesPage,
   },
 }
