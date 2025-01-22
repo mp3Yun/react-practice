@@ -1,5 +1,11 @@
+import { Outlet } from '@tanstack/react-router'
+
 const GamesPage: React.FC = () => {
-  return <></>
+  return (
+    <>
+      <Outlet />
+    </>
+  )
 }
 
 export default GamesPage

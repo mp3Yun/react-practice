@@ -5,5 +5,13 @@ import { RoutePathEnum, routePathMaps } from '../../dto/route-paths'
 export const gamesRoute = createRoute({
   getParentRoute: () => homeRoute,
   path: '/games', // 定義路由的 path
-  component: routePathMaps[RoutePathEnum.ChineseCabbage].component, // 定義該路由的對應組件
+  component: routePathMaps[RoutePathEnum.Games].component, // 定義該路由的對應組件
 })
+
+export const ticTacToeRoute = createRoute({
+  getParentRoute: () => gamesRoute,
+  path: '/ticTacToe', // 定義路由的 path
+  component: routePathMaps[RoutePathEnum.TicTacToe].component, // 定義該路由的對應組件
+})
+
+export const gamesRouteTree = gamesRoute.addChildren([ticTacToeRoute])
