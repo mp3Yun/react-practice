@@ -89,3 +89,16 @@ export function sortByCustomCondition<T>(
 export function generateArray(n: number): number[] {
   return Array.from({ length: n }, (_, index) => index + 1)
 }
+
+export function generateRandomPairs(n: number): number[] {
+  // Step 1: 產生 0~(n-1) 成對的陣列
+  const originalArray = Array.from({ length: n }, (_, i) => [i, i]).flat()
+
+  // Step 2: 打亂陣列（Fisher-Yates 洗牌）
+  for (let i = originalArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[originalArray[i], originalArray[j]] = [originalArray[j], originalArray[i]]
+  }
+
+  return originalArray
+}

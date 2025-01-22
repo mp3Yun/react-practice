@@ -12,6 +12,7 @@ import FormSteps3Page from '../feature/form/formSteps3Sample/FormStepsPage3'
 import FormStepsPage from '../feature/form/FormStepsPage'
 import SampleFormUseFieldArray from '../feature/form/FormUseFieldArraySamplePage'
 import GamesPage from '../feature/games'
+import MemoryCardPage from '../feature/games/memory-card/MemoryCardPage'
 import TicTacToePage from '../feature/games/tic-tac-toe/TicTacToePage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
@@ -47,6 +48,7 @@ export enum RoutePathEnum {
   ChineseCabbage = '/home/chineseCabbage',
   Games = '/home/games',
   TicTacToe = '/home/games/ticTacToe',
+  MemoryCard = '/home/games/memoryCard',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -125,5 +127,8 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.TicTacToe]: {
     component: TicTacToePage,
+  },
+  [RoutePathEnum.MemoryCard]: {
+    component: MemoryCardPage,
   },
 }

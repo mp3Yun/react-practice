@@ -5,6 +5,13 @@ import { CiCircleInfo } from 'react-icons/ci'
 import { FaCheck } from 'react-icons/fa'
 import React from 'react'
 import ReactIcon from '../assets/react.svg'
+import Animal1 from '../assets/images/animal1.png'
+import Animal2 from '../assets/images/animal2.png'
+import Animal3 from '../assets/images/animal3.png'
+import Animal4 from '../assets/images/animal4.png'
+import Animal5 from '../assets/images/animal5.png'
+import Animal6 from '../assets/images/animal6.png'
+import AnimalAll from '../assets/images/animal_all.png'
 
 export enum ChakraIcons {
   Add = 'Add',
@@ -19,7 +26,17 @@ export enum SvgIcons {
   React = 'React',
 }
 
-export type AllIcons = ChakraIcons | SvgIcons
+export enum PngImgs {
+  Animal1 = 'Animal1',
+  Animal2 = 'Animal2',
+  Animal3 = 'Animal3',
+  Animal4 = 'Animal4',
+  Animal5 = 'Animal5',
+  Animal6 = 'Animal6',
+  AnimalAll = 'AnimalAll',
+}
+
+export type AllIcons = ChakraIcons | SvgIcons | PngImgs
 // 定義 iconMap
 const iconMap: Record<AllIcons, React.ElementType | string> = {
   [ChakraIcons.Add]: GrAdd,
@@ -29,6 +46,13 @@ const iconMap: Record<AllIcons, React.ElementType | string> = {
   [ChakraIcons.Info]: CiCircleInfo,
   [ChakraIcons.Check]: FaCheck,
   [SvgIcons.React]: ReactIcon,
+  [PngImgs.Animal1]: Animal1,
+  [PngImgs.Animal2]: Animal2,
+  [PngImgs.Animal3]: Animal3,
+  [PngImgs.Animal4]: Animal4,
+  [PngImgs.Animal5]: Animal5,
+  [PngImgs.Animal6]: Animal6,
+  [PngImgs.AnimalAll]: AnimalAll,
 }
 
 // 定義 IconTypes
