@@ -14,6 +14,7 @@ import SampleFormUseFieldArray from '../feature/form/FormUseFieldArraySamplePage
 import GamesPage from '../feature/games'
 import MemoryCardPage from '../feature/games/memory-card/MemoryCardPage'
 import TicTacToePage from '../feature/games/tic-tac-toe/TicTacToePage'
+import WhackAMolePage from '../feature/games/whack-a-mole/WhackAMolePage'
 import HomePage from '../feature/home/HomePage'
 import LoginPage from '../feature/login/LoginPage'
 import MainPage from '../feature/main/MainPage'
@@ -49,6 +50,7 @@ export enum RoutePathEnum {
   Games = '/home/games',
   TicTacToe = '/home/games/ticTacToe',
   MemoryCard = '/home/games/memoryCard',
+  WhackAMole = '/home/games/whackAMole',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -130,5 +132,8 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.MemoryCard]: {
     component: MemoryCardPage,
+  },
+  [RoutePathEnum.WhackAMole]: {
+    component: WhackAMolePage,
   },
 }
