@@ -2,6 +2,8 @@ import { Box, Input, InputProps, Text } from '@chakra-ui/react'
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
 import { AllIcons } from '../../utils/icons-utils'
 import ErrorMessage from './ErrorMessage'
+import { useFormLayoutContext } from '../../hooks/FormLayoutContext'
+import { useEffect } from 'react'
 
 interface IconInfoProps {
   icon: AllIcons
@@ -40,6 +42,9 @@ const FormInput = <TFieldValues extends FieldValues>({
     fieldState: { error },
   } = useController({ name, control, rules })
 
+  const { flexDir } = useFormLayoutContext()
+  const direction = flexDir ?? 'column'
+
   // 如果有自定義的 onChange，則結合 react-hook-form 的 field.onChange
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -48,8 +53,13 @@ const FormInput = <TFieldValues extends FieldValues>({
     field.onChange(e) // 保證 react-hook-form 的狀態更新
   }
   return (
-    <Box my={2}>
-      <Text>
+    <Box
+      my={2}
+      display="flex"
+      flexDir={direction}
+      alignItems={direction === 'row' ? 'center' : 'start'}
+    >
+      <Text whiteSpace="nowrap" mr={direction === 'row' ? '10px' : '0px'}>
         {isRequired && <span style={{ color: 'red' }}>*</span>}
         {label}
       </Text>

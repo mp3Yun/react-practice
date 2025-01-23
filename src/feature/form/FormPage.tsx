@@ -61,7 +61,7 @@ const FormPage: React.FC = () => {
           {errors.exampleRequired && (
             <Box color="red.500">This field is required</Box>
           )}
-          <input type="submit" />
+          <input type="submit" value={'送出'} />
         </form>
       ) : (
         <FormGuardProvider>
