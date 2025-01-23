@@ -1,6 +1,7 @@
 import { Box, Grid, GridItem, Text } from '@chakra-ui/react'
 import { useState } from 'react'
 import ScoreBoard from './score-board/ScoreBoard'
+import GameBoard from './game-board/GameBoard'
 
 enum LevelType {
   Easy = 1,
@@ -32,7 +33,9 @@ const WhackAMolePage: React.FC = () => {
         score={score}
         remainingSeconds={remainingSeconds}
       ></ScoreBoard>
-      <Box margin="0.5rem"></Box>
+      <Box margin="0.5rem">
+        <GameBoard level={level}></GameBoard>
+      </Box>
     </Box>
   )
 }
