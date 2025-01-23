@@ -14,6 +14,7 @@ import MemoryCard from '../../../components/MemoryCard'
 import { FormLayoutContextProvider } from '../../../hooks/FormLayoutContext'
 import { generateRandomPairs } from '../../../utils/array-utils'
 import { PngImgs } from '../../../utils/icons-utils'
+import Confetti from '../../../components/confetti/Confetti'
 
 interface StepRecord {
   // 第幾張卡被翻動
@@ -65,7 +66,10 @@ const MemoryCardPage: React.FC = () => {
         return prev
       }
       const newPaired = [...prev, Number(newValue[0].value)]
-      if (newPaired.length === cardSize) onOpen()
+      const currentCardSize = formMethods.getValues().cardSize // 使用最新的值
+      if (newPaired.length === +currentCardSize) {
+        onOpen()
+      }
       return newPaired
     })
   }
@@ -85,18 +89,22 @@ const MemoryCardPage: React.FC = () => {
   // 表單控制
   const formMethods = useForm<FormContext>({
     defaultValues: {
-      cardSize: 4,
+      cardSize: 2,
     },
   })
-  const cardSize = formMethods.getValues().cardSize
 
   // 狀態管理
+  const cardSize = formMethods.watch('cardSize') // 即時監控 cardSize 的變化
   const [cardList, setCardList] = useState<CardInfo[]>(initCardList(cardSize))
   const [pairValue, setPairValue] = useState<StepRecord[]>([])
   const [isPaired, setIsPaired] = useState<number[]>([])
   const { open, onOpen, onClose } = useDisclosure()
 
-  const handleReset = () => {
+  const handleReset = (defaultCardSize?: number) => {
+    // 如果有提供 defaultCardSize，更新表單的值並設定為新預設值
+    if (defaultCardSize) {
+      formMethods.reset({ cardSize: defaultCardSize }) // 更新表單的值和預設值
+    }
     const newCardList = initCardList(formMethods.getValues().cardSize)
     setCardList(newCardList)
     setPairValue([])
@@ -129,7 +137,9 @@ const MemoryCardPage: React.FC = () => {
         <FormLayoutContextProvider initialFlexDir="row">
           <FormProvider {...formMethods}>
             <form
-              onSubmit={formMethods.handleSubmit(() => handleReset())}
+              onSubmit={formMethods.handleSubmit((data) =>
+                handleReset(data.cardSize)
+              )}
               style={{ display: 'flex', gap: '8px' }}
             >
               <Box>
@@ -137,10 +147,18 @@ const MemoryCardPage: React.FC = () => {
                   label="卡片數量"
                   control={formMethods.control}
                   name="cardSize"
+                  rules={{
+                    required: '請輸入卡片數量',
+                    validate: (value) => {
+                      if (value > 6) {
+                        return 'Maximum 6 cards allowed' // Handle validation error
+                      }
+                    },
+                  }}
                 />
               </Box>
 
-              <Button alignSelf="center" type="submit">
+              <Button mt="8px" type="submit">
                 Confirm
               </Button>
             </form>
@@ -148,7 +166,7 @@ const MemoryCardPage: React.FC = () => {
         </FormLayoutContextProvider>
       </Box>
 
-      <Box margin="4rem" className="show-border">
+      <Box margin="2rem" className="show-border">
         <Grid templateColumns="repeat(4, 1fr)" gap="2rem">
           {cardList.map((item, index) => (
             <GridItem key={index}>
@@ -170,8 +188,11 @@ const MemoryCardPage: React.FC = () => {
       </Box>
 
       <Box m="2rem">
-        <Button onClick={handleReset}>Start a new round</Button>
+        <Button onClick={() => handleReset()}>Start a new round</Button>
       </Box>
+
+      {/* 彩帶動畫 */}
+      {open && <Confetti confettiNumber={50} />}
 
       <ConfirmDialog
         isOpen={open}

@@ -59,20 +59,28 @@ const FormInput = <TFieldValues extends FieldValues>({
       flexDir={direction}
       alignItems={direction === 'row' ? 'center' : 'start'}
     >
-      <Text whiteSpace="nowrap" mr={direction === 'row' ? '10px' : '0px'}>
+      <Text
+        height="auto"
+        whiteSpace="nowrap"
+        mr={direction === 'row' ? '10px' : '0px'}
+        pb={direction === 'row' ? '20px' : '0px'}
+        lineHeight="1" // 確保行高不影響對齊
+      >
         {isRequired && <span style={{ color: 'red' }}>*</span>}
         {label}
       </Text>
-      <Input
-        {...inputProps}
-        {...field}
-        value={value ?? field.value}
-        onChange={handleOnChange} // 使用自定義的 onChange 處理
-        onFocus={onFocus}
-        onKeyDown={onKeyDown}
-        onBlur={onBlur}
-      ></Input>
-      <ErrorMessage message={error?.message} />
+      <Box flex="1">
+        <Input
+          {...inputProps}
+          {...field}
+          value={value ?? field.value}
+          onChange={handleOnChange} // 使用自定義的 onChange 處理
+          onFocus={onFocus}
+          onKeyDown={onKeyDown}
+          onBlur={onBlur}
+        ></Input>
+        <ErrorMessage message={error?.message} />
+      </Box>
     </Box>
   )
 }
