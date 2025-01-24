@@ -1,5 +1,5 @@
-import { Box, Grid, GridItem, Text } from '@chakra-ui/react'
-import { useState } from 'react'
+import { Box, Button, Grid, GridItem, Text } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 import ScoreBoard from './score-board/ScoreBoard'
 import GameBoard from './game-board/GameBoard'
 
@@ -18,8 +18,30 @@ function getLevelString(level: number): string | undefined {
 const WhackAMolePage: React.FC = () => {
   // 狀態管理
   const [score, setScore] = useState(0)
-  const [remainingSeconds, setRemainingSeconds] = useState(0)
+  const [remainingSeconds, setRemainingSeconds] = useState(30)
   const [level, setLevel] = useState(LevelType.Easy)
+  const [isGameStarted, setIsGameStarted] = useState(false)
+
+  // 遊戲開始
+  useEffect(() => {
+    let timerId = 0
+    if (isGameStarted && remainingSeconds > 0) {
+      timerId = setInterval(() => {
+        setRemainingSeconds((prev) => prev - 1)
+      }, 1000)
+    } else if (remainingSeconds === 0) {
+      setIsGameStarted(false)
+
+      if (score > 300) {
+        // TODO: 確認是否要挑戰更高級的關卡
+      }
+    }
+    return () => clearInterval(timerId)
+  }, [isGameStarted, remainingSeconds])
+
+  const calculateScore = (score: number) => {
+    setScore((prev) => prev + score)
+  }
 
   return (
     <Box w="100%" h="auto" alignContent="center" justifyItems="center">
@@ -34,7 +56,16 @@ const WhackAMolePage: React.FC = () => {
         remainingSeconds={remainingSeconds}
       ></ScoreBoard>
       <Box margin="0.5rem">
-        <GameBoard level={level}></GameBoard>
+        <Button onClick={() => setIsGameStarted(!isGameStarted)}>
+          {isGameStarted ? 'Stop' : 'Start'}
+        </Button>
+      </Box>
+      <Box margin="0.5rem">
+        <GameBoard
+          level={level}
+          isGameStarted={isGameStarted}
+          calculateScore={calculateScore}
+        ></GameBoard>
       </Box>
     </Box>
   )
