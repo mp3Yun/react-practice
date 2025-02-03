@@ -1,7 +1,8 @@
-import { Box, Button, Grid, GridItem, Text } from '@chakra-ui/react'
+import { Box, Button, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
-import ScoreBoard from './score-board/ScoreBoard'
+import ConfirmDialog from '../../../components/dialogs/ConfirmDialog'
 import GameBoard from './game-board/GameBoard'
+import ScoreBoard from './score-board/ScoreBoard'
 
 enum LevelType {
   Easy = 1,
@@ -21,6 +22,7 @@ const WhackAMolePage: React.FC = () => {
   const [remainingSeconds, setRemainingSeconds] = useState(30)
   const [level, setLevel] = useState(LevelType.Easy)
   const [isGameStarted, setIsGameStarted] = useState(false)
+  const [isModalOpen, setModalOpen] = useState(false)
 
   // 遊戲開始
   useEffect(() => {
@@ -32,8 +34,13 @@ const WhackAMolePage: React.FC = () => {
     } else if (remainingSeconds === 0) {
       setIsGameStarted(false)
 
-      if (score > 300) {
-        // TODO: 確認是否要挑戰更高級的關卡
+      if (score > 50) {
+        setModalOpen(true)
+        // 清空分數
+        setScore(0)
+        // 重置時間
+        setRemainingSeconds(30)
+        clearInterval(timerId) // 這一個有必要嗎?
       }
     }
     return () => clearInterval(timerId)
@@ -67,6 +74,18 @@ const WhackAMolePage: React.FC = () => {
           calculateScore={calculateScore}
         ></GameBoard>
       </Box>
+
+      {/* dialog */}
+      <ConfirmDialog
+        isOpen={isModalOpen}
+        confirmTitle="恭喜通關"
+        confirmMessage="是否要挑戰下一個難度?"
+        onConfirm={() => {
+          setModalOpen(false)
+          setLevel(level + 1)
+        }}
+        onClose={() => setModalOpen(false)}
+      ></ConfirmDialog>
     </Box>
   )
 }

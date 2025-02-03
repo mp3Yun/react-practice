@@ -11,10 +11,18 @@ const GameBoard: React.FC<Props> = ({
   isGameStarted,
   calculateScore,
 }) => {
+  const holeCount = [2, 3, 4, 5, 6]
   // 狀態管理
-  const [molePositions, setMolePositions] = useState<boolean[]>(
-    Array.from({ length: (level + 2) * (level + 2) }, () => false)
-  )
+  const [molePositions, setMolePositions] = useState<boolean[]>([])
+
+  // 刷新地鼠的位置
+  useEffect(() => {
+    const newPositions = Array.from(
+      { length: holeCount[level - 1] * holeCount[level - 1] },
+      () => false
+    )
+    setMolePositions(newPositions)
+  }, [level])
 
   // 控制地鼠出現的時機
   useEffect(() => {
@@ -41,8 +49,8 @@ const GameBoard: React.FC<Props> = ({
 
   return (
     <Grid
-      templateColumns={`repeat(${level + 2}, 1fr)`}
-      templateRows={`repeat(${level + 2}, 1fr)`}
+      templateColumns={`repeat(${holeCount[level - 1]}, 1fr)`}
+      templateRows={`repeat(${holeCount[level - 1]}, 1fr)`}
       gap="0.5rem"
     >
       {molePositions.map((isMole, index) => (
