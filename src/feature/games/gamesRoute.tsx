@@ -26,8 +26,15 @@ export const whackAMoleRoute = createRoute({
   component: routePathMaps[RoutePathEnum.WhackAMole].component, // 定義該路由的對應組件
 })
 
+export const number2048Route = createRoute({
+  getParentRoute: () => gamesRoute,
+  path: '/number2048', // 定義路由的 path
+  component: routePathMaps[RoutePathEnum.Number2048].component, // 定義該路由的對應組件
+})
+
 export const gamesRouteTree = gamesRoute.addChildren([
   ticTacToeRoute,
   memoryCardRoute,
   whackAMoleRoute,
+  number2048Route,
 ])
