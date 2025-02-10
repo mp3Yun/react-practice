@@ -12,6 +12,7 @@ import { videoRoute } from '../video/videoRoute'
 import { settingRoute } from '../setting/settingRoute'
 import { chineseCabbageRoute } from '../chinese-cabbage/chineseCabbageRoute'
 import { gamesRouteTree } from '../games/gamesRoute'
+import { xlsxRoute } from '../xlsx/xlsxRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -44,4 +45,6 @@ export const homeRouteTree = homeRoute.addChildren([
   chineseCabbageRoute,
   // games module
   gamesRouteTree,
+  // xlsx module
+  xlsxRoute,
 ])

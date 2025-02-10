@@ -24,6 +24,7 @@ import SettingPage from '../feature/setting/SettingPage'
 import TablePage from '../feature/table/TablePage'
 import UseRefCasePage from '../feature/use-case/useRefCasePage'
 import VideoPage from '../feature/video/VideoPage'
+import XlsxHomePage from '../feature/xlsx/XlsxHomePage'
 import RouteConfigDto from './route-config.dto'
 
 // 跳頁路徑，要使用絕對路徑
@@ -55,6 +56,7 @@ export enum RoutePathEnum {
   WhackAMole = '/home/games/whackAMole',
   Number2048 = '/home/games/number2048',
   SnakeGame = '/home/games/snakeGame',
+  Xlsx = '/home/xlsx',
 }
 
 export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
@@ -145,5 +147,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.SnakeGame]: {
     component: SnakeGamePage,
+  },
+  // xlsx module
+  [RoutePathEnum.Xlsx]: {
+    component: XlsxHomePage,
   },
 }
