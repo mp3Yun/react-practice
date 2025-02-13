@@ -1,21 +1,21 @@
 import { Box, Text } from '@chakra-ui/react'
-import { Strategy } from '../strategy/ParserFactory'
-import { resultComponentMap } from '../parser-result/ParserResult'
 import LoadingSpinner from '../../../components/LoadingSpinner'
+import { ReportType } from '../../../helper/report-parser-content/report-parser-context'
+import { resultComponentMap } from '../parser-result/ParserResult'
 
 interface ResultDisplayProps<T> {
-  strategy: Strategy
+  reportType: ReportType
   parsedData: T[]
   isLoading: boolean
 }
 
 const ResultDisplay = <T,>({
-  strategy,
+  reportType,
   parsedData,
   isLoading,
 }: ResultDisplayProps<T>) => {
   const ResultComponent =
-    resultComponentMap[strategy] || (() => <Text>No valid strategy</Text>)
+    resultComponentMap[reportType] || (() => <Text>No valid strategy</Text>)
   return (
     <Box
       display="flex"

@@ -8,24 +8,29 @@ interface UsePaginationProp {
   paginatedData: () => any[]
   startLoading: () => void
   stopLoading: () => void
+  resetCurrentPage: () => void
 }
-const usePagination = (data: any, pageSize: number): UsePaginationProp => {
+const usePagination = (
+  reportData: any[],
+  pageSize: number
+): UsePaginationProp => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [hasMore, setHasMore] = useState<boolean>(true)
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const startLoading = () => setIsLoading(true)
   const stopLoading = () => setIsLoading(false)
+  const resetCurrentPage = () => setCurrentPage(1)
 
   const paginatedData = () => {
     // 取得下一批資料的起始索引值
     const startIndex = (currentPage - 1) * pageSize
     const endIndex = startIndex + pageSize
-    return data.slice(startIndex, endIndex)
+    return reportData.slice(startIndex, endIndex)
   }
 
   const loadMoreData = () => {
-    if ((currentPage + 1) * pageSize > data.length) {
+    if ((currentPage + 1) * pageSize > reportData.length) {
       // 沒有更多資料了
       setHasMore(false)
     } else {
@@ -42,6 +47,7 @@ const usePagination = (data: any, pageSize: number): UsePaginationProp => {
     loadMoreData,
     startLoading,
     stopLoading,
+    resetCurrentPage,
   }
 }
 

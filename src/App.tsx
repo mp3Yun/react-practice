@@ -2,12 +2,13 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { RouterProvider } from '@tanstack/react-router'
 import React, { StrictMode } from 'react'
 import { AuthProvider } from './hooks/AuthContext.tsx'
+import { LoadingProvider } from './hooks/LoadingContext.tsx'
+import { OverlayVisibleProvider } from './hooks/OverlayVisibleContext.tsx'
+import { StoreProvider } from './hooks/contexts/store-context/UseStore.tsx'
 import { ParagraphStyleProvider } from './hooks/useParagraphStyle.tsx'
 import './i18n' // 引入 i18n 設定檔
 import { router } from './routes/routes'
 import system from './theme.ts'
-import { LoadingProvider } from './hooks/LoadingContext.tsx'
-import { OverlayVisibleProvider } from './hooks/OverlayVisibleContext.tsx'
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
             <OverlayVisibleProvider>
               <ParagraphStyleProvider>
                 <AuthProvider>
-                  <RouterProvider router={router} />
+                  <StoreProvider>
+                    <RouterProvider router={router} />
+                  </StoreProvider>
                 </AuthProvider>
               </ParagraphStyleProvider>
             </OverlayVisibleProvider>

@@ -4,15 +4,15 @@ import { Route } from '../../routes/__root'
 import { buttonRouteTree } from '../button/buttonRoute'
 import { carouselRouteTree } from '../carousel/carouselRoute'
 import { chartRoute } from '../chart/chartRoute'
+import { chineseCabbageRoute } from '../chinese-cabbage/chineseCabbageRoute'
 import { formTreeRoute } from '../form/formRoute'
+import { gamesRouteTree } from '../games/gamesRoute'
 import { mainRoute } from '../main/mainRoute'
+import { settingRoute } from '../setting/settingRoute'
 import { tableRoute } from '../table/tableRoute'
 import { useCaseRouteTree } from '../use-case/useCaseRoute'
 import { videoRoute } from '../video/videoRoute'
-import { settingRoute } from '../setting/settingRoute'
-import { chineseCabbageRoute } from '../chinese-cabbage/chineseCabbageRoute'
-import { gamesRouteTree } from '../games/gamesRoute'
-import { xlsxRoute } from '../xlsx/xlsxRoute'
+import { xlsxRouteTree } from '../xlsx/xlsxRoute'
 
 // 創建路由
 export const homeRoute = createRoute({
@@ -46,5 +46,5 @@ export const homeRouteTree = homeRoute.addChildren([
   // games module
   gamesRouteTree,
   // xlsx module
-  xlsxRoute,
+  xlsxRouteTree,
 ])

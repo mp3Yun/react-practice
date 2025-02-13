@@ -1,14 +1,16 @@
 import { useCallback, useState } from 'react'
-import { parseExcelFile } from '../utils/xlsx-utils'
+import { readExcelWithImages } from '../utils/xlsx-utils'
 
 interface UseExcelProp {
   data: any
   error: string | null
+  imgs: Record<string, string> | null
   handleFile: (file: File) => void
 }
 const useExcel = (): UseExcelProp => {
   const [data, setData] = useState<any[]>([])
   const [error, setError] = useState<string | null>(null)
+  const [imgs, setImgs] = useState<Record<string, string> | null>(null)
 
   /**
    *  ====== note: When to use 'useCallback' ======
@@ -27,15 +29,19 @@ const useExcel = (): UseExcelProp => {
   // }, [])
   const handleFile = async (file: File) => {
     try {
-      const result = await parseExcelFile(file)
-      setData(result)
+      // const result = await parseExcelFile(file)
+      // const rawData = await excelRawData(file)
+      // 使用圖片的
+      const result = await readExcelWithImages(file)
+      setData(result?.sheetData as any[])
+      setImgs(result?.imageMappings)
       setError(null)
     } catch (error) {
       setError('Failed to parse Excel file')
     }
   }
 
-  return { data, error, handleFile }
+  return { data, error, imgs, handleFile }
 }
 
 export default useExcel

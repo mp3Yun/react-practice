@@ -1,23 +1,23 @@
 import ReportParserContext, {
-  AuditReport,
+  ReportType,
   ReportParserStrategy,
 } from './report-parser-context'
 import { ReportInfo } from './report.type'
+import ToursReportParser from './reports/tours-parser'
 
 type ParserSelector = Record<
-  AuditReport,
-  // new (reportFileName: string) => ReportParserStrategy<ReportInfo>
-  any
+  ReportType,
+  new (reportFileName: string) => ReportParserStrategy<ReportInfo>
 >
 // Mapping of report names to their respective parser classes
 const parserMapping: ParserSelector = {
-  DailyTradingReport: 'DailyTradingParser',
-  DailyTradingReportM: 'DailyTradingParser',
+  ToursReport: ToursReportParser,
+  // HotelsReport:
 }
 
 export default class ReportParserService {
   public static parseReport<T extends ReportInfo>(
-    reportName: AuditReport,
+    reportName: ReportType,
     reportFileName: string,
     rawData: string[][]
   ): T {
