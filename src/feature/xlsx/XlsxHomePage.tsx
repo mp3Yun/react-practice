@@ -12,10 +12,14 @@ const XlsxHomePage: React.FC = () => {
   const [parsedData, setParsedData] = useState<any[]>([]) // 存放處理後的資料
   const [showData, setShowData] = useState<any[]>([])
   const [strategy, setStrategy] = useState<Strategy>('tours')
-  const { currentPage, paginatedData, loadMoreData } = usePagination(
-    parsedData,
-    10
-  )
+  const {
+    currentPage,
+    isLoading,
+    paginatedData,
+    loadMoreData,
+    startLoading,
+    stopLoading,
+  } = usePagination(parsedData, 10)
   const { ref, inView, entry } = useInView({
     /* Optional options */
     // threshold: 0.3, // 30% 可見時觸發
@@ -33,7 +37,14 @@ const XlsxHomePage: React.FC = () => {
 
   useEffect(() => {
     if (parsedData.length > 0) {
-      setShowData((prev) => [...prev, ...paginatedData()]) // 初始化，顯示10筆資料
+      startLoading()
+      // 模擬延遲
+      const timerId = setTimeout(() => {
+        setShowData((prev) => [...prev, ...paginatedData()]) // 初始化，顯示10筆資料
+        stopLoading()
+      }, 1000)
+
+      return () => clearTimeout(timerId)
     }
   }, [parsedData, currentPage])
 
@@ -69,7 +80,11 @@ const XlsxHomePage: React.FC = () => {
       </Box>
       <Text fontSize="xl">Results Display</Text>
       {/* result */}
-      <ResultDisplay strategy={strategy} parsedData={showData}></ResultDisplay>
+      <ResultDisplay
+        strategy={strategy}
+        parsedData={showData}
+        isLoading={isLoading}
+      ></ResultDisplay>
       {/* ref 綁定底部元素，用於偵測是否滑到底部了 */}
       {showData.length > 0 && <Box ref={ref} height="2px"></Box>}
     </Box>

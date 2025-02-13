@@ -1,13 +1,19 @@
 import { Box, Text } from '@chakra-ui/react'
 import { Strategy } from '../strategy/ParserFactory'
 import { resultComponentMap } from '../parser-result/ParserResult'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 
 interface ResultDisplayProps<T> {
   strategy: Strategy
   parsedData: T[]
+  isLoading: boolean
 }
 
-const ResultDisplay = <T,>({ strategy, parsedData }: ResultDisplayProps<T>) => {
+const ResultDisplay = <T,>({
+  strategy,
+  parsedData,
+  isLoading,
+}: ResultDisplayProps<T>) => {
   const ResultComponent =
     resultComponentMap[strategy] || (() => <Text>No valid strategy</Text>)
   return (
@@ -20,8 +26,13 @@ const ResultDisplay = <T,>({ strategy, parsedData }: ResultDisplayProps<T>) => {
     >
       {parsedData.length > 0 ? (
         <ResultComponent data={parsedData} />
-      ) : (
+      ) : isLoading ? null : (
         'no data'
+      )}
+      {isLoading && (
+        <Box alignSelf="center">
+          <LoadingSpinner></LoadingSpinner>
+        </Box>
       )}
     </Box>
   )

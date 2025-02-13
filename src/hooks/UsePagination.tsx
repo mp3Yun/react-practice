@@ -3,12 +3,19 @@ import { useState } from 'react'
 interface UsePaginationProp {
   currentPage: number
   hasMore: boolean
+  isLoading: boolean
   loadMoreData: () => void
   paginatedData: () => any[]
+  startLoading: () => void
+  stopLoading: () => void
 }
 const usePagination = (data: any, pageSize: number): UsePaginationProp => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [hasMore, setHasMore] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const startLoading = () => setIsLoading(true)
+  const stopLoading = () => setIsLoading(false)
 
   const paginatedData = () => {
     // 取得下一批資料的起始索引值
@@ -27,7 +34,15 @@ const usePagination = (data: any, pageSize: number): UsePaginationProp => {
     }
   }
 
-  return { currentPage, hasMore, paginatedData, loadMoreData }
+  return {
+    currentPage,
+    hasMore,
+    isLoading,
+    paginatedData,
+    loadMoreData,
+    startLoading,
+    stopLoading,
+  }
 }
 
 export default usePagination
