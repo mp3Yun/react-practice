@@ -6,7 +6,7 @@ interface UseExcelProp {
   error: string | null
   handleFile: (file: File) => void
 }
-const UseExcel = (): UseExcelProp => {
+const useExcel = (): UseExcelProp => {
   const [data, setData] = useState<any[]>([])
   const [error, setError] = useState<string | null>(null)
 
@@ -38,4 +38,4 @@ const UseExcel = (): UseExcelProp => {
   return { data, error, handleFile }
 }
 
-export default UseExcel
+export default useExcel

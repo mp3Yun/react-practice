@@ -2,13 +2,13 @@ import { Box, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import FileUpload from '../../components/buttons/FileUpload'
-import UseExcel from '../../hooks/UseExcel'
+import useExcel from '../../hooks/UseExcel'
 import ResultDisplay from './components/ResultDisplay'
 import { Strategy, getParser } from './strategy/ParserFactory'
 import usePagination from '../../hooks/UsePagination'
 
 const XlsxHomePage: React.FC = () => {
-  const { data, error, handleFile } = UseExcel()
+  const { data, error, handleFile } = useExcel()
   const [parsedData, setParsedData] = useState<any[]>([]) // 存放處理後的資料
   const [showData, setShowData] = useState<any[]>([])
   const [strategy, setStrategy] = useState<Strategy>('tours')
