@@ -23,7 +23,14 @@ const CrossZoneDragger = <T extends ItemInfo>({
 }: CrossZoneDraggerProps<T>) => {
   return (
     <DndContext onDragEnd={onDragEnd} collisionDetection={closestCenter}>
-      <Box style={{ display: 'flex', gap: '1rem' }}>
+      <Box
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          width: '100%',
+        }}
+      >
         {Object.keys(data).map((key) => (
           <SingleDragBlock
             key={key}
