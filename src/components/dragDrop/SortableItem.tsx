@@ -1,12 +1,12 @@
 import { Box } from '@chakra-ui/react'
 import { useSortable } from '@dnd-kit/sortable'
 
-interface SortableItemProps<T extends { id: number; text: string }> {
+interface SortableItemProps<T extends { id: string; text: string }> {
   item: T
   CustomComponent: React.ComponentType<{ item: T }> // 傳遞元件類型
 }
 
-const SortableItem = <T extends { id: number; text: string }>({
+const SortableItem = <T extends { id: string; text: string }>({
   item,
   CustomComponent,
 }: SortableItemProps<T>) => {

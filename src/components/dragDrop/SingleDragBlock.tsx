@@ -1,10 +1,10 @@
 import React from 'react'
 import { ItemInfo } from './CrossZoneDragger'
 import { SortableContext } from '@dnd-kit/sortable'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, BoxProps, Text } from '@chakra-ui/react'
 import SortableItem from './SortableItem'
 
-interface Props<T extends ItemInfo> {
+interface Props<T extends ItemInfo> extends BoxProps {
   data: T[]
   CustomComponent: React.ComponentType<{ item: T }>
 }
@@ -12,6 +12,7 @@ interface Props<T extends ItemInfo> {
 const SingleDragBlock = <T extends ItemInfo>({
   data,
   CustomComponent,
+  ...boxProps
 }: Props<T>) => {
   return (
     <SortableContext items={data}>
@@ -20,8 +21,8 @@ const SingleDragBlock = <T extends ItemInfo>({
         flexDir="row"
         flexWrap="wrap"
         gap="0.5rem"
-        className="show-border"
-        width="90%"
+        width="100%"
+        {...boxProps}
       >
         {data.length > 0 ? (
           data.map((item) => (

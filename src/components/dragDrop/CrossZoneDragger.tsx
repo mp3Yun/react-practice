@@ -4,7 +4,7 @@ import SingleDragBlock from './SingleDragBlock'
 
 export interface ItemInfo {
   /** 排序使用的 id */
-  id: number
+  id: string
   /** 原本的 id */
   origId: number
   text: string
