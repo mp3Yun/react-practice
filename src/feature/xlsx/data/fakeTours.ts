@@ -168,4 +168,115 @@ export const fakeTours = [
     },
     isLike: {},
   },
+
+  {
+    id: {
+      name: 'id',
+      value: 'T4',
+    },
+    name: {
+      name: '景點名稱',
+      value: 'TESTB4',
+    },
+    info: {
+      name: '資訊介紹',
+      value: 'TESTC4',
+    },
+    special: {
+      name: '特色',
+      value: 'TEST4',
+    },
+    price: {
+      name: '價格',
+      value: 'TESTB4',
+    },
+    openDate: {
+      name: '開放日期',
+      value: 'TESTC4',
+    },
+    openingHours: {
+      name: '開放時間',
+      value: 'TEST4',
+    },
+    location: {
+      name: '地點',
+      value: 'TESTB4',
+    },
+    transportation: {
+      name: '交通',
+      value: 'TESTC4',
+    },
+    commuteTime: {
+      name: '通勤時間',
+      value: '',
+    },
+    estimatedStayTime: {
+      name: '預計停留時間',
+      value: '',
+    },
+    image1: {
+      name: '照片1',
+      value: '',
+    },
+    image2: {
+      name: '照片2',
+      value: '',
+    },
+    isLike: {},
+  },
+  {
+    id: {
+      name: 'id',
+      value: 'T5',
+    },
+    name: {
+      name: '景點名稱',
+      value: 'TESTB5',
+    },
+    info: {
+      name: '資訊介紹',
+      value: 'TESTC5',
+    },
+    special: {
+      name: '特色',
+      value: 'TEST5',
+    },
+    price: {
+      name: '價格',
+      value: 'TESTB5',
+    },
+    openDate: {
+      name: '開放日期',
+      value: 'TESTC5',
+    },
+    openingHours: {
+      name: '開放時間',
+      value: 'TEST5',
+    },
+    location: {
+      name: '地點',
+      value: 'TESTB5',
+    },
+    transportation: {
+      name: '交通',
+      value: 'TESTC5',
+    },
+    commuteTime: {
+      name: '通勤時間',
+      value: '',
+    },
+    estimatedStayTime: {
+      name: '預計停留時間',
+      value: '',
+    },
+    image1: {
+      name: '照片1',
+      value: 'Final',
+    },
+    image2: {
+      name: '照片2',
+      value: '',
+    },
+    isLike: {},
+  },
 ]

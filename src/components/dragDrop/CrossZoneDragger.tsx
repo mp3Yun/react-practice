@@ -6,7 +6,7 @@ export interface ItemInfo {
   /** 排序使用的 id */
   id: string
   /** 原本的 id */
-  origId: number
+  origId: string
   text: string
 }
 

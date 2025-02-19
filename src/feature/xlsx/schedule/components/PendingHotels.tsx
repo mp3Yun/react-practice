@@ -2,7 +2,7 @@ import React from 'react'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import { Box, Text } from '@chakra-ui/react'
 import SingleDragBlock from '../../../../components/dragDrop/SingleDragBlock'
-import { TripCard } from '../SchedulePage'
+import { TripCard } from './TripCard'
 
 interface Props {
   pendingHotels: ItemInfo[]
