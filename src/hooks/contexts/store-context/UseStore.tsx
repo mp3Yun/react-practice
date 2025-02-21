@@ -26,10 +26,7 @@ const StoreContext = createContext<{
 
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [storeData, setStoreData] = useState<Partial<StoreDataByFeature>>({})
-  // 使用 useEffect 來監聽 storeData 的變化 TODO: 為什麼不即時???
-  useEffect(() => {
-    console.log('storeData updated:', storeData)
-  }, [storeData]) // 這裡的依賴是 storeData，所以每當 storeData 更新時，useEffect 都會被調用
+  useEffect(() => {}, [storeData]) // 這裡的依賴是 storeData，所以每當 storeData 更新時，useEffect 都會被調用
 
   return (
     <StoreContext.Provider value={{ storeData, setStoreData }}>

@@ -3,6 +3,8 @@ import {
   closestCenter,
   DndContext,
   DragEndEvent,
+  DragOverlay,
+  UniqueIdentifier,
   useDraggable,
 } from '@dnd-kit/core'
 import { useEffect, useState } from 'react'
@@ -13,6 +15,8 @@ import { fakeTours } from '../data/fakeTours'
 import ConfirmedSchedules from './components/ConfirmedSchedules'
 import PendingHotels from './components/PendingHotels'
 import PendingTours from './components/PendingTours'
+import { useDragContext } from '../../../hooks/contexts/drag-context/UseDragContext'
+import { TripCard } from './components/TripCard'
 
 // 定義 Enum
 enum DataKey {
@@ -49,6 +53,20 @@ const getAllMoveableItems = (data: SortOutData): Record<string, ItemInfo[]> => {
   } as Record<string, ItemInfo[]>
   console.error('99-所有可移動項目 =>', allMoveableItems)
   return allMoveableItems
+}
+
+const findActivedItem = (
+  data: SortOutData,
+  id?: UniqueIdentifier
+): ItemInfo | null => {
+  const tmpItems = getAllMoveableItems(data)
+  const mergeData = Object.keys(tmpItems).reduce((acc, key) => {
+    return [...acc, ...tmpItems[key]]
+  }, [] as ItemInfo[])
+  const activeItem = mergeData.find((item) => {
+    return item.id === id
+  })
+  return activeItem || null
 }
 
 const SchedulePage: React.FC = () => {
@@ -90,6 +108,9 @@ const SchedulePage: React.FC = () => {
     [DataKey.hotels]: pendingHotels,
     [DataKey.schedules]: confirmedSchedules,
   })
+  const { cancelDrag } = useDragContext()
+
+  const [activeItem, setActiveItem] = useState<ItemInfo | null>(null)
 
   useEffect(() => {
     if (data[DataKey.tours].length > 0) {
@@ -115,11 +136,24 @@ const SchedulePage: React.FC = () => {
 
   // 處理跨區拖拉
   const handleDragEnd = (event: DragEndEvent) => {
+    // 當取消拖拉為 true 時,不做任何動作
+    if (!!cancelDrag) return
+
     const { active, over } = event
+
+    if (!over) return
+    if (active.id === over.id) {
+      return
+    }
 
     console.log('active.id', active.id)
     console.log('over.id', over?.id)
-    if (!over) return
+    if (!!active.id) {
+      const activeItem = findActivedItem(data, active.id)
+      if (activeItem) {
+        setActiveItem(activeItem)
+      }
+    }
 
     let sourceKey: string | null = null
     let targetKey: string | null = null
@@ -210,6 +244,7 @@ const SchedulePage: React.FC = () => {
 
   // 更新一天的日程
   const updateSchedules = (scheduleDays: ItemInfo[]) => {
+    console.error('updateSchedules =>', scheduleDays)
     setData((prev) => {
       const moveResultObj = {
         ...prev,
@@ -276,7 +311,9 @@ const SchedulePage: React.FC = () => {
       {/* 拖動過程中的 Overlay
        *  優點: 如果畫面有 overflow 的部分時，或非 absolute 的元素時，拖動過程中可以正常顯示
        */}
-      {/* <DragOverlay></DragOverlay> */}
+      <DragOverlay>
+        {activeItem ? <TripCard item={activeItem} /> : null}
+      </DragOverlay>
     </DndContext>
   )
 }

@@ -11,7 +11,7 @@ const PendingTours: React.FC<Props> = ({ pendingTours }) => {
   // TODO: 點擊單張卡片的時候，跳出 popup ，顯示該張卡片的資訊
   // Tours 有它的格式(畫面)
   return (
-    <Box display="flex" flexDir="column" position="sticky">
+    <Box display="flex" flexDir="column">
       <Box
         className="show-border"
         padding="5px"

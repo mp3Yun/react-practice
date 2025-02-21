@@ -1,13 +1,19 @@
 import { Box } from '@chakra-ui/react'
-import TourDetail from '../../../../helper/report-parser-content/reports/tours-parser/tour-detail'
 import TouristSpotItem, { TourDetailValue } from './TouristSpotItem'
 
-const TouristSpotsList: React.FC<{ data: TourDetailValue[] }> = ({ data }) => {
+const TouristSpotsList: React.FC<{
+  data: TourDetailValue[]
+  justForShow?: boolean
+}> = ({ data, justForShow }) => {
   return (
     <Box>
       TouristSpotsList
       {data.map((item) => (
-        <TouristSpotItem key={item.id.value} data={item}></TouristSpotItem>
+        <TouristSpotItem
+          key={item.id.value}
+          data={item}
+          justForShow={justForShow}
+        ></TouristSpotItem>
       ))}
     </Box>
   )

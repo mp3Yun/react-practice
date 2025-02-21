@@ -1,38 +1,88 @@
-import { Box } from '@chakra-ui/react'
+import { Box, IconButton, Text, useDisclosure } from '@chakra-ui/react'
 import { useDraggable } from '@dnd-kit/core'
+import { useRef } from 'react'
+import { CiCircleInfo } from 'react-icons/ci'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
+import { useDragContext } from '../../../../hooks/contexts/drag-context/UseDragContext'
+import DetailTripCard from './DetailTripCard'
 
 export const TripCard = <T extends ItemInfo>({ item }: { item: T }) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } =
-    useDraggable({
-      id: item.id,
-    })
+  const iconRef = useRef<HTMLButtonElement | null>(null) // Reference to the icon button
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: item.id,
+  })
+  const { open, onOpen, onClose } = useDisclosure()
+  const { setCancelDrag } = useDragContext()
 
-  const handleMouseUp = () => {
-    if (!isDragging) {
-      console.log('Card clicked! 展開 Popup', isDragging)
-      // 在這裡觸發打開 Popup 的邏輯 TODO:
+  const customListeners = {
+    ...listeners,
+    onPointerDown: (event: any) => {
+      if (event.target.closest('[data-no-dnd="true"]')) {
+        event.preventDefault()
+        handleIconClick(event)
+        return // 讓 IconButton 不觸發拖動
+      }
+      listeners?.onPointerDown?.(event)
+    },
+  }
+
+  const handleIconClick = (e: React.MouseEvent) => {
+    if (iconRef.current && iconRef.current.contains(e.target as Node)) {
+      onOpen()
+      setCancelDrag(true)
     }
   }
+
+  const handleCloseDialog = () => {
+    onClose()
+    setCancelDrag(false)
+  }
+
   return (
-    <Box
-      ref={setNodeRef}
-      {...attributes}
-      {...listeners}
-      className="show-border"
-      padding="5px"
-      display="flex"
-      flexDir="column"
-      borderRadius="2xl"
-      bgColor="white"
-      transform={
-        transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined
-      }
-      transition="transform 0.1s ease-out"
-      zIndex="15"
-      onMouseUp={handleMouseUp}
-    >
-      {item.text}
-    </Box>
+    <>
+      <Box
+        ref={setNodeRef}
+        {...attributes}
+        {...customListeners}
+        className="show-border"
+        py="2px"
+        px="10px 2px"
+        display="flex"
+        flexDir="row"
+        borderRadius="2xl"
+        bgColor="white"
+        transform={
+          transform
+            ? `translate(${transform.x}px, ${transform.y}px)`
+            : undefined
+        }
+        transition="transform 0.1s ease-out"
+        zIndex="15"
+        pointerEvents="auto" // ✅ 讓 Box 可以被點擊
+      >
+        <Text alignSelf="center">{item.text}</Text>
+
+        <IconButton
+          data-no-dnd="true"
+          ref={iconRef}
+          bgColor="white"
+          size="md"
+          aria-label="Search database"
+          color="secondary.500"
+          zIndex="15"
+          pointerEvents="auto"
+        >
+          <CiCircleInfo />
+        </IconButton>
+      </Box>
+      {open && (
+        <DetailTripCard
+          itemInfo={item}
+          isOpen={open}
+          onConfirm={handleCloseDialog}
+          onClose={handleCloseDialog}
+        />
+      )}
+    </>
   )
 }

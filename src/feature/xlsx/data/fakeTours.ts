@@ -168,7 +168,6 @@ export const fakeTours = [
     },
     isLike: {},
   },
-
   {
     id: {
       name: 'id',
@@ -277,6 +276,9 @@ export const fakeTours = [
       name: '照片2',
       value: '',
     },
-    isLike: {},
+    isLike: {
+      name: '',
+      value: '',
+    },
   },
 ]

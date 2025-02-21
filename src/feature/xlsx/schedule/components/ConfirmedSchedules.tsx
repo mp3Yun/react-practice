@@ -1,4 +1,11 @@
-import { Box, Button, Flex, Text, VStack } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Flex,
+  Text,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react'
 import React from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
@@ -20,6 +27,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
   handleAddDay,
   handleCloseDay,
 }) => {
+  const { open } = useDisclosure()
   const handleClose = (dayKey: string) => {
     // 取得那個dayKey
     console.log('99-dayKey=>', dayKey)
@@ -57,8 +65,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
           gap="1rem"
           justifyContent="start"
           maxHeight="52vh" // 讓內容區域有最大高度
-          overflowY="auto" // 過長時 Y 軸滾動
-          overflowX="auto" // 添加橫向滾動條
+          overflow="auto"
           whiteSpace="nowrap" // 防止內容換行，保證內容會超出並顯示滾動條
         >
           <VStack align="start">
