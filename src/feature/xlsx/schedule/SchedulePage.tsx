@@ -140,14 +140,14 @@ const SchedulePage: React.FC = () => {
     if (!!cancelDrag) return
 
     const { active, over } = event
-
+    console.log('active.id', active.id)
+    console.log('over.id', over?.id)
     if (!over) return
     if (active.id === over.id) {
+      // TODO: 要區分他現在是拉到哪一個區塊
       return
     }
 
-    console.log('active.id', active.id)
-    console.log('over.id', over?.id)
     if (!!active.id) {
       const activeItem = findActivedItem(data, active.id)
       if (activeItem) {
@@ -245,12 +245,16 @@ const SchedulePage: React.FC = () => {
   // 更新一天的日程
   const updateSchedules = (scheduleDays: ItemInfo[]) => {
     console.error('updateSchedules =>', scheduleDays)
+    const filteredData = scheduleDays.filter(
+      (item) => !item.id.includes('empty')
+    )
     setData((prev) => {
       const moveResultObj = {
         ...prev,
         [DataKey.schedules]: {
           ...prev[DataKey.schedules],
           [dayKey]: scheduleDays,
+          // [dayKey]: filteredData,
         },
       }
       return moveResultObj

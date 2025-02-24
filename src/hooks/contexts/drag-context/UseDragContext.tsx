@@ -19,7 +19,6 @@ export const DragProvider = ({ children }: { children: React.ReactNode }) => {
 
 export const useDragContext = (): DragContextType => {
   const context = useContext(DragContext)
-
   if (!context) {
     throw new Error('useDragContext must be used within a DragProvider')
   }

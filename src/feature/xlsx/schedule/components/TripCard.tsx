@@ -34,8 +34,8 @@ export const TripCard = <T extends ItemInfo>({ item }: { item: T }) => {
   }
 
   const handleCloseDialog = () => {
-    onClose()
     setCancelDrag(false)
+    onClose()
   }
 
   return (

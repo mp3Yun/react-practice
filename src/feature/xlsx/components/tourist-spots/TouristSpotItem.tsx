@@ -101,7 +101,7 @@ const TouristSpotItem: React.FC<TouristSpotItemProps> = ({
           </Table.Row>
           <Table.Row>
             <Table.Cell>資訊:</Table.Cell>
-            <Table.Cell>
+            <Table.Cell colSpan={2}>
               {isValidURL(data.info.value) ? (
                 <Link
                   href={data.info.value}
@@ -117,39 +117,39 @@ const TouristSpotItem: React.FC<TouristSpotItemProps> = ({
           </Table.Row>
           <Table.Row>
             <Table.Cell>特別的地方:</Table.Cell>
-            <Table.Cell>{data.special.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.special.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>價格:</Table.Cell>
-            <Table.Cell>{data.price.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.price.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>開放日期:</Table.Cell>
-            <Table.Cell>{data.openDate.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.openDate.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>營業時間:</Table.Cell>
-            <Table.Cell>{data.openingHours.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.openingHours.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>地點:</Table.Cell>
-            <Table.Cell>{data.location.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.location.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>交通:</Table.Cell>
-            <Table.Cell>{data.transportation.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.transportation.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>通勤時間:</Table.Cell>
-            <Table.Cell>{data.commuteTime?.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.commuteTime?.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>預計停留間:</Table.Cell>
-            <Table.Cell>{data.estimatedStayTime?.value}</Table.Cell>
+            <Table.Cell colSpan={2}>{data.estimatedStayTime?.value}</Table.Cell>
           </Table.Row>
           <Table.Row>
             <Table.Cell>照片1:</Table.Cell>
-            <Table.Cell>
+            <Table.Cell colSpan={2}>
               {data.image1?.value.includes('data:image') ? (
                 <img src={data.image1.value} width="800px" height="auto"></img>
               ) : (
@@ -159,7 +159,7 @@ const TouristSpotItem: React.FC<TouristSpotItemProps> = ({
           </Table.Row>
           <Table.Row>
             <Table.Cell>照片2:</Table.Cell>
-            <Table.Cell>
+            <Table.Cell colSpan={2}>
               {data.image2?.value.includes('data:image') ? (
                 <img src={data.image2.value} width="800px" height="auto"></img>
               ) : (
