@@ -58,9 +58,13 @@ export const TripCard = <T extends ItemInfo>({ item }: { item: T }) => {
         }
         transition="transform 0.1s ease-out"
         zIndex="15"
+        justifyContent="space-between"
         pointerEvents="auto" // ✅ 讓 Box 可以被點擊
       >
-        <Text alignSelf="center">{item.text}</Text>
+        <Text alignSelf="center">
+          {item.text}
+          {item?.estimatedStayTime && `(${item.estimatedStayTime}hr)`}
+        </Text>
 
         <IconButton
           data-no-dnd="true"

@@ -31,7 +31,13 @@ interface SortOutData {
   [DataKey.schedules]: Record<string, ItemInfo[]>
 }
 
-const parseDataToPendingItem = <T extends { id: ColumnType; name: ColumnType }>(
+const parseDataToPendingItem = <
+  T extends {
+    id: ColumnType
+    name: ColumnType
+    estimatedStayTime?: ColumnType
+  },
+>(
   dataKey: DataKey,
   data: T[]
 ): ItemInfo[] => {
@@ -39,6 +45,7 @@ const parseDataToPendingItem = <T extends { id: ColumnType; name: ColumnType }>(
     id: `${dataKey}-${item.id.value}`,
     origId: item.id.value,
     text: item.name.value,
+    estimatedStayTime: item?.estimatedStayTime?.value ?? '',
   }))
 }
 
@@ -113,15 +120,15 @@ const SchedulePage: React.FC = () => {
   const [activeItem, setActiveItem] = useState<ItemInfo | null>(null)
 
   useEffect(() => {
-    if (data[DataKey.tours].length > 0) {
+    if (data[DataKey.tours].length >= 0) {
       setPendingTours(data[DataKey.tours])
     }
 
-    if (data[DataKey.hotels].length > 0) {
+    if (data[DataKey.hotels].length >= 0) {
       setPendingHotels(data[DataKey.hotels])
     }
 
-    if (data[DataKey.schedules][dayKey].length > 0) {
+    if (data[DataKey.schedules][dayKey].length >= 0) {
       const tmpScheduleData = data[DataKey.schedules][dayKey]
       const tmpDataObj = {
         ...data,
@@ -141,10 +148,10 @@ const SchedulePage: React.FC = () => {
 
     const { active, over } = event
     console.log('active.id', active.id)
-    console.log('over.id', over?.id)
+    console.log('over', over)
     if (!over) return
     if (active.id === over.id) {
-      // TODO: 要區分他現在是拉到哪一個區塊
+      // TODO: 要區分他現在是拉到哪一個區塊 這邊有點問題耶
       return
     }
 
@@ -214,7 +221,7 @@ const SchedulePage: React.FC = () => {
     )
     const tmpTargetItem = !allMoveableItems[targetKey]
       ? []
-      : allMoveableItems[targetKey]
+      : allMoveableItems[targetKey].filter((item) => !item.id.includes('empty'))
     console.error('99-tmpTargetItem =>', tmpTargetItem)
     const newTargetList = [...tmpTargetItem, movedItem]
 
@@ -240,6 +247,9 @@ const SchedulePage: React.FC = () => {
     } else {
       setData(data)
     }
+
+    // 清空當前移動項目
+    setActiveItem(null)
   }
 
   // 更新一天的日程

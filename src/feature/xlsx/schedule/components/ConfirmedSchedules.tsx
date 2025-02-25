@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Button, Flex, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
@@ -27,7 +20,6 @@ const ConfirmedSchedules: React.FC<Props> = ({
   handleAddDay,
   handleCloseDay,
 }) => {
-  const { open } = useDisclosure()
   const handleClose = (dayKey: string) => {
     // 取得那個dayKey
     console.log('99-dayKey=>', dayKey)

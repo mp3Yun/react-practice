@@ -45,7 +45,7 @@ export const fakeTours = [
     },
     estimatedStayTime: {
       name: '預計停留時間',
-      value: '半天以上',
+      value: '3',
     },
     image1: {
       name: '照片1',
