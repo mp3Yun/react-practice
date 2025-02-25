@@ -1,14 +1,15 @@
 import { Box, Button, Flex, Text, VStack } from '@chakra-ui/react'
-import React from 'react'
+import { DragEndEvent } from '@dnd-kit/core'
+import { useSortable } from '@dnd-kit/sortable'
+import React, { useState } from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import DailySchedule from './DailySchedule'
-import { DndContext } from '@dnd-kit/core'
-import { useSortable } from '@dnd-kit/sortable'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
-  updateSchedules: (currentDayKey: string, scheduleDays: ItemInfo[]) => void
+  updateDaySchedules: (currentDayKey: string, scheduleDays: ItemInfo[]) => void
+  updateAllSchedules: (scheduleDays: Record<string, ItemInfo[]>) => void
   activeDayKey: string
   setDayKey: (dayKey: string) => void
   handleAddDay: () => void
@@ -16,12 +17,16 @@ interface Props {
 }
 const ConfirmedSchedules: React.FC<Props> = ({
   scheduleDays,
-  updateSchedules,
+  updateDaySchedules,
+  updateAllSchedules,
   activeDayKey,
   setDayKey,
   handleAddDay,
   handleCloseDay,
 }) => {
+  // Shared state to manage schedules across days
+  const [schedules, setSchedules] = useState(scheduleDays)
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: 'confirmed-schedules' })
   const handleClose = (dayKey: string) => {
@@ -30,10 +35,53 @@ const ConfirmedSchedules: React.FC<Props> = ({
     handleCloseDay(dayKey)
   }
 
-  const handleSubDragEnd = (event: any) => {
-    const { active } = event
-    console.log('99-[ConfirmedSchedules_sub_Dnd] handleDragEnd active', active)
+  const handleSubDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event
+
+    // Check if items are dropped in a different context
+    if (active.id !== over?.id) {
+      // Find the source and target schedules
+      const sourceDayKey = active.data?.current?.dropContext
+      const targetDayKey = over?.data?.current?.dropContext
+
+      if (sourceDayKey && targetDayKey && sourceDayKey !== targetDayKey) {
+        // Handle cross-context drag
+        const sourceItems = schedules[sourceDayKey]
+        const targetItems = schedules[targetDayKey]
+
+        // Find the active item and its position
+        const activeIndex = sourceItems.findIndex(
+          (item) => item.id === active.id
+        )
+        const overIndex = targetItems.findIndex((item) => item.id === over?.id)
+
+        // Move the item from the source context to the target context
+        const movedItem = sourceItems[activeIndex]
+        const updatedSourceItems = sourceItems.filter(
+          (item) => item.id !== active.id
+        )
+        const updatedTargetItems = [
+          ...targetItems.slice(0, overIndex),
+          movedItem,
+          ...targetItems.slice(overIndex),
+        ]
+
+        // Update the state with the new schedule
+        setSchedules({
+          ...schedules,
+          [sourceDayKey]: updatedSourceItems,
+          [targetDayKey]: updatedTargetItems,
+        })
+
+        updateAllSchedules({
+          ...schedules,
+          [sourceDayKey]: updatedSourceItems,
+          [targetDayKey]: updatedTargetItems,
+        })
+      }
+    }
   }
+
   return (
     <Box display="flex" flexDir="column">
       <Box
@@ -115,28 +163,27 @@ const ConfirmedSchedules: React.FC<Props> = ({
             {/* Tab Panels - All content is visible */}
 
             <Box display="flex" width="100%" mt="2" ref={setNodeRef}>
-              <DndContext onDragEnd={handleSubDragEnd}>
-                {Object.entries(scheduleDays).map(([key, value]) => (
-                  <Box
-                    key={key}
-                    width="25vw"
-                    p={3}
-                    borderWidth="1px"
-                    borderRadius="md"
-                    borderColor={
-                      activeDayKey === key ? 'primary.300' : 'primary.50'
-                    }
-                  >
-                    <DailySchedule
-                      {...attributes}
-                      {...listeners}
-                      dayKey={key}
-                      data={value}
-                      updateSchedules={updateSchedules}
-                    ></DailySchedule>
-                  </Box>
-                ))}
-              </DndContext>
+              {Object.entries(scheduleDays).map(([key, value]) => (
+                <Box
+                  id={key}
+                  key={key}
+                  width="25vw"
+                  p={3}
+                  borderWidth="1px"
+                  borderRadius="md"
+                  borderColor={
+                    activeDayKey === key ? 'primary.300' : 'primary.50'
+                  }
+                >
+                  <DailySchedule
+                    {...attributes}
+                    {...listeners}
+                    dayKey={key}
+                    data={value}
+                    updateDaySchedules={updateDaySchedules}
+                  ></DailySchedule>
+                </Box>
+              ))}
             </Box>
           </VStack>
         </Box>

@@ -253,7 +253,10 @@ const SchedulePage: React.FC = () => {
   }
 
   // 更新一天的日程
-  const updateSchedules = (currentDayKey: string, scheduleDays: ItemInfo[]) => {
+  const updateDaySchedules = (
+    currentDayKey: string,
+    scheduleDays: ItemInfo[]
+  ) => {
     console.error('updateSchedules =>', scheduleDays)
     // const filteredData = scheduleDays.filter(
     //   (item) => !item.id.includes('empty')
@@ -265,6 +268,17 @@ const SchedulePage: React.FC = () => {
           ...prev[DataKey.schedules],
           [currentDayKey]: scheduleDays,
         },
+      }
+      return moveResultObj
+    })
+  }
+
+  // 更新所有排程
+  const updateAllSchedules = (scheduleDays: Record<string, ItemInfo[]>) => {
+    setData((prev) => {
+      const moveResultObj = {
+        ...prev,
+        [DataKey.schedules]: scheduleDays,
       }
       return moveResultObj
     })
@@ -314,7 +328,8 @@ const SchedulePage: React.FC = () => {
         {/* 行程 */}
         <ConfirmedSchedules
           scheduleDays={data[DataKey.schedules]}
-          updateSchedules={updateSchedules}
+          updateDaySchedules={updateDaySchedules}
+          updateAllSchedules={updateAllSchedules}
           activeDayKey={dayKey}
           setDayKey={setDayKey}
           handleAddDay={handleAddDay}
