@@ -253,18 +253,17 @@ const SchedulePage: React.FC = () => {
   }
 
   // 更新一天的日程
-  const updateSchedules = (scheduleDays: ItemInfo[]) => {
+  const updateSchedules = (currentDayKey: string, scheduleDays: ItemInfo[]) => {
     console.error('updateSchedules =>', scheduleDays)
-    const filteredData = scheduleDays.filter(
-      (item) => !item.id.includes('empty')
-    )
+    // const filteredData = scheduleDays.filter(
+    //   (item) => !item.id.includes('empty')
+    // )
     setData((prev) => {
       const moveResultObj = {
         ...prev,
         [DataKey.schedules]: {
           ...prev[DataKey.schedules],
-          [dayKey]: scheduleDays,
-          // [dayKey]: filteredData,
+          [currentDayKey]: scheduleDays,
         },
       }
       return moveResultObj

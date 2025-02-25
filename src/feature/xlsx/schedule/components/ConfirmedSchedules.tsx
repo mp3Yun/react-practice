@@ -8,7 +8,7 @@ import { useSortable } from '@dnd-kit/sortable'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
-  updateSchedules: (scheduleDays: ItemInfo[]) => void
+  updateSchedules: (currentDayKey: string, scheduleDays: ItemInfo[]) => void
   activeDayKey: string
   setDayKey: (dayKey: string) => void
   handleAddDay: () => void

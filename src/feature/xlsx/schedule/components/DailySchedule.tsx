@@ -34,7 +34,7 @@ import TimeOccupiedCard from './TimeOccupiedCard'
 interface Props<T extends ItemInfo> {
   dayKey: string
   data: T[]
-  updateSchedules: (scheduleDays: ItemInfo[]) => void
+  updateSchedules: (currentDayKey: string, scheduleDays: ItemInfo[]) => void
 }
 
 const timeMarkers = ['08', '12', '16', '20']
@@ -111,7 +111,8 @@ const DailySchedule = <T extends ItemInfo>({
         arrayMove(scheduleItems, oldIndex, newIndex)
       )
       console.error('99-checkScheduleTimeItems=>', checkScheduleTimeItems)
-      updateSchedules(checkScheduleTimeItems)
+      console.log(`Items moved in DndContext for day: ${dayKey}`)
+      updateSchedules(dayKey, checkScheduleTimeItems)
     }
   }
 
