@@ -3,6 +3,8 @@ import React from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import DailySchedule from './DailySchedule'
+import { DndContext } from '@dnd-kit/core'
+import { useSortable } from '@dnd-kit/sortable'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
@@ -20,10 +22,17 @@ const ConfirmedSchedules: React.FC<Props> = ({
   handleAddDay,
   handleCloseDay,
 }) => {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id: 'confirmed-schedules' })
   const handleClose = (dayKey: string) => {
     // 取得那個dayKey
     console.log('99-dayKey=>', dayKey)
     handleCloseDay(dayKey)
+  }
+
+  const handleSubDragEnd = (event: any) => {
+    const { active } = event
+    console.log('99-[ConfirmedSchedules_sub_Dnd] handleDragEnd active', active)
   }
   return (
     <Box display="flex" flexDir="column">
@@ -104,25 +113,30 @@ const ConfirmedSchedules: React.FC<Props> = ({
             </Box>
 
             {/* Tab Panels - All content is visible */}
-            <Box display="flex" width="100%" mt="2">
-              {Object.entries(scheduleDays).map(([key, value]) => (
-                <Box
-                  key={key}
-                  width="25vw"
-                  p={3}
-                  borderWidth="1px"
-                  borderRadius="md"
-                  borderColor={
-                    activeDayKey === key ? 'primary.300' : 'primary.50'
-                  }
-                >
-                  <DailySchedule
-                    dayKey={key}
-                    data={value}
-                    updateSchedules={updateSchedules}
-                  ></DailySchedule>
-                </Box>
-              ))}
+
+            <Box display="flex" width="100%" mt="2" ref={setNodeRef}>
+              <DndContext onDragEnd={handleSubDragEnd}>
+                {Object.entries(scheduleDays).map(([key, value]) => (
+                  <Box
+                    key={key}
+                    width="25vw"
+                    p={3}
+                    borderWidth="1px"
+                    borderRadius="md"
+                    borderColor={
+                      activeDayKey === key ? 'primary.300' : 'primary.50'
+                    }
+                  >
+                    <DailySchedule
+                      {...attributes}
+                      {...listeners}
+                      dayKey={key}
+                      data={value}
+                      updateSchedules={updateSchedules}
+                    ></DailySchedule>
+                  </Box>
+                ))}
+              </DndContext>
             </Box>
           </VStack>
         </Box>

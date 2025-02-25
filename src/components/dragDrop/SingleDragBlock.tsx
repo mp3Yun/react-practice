@@ -1,8 +1,8 @@
+import { Box, BoxProps, Text } from '@chakra-ui/react'
+import { SortableContext } from '@dnd-kit/sortable'
 import React from 'react'
 import { ItemInfo } from './CrossZoneDragger'
-import { SortableContext } from '@dnd-kit/sortable'
-import { Box, BoxProps, Text } from '@chakra-ui/react'
-import SortableItem from './SortableItem'
+import DraggableItem from './DraggableItem'
 
 interface Props<T extends ItemInfo> extends BoxProps {
   data: T[]
@@ -26,18 +26,17 @@ const SingleDragBlock = <T extends ItemInfo>({
       >
         {data.length > 0 ? (
           data.map((item) => (
-            <SortableItem<T>
+            <DraggableItem<T>
               key={item.id}
               item={item}
               CustomComponent={CustomComponent}
-            ></SortableItem>
+            ></DraggableItem>
           )) // 🟢 當沒有資料時，顯示占位符
         ) : (
           <Text textAlign="center" color="gray.500">
             拖曳項目到這裡
           </Text>
         )}
-        {}
       </Box>
     </SortableContext>
   )

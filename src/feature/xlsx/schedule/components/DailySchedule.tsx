@@ -15,11 +15,13 @@ import {
   DndContext,
   DragEndEvent,
   DragOverEvent,
+  DragStartEvent,
   useDroppable,
 } from '@dnd-kit/core'
 import {
   arrayMove,
   SortableContext,
+  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import CircleWithText from '../../../../components/circle/CircleWithText'
@@ -92,13 +94,15 @@ const DailySchedule = <T extends ItemInfo>({
     ...generateEmptyItem(timeSlots.length - data.length),
   ]
 
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef } = useSortable({
     id: dayKey,
-    data: scheduleItems,
+    data: {
+      dropContext: dayKey,
+    },
   })
-  const handleDragOver = (event: DragOverEvent) => {
+  const handleDayDragEnd = (event: DragOverEvent) => {
     const { active, over } = event
-    console.log('99-[sub_Dnd] active.id', active.id)
+    console.log('99-[sub_Dnd] active.id', active)
     console.log('99-[sub_Dnd] over.id', over)
     if (active.id !== over?.id) {
       const oldIndex = scheduleItems.findIndex((e) => e.id === active.id)
@@ -115,10 +119,13 @@ const DailySchedule = <T extends ItemInfo>({
     <div ref={setNodeRef}>
       {/* <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}> */}
       <DndContext
-        onDragOver={handleDragOver}
+        onDragEnd={handleDayDragEnd}
         collisionDetection={closestCenter}
       >
-        <SortableContext items={data} strategy={verticalListSortingStrategy}>
+        <SortableContext
+          items={data.map((e) => e.id)}
+          strategy={verticalListSortingStrategy}
+        >
           <TimelineRoot size="lg" variant="subtle" width="100%">
             {timeMarkers.map((marker, index) => (
               <TimelineItem key={index}>

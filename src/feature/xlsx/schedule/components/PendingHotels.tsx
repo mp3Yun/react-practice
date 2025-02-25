@@ -9,8 +9,6 @@ interface Props {
 }
 
 const PendingHotels: React.FC<Props> = ({ pendingHotels }) => {
-  // TODO: 點擊單張卡片的時候，跳出 popup ，顯示該張卡片的資訊
-  // Hotel 有它的格式(畫面)
   return (
     <Box display="flex" flexDir="column">
       <Box

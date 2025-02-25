@@ -147,7 +147,7 @@ const SchedulePage: React.FC = () => {
     if (!!cancelDrag) return
 
     const { active, over } = event
-    console.log('active.id', active.id)
+    console.log('active', active)
     console.log('over', over)
     if (!over) return
     if (active.id === over.id) {

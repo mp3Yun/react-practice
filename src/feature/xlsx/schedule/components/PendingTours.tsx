@@ -2,14 +2,13 @@ import { Box, Text } from '@chakra-ui/react'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import SingleDragBlock from '../../../../components/dragDrop/SingleDragBlock'
 import { TripCard } from './TripCard'
+import { useDraggable } from '@dnd-kit/core'
 
 interface Props {
   pendingTours: ItemInfo[]
 }
 
 const PendingTours: React.FC<Props> = ({ pendingTours }) => {
-  // TODO: 點擊單張卡片的時候，跳出 popup ，顯示該張卡片的資訊
-  // Tours 有它的格式(畫面)
   return (
     <Box display="flex" flexDir="column">
       <Box
