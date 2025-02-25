@@ -174,17 +174,6 @@ const SchedulePage: React.FC = () => {
     })
   }
 
-  // 更新所有排程
-  const updateAllSchedules = (scheduleDays: Record<string, ItemInfo[]>) => {
-    setData((prev) => {
-      const moveResultObj = {
-        ...prev,
-        [DataKey.schedules]: scheduleDays,
-      }
-      return moveResultObj
-    })
-  }
-
   // 新增第X天的行程
   const handleAddDay = () => {
     let currentSchedulesObj = Object.assign(data[DataKey.schedules])
@@ -228,7 +217,6 @@ const SchedulePage: React.FC = () => {
         {/* 行程 */}
         <ConfirmedSchedules
           scheduleDays={data[DataKey.schedules]}
-          updateDaySchedules={updateDaySchedules}
           activeDayKey={dayKey}
           setDayKey={setDayKey}
           handleAddDay={handleAddDay}

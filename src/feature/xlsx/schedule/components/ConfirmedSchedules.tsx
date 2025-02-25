@@ -7,7 +7,6 @@ import DailySchedule from './DailySchedule'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
-  updateDaySchedules: (currentDayKey: string, scheduleDays: ItemInfo[]) => void
   activeDayKey: string
   setDayKey: (dayKey: string) => void
   handleAddDay: () => void
@@ -15,66 +14,16 @@ interface Props {
 }
 const ConfirmedSchedules: React.FC<Props> = ({
   scheduleDays,
-  updateDaySchedules,
   activeDayKey,
   setDayKey,
   handleAddDay,
   handleCloseDay,
 }) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: 'confirmed-schedules' }) // TODO: 這個應該可以拔掉
   const handleClose = (dayKey: string) => {
     // 取得那個dayKey
     console.log('99-dayKey=>', dayKey)
     handleCloseDay(dayKey)
   }
-
-  // const handleSubDragEnd = (event: DragEndEvent) => {
-  //   const { active, over } = event
-
-  //   // Check if items are dropped in a different context
-  //   if (active.id !== over?.id) {
-  //     // Find the source and target schedules
-  //     const sourceDayKey = active.data?.current?.dropContext
-  //     const targetDayKey = over?.data?.current?.dropContext
-
-  //     if (sourceDayKey && targetDayKey && sourceDayKey !== targetDayKey) {
-  //       // Handle cross-context drag
-  //       const sourceItems = schedules[sourceDayKey]
-  //       const targetItems = schedules[targetDayKey]
-
-  //       // Find the active item and its position
-  //       const activeIndex = sourceItems.findIndex(
-  //         (item) => item.id === active.id
-  //       )
-  //       const overIndex = targetItems.findIndex((item) => item.id === over?.id)
-
-  //       // Move the item from the source context to the target context
-  //       const movedItem = sourceItems[activeIndex]
-  //       const updatedSourceItems = sourceItems.filter(
-  //         (item) => item.id !== active.id
-  //       )
-  //       const updatedTargetItems = [
-  //         ...targetItems.slice(0, overIndex),
-  //         movedItem,
-  //         ...targetItems.slice(overIndex),
-  //       ]
-
-  //       // Update the state with the new schedule
-  //       setSchedules({
-  //         ...schedules,
-  //         [sourceDayKey]: updatedSourceItems,
-  //         [targetDayKey]: updatedTargetItems,
-  //       })
-
-  //       updateAllSchedules({
-  //         ...schedules,
-  //         [sourceDayKey]: updatedSourceItems,
-  //         [targetDayKey]: updatedTargetItems,
-  //       })
-  //     }
-  //   }
-  // }
 
   return (
     <Box display="flex" flexDir="column">
@@ -155,8 +104,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
             </Box>
 
             {/* Tab Panels - All content is visible */}
-
-            <Box display="flex" width="100%" mt="2" ref={setNodeRef}>
+            <Box display="flex" width="100%" mt="2">
               {Object.entries(scheduleDays).map(([key, value]) => (
                 <Box
                   id={key}
@@ -169,13 +117,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
                     activeDayKey === key ? 'primary.300' : 'primary.50'
                   }
                 >
-                  <DailySchedule
-                    {...attributes}
-                    {...listeners}
-                    dayKey={key}
-                    data={value}
-                    updateDaySchedules={updateDaySchedules}
-                  ></DailySchedule>
+                  <DailySchedule dayKey={key} data={value}></DailySchedule>
                 </Box>
               ))}
             </Box>

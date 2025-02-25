@@ -10,20 +10,18 @@ import {
   TimelineRoot,
   TimelineTitle,
 } from '@chakra-ui/react'
-import { DragOverEvent, useDroppable } from '@dnd-kit/core'
-import { arrayMove, SortableContext } from '@dnd-kit/sortable'
+import { useDroppable } from '@dnd-kit/core'
+import { SortableContext } from '@dnd-kit/sortable'
 import CircleWithText from '../../../../components/circle/CircleWithText'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import SortableItem from '../../../../components/dragDrop/SortableItem'
 import { EmptyCard } from './EmptyCard'
 import TimeOccupiedCard from './TimeOccupiedCard'
 import { TripCard } from './TripCard'
-import { generateEmptyItem } from '../utils/schedule-utils'
 
 interface Props<T extends ItemInfo> {
   dayKey: string
   data: T[]
-  updateDaySchedules: (currentDayKey: string, scheduleDays: ItemInfo[]) => void
 }
 
 const timeMarkers = ['08', '12', '16', '20']
@@ -41,11 +39,7 @@ const getContextByTime = (time: string) => {
   return `${displayTimeText}時段`
 }
 
-const DailySchedule = <T extends ItemInfo>({
-  dayKey,
-  data,
-  updateDaySchedules,
-}: Props<T>) => {
+const DailySchedule = <T extends ItemInfo>({ dayKey, data }: Props<T>) => {
   let scheduleItems: ItemInfo[] = [...data]
 
   const { setNodeRef } = useDroppable({
@@ -54,25 +48,6 @@ const DailySchedule = <T extends ItemInfo>({
       dropContext: dayKey,
     },
   })
-
-  // // 單日調整的邏輯 TODO:
-  // const handleDayDragEnd = (event: DragOverEvent) => {
-  //   const { active, over } = event
-  //   console.log('99-[sub_Dnd] active', active)
-  //   console.log('99-[sub_Dnd] over', over)
-  //   if (!over) {
-  //     return
-  //   }
-
-  //   if (active.id !== over?.id) {
-  //     const oldIndex = scheduleItems.findIndex((e) => e.id === active.id)
-  //     const newIndex = scheduleItems.findIndex((e) => e.id === over?.id)
-  //     const checkScheduleTimeItems = checkScheduleTimeFunc(
-  //       arrayMove(scheduleItems, oldIndex, newIndex)
-  //     )
-  //     updateDaySchedules(dayKey, checkScheduleTimeItems)
-  //   }
-  // }
 
   return (
     <div ref={setNodeRef}>
