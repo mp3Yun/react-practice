@@ -18,6 +18,7 @@ import SortableItem from '../../../../components/dragDrop/SortableItem'
 import { EmptyCard } from './EmptyCard'
 import TimeOccupiedCard from './TimeOccupiedCard'
 import { TripCard } from './TripCard'
+import { generateEmptyItem } from '../utils/schedule-utils'
 
 interface Props<T extends ItemInfo> {
   dayKey: string
@@ -40,47 +41,12 @@ const getContextByTime = (time: string) => {
   return `${displayTimeText}時段`
 }
 
-const generateEmptyItem = (dayKey: string, amount: number) => {
-  return Array.from({ length: amount }, (_, i) => ({
-    id: `empty${dayKey}-${i}`,
-    origId: `${i}`,
-    text: '',
-  }))
-}
-
-const checkScheduleTimeFunc = (scheduleItems: ItemInfo[]) => {
-  const needToChangeIndex: number[] = []
-  const result = scheduleItems.map((item, index) => {
-    if (item.estimatedStayTime) {
-      for (let i = index; i < index + +item.estimatedStayTime; i++) {
-        needToChangeIndex.push(i)
-      }
-    }
-
-    if (needToChangeIndex.includes(index)) {
-      if (item.id.startsWith('empty')) {
-        item.id = `occupied-${item.origId}`
-      }
-    } else {
-      if (item.id.startsWith('occupied')) {
-        item.id = `empty-${item.origId}`
-      }
-    }
-    return item
-  })
-
-  return result
-}
-
 const DailySchedule = <T extends ItemInfo>({
   dayKey,
   data,
   updateDaySchedules,
 }: Props<T>) => {
-  let scheduleItems: ItemInfo[] = [
-    ...data,
-    ...generateEmptyItem(dayKey, timeSlots.length - data.length),
-  ]
+  let scheduleItems: ItemInfo[] = [...data]
 
   const { setNodeRef } = useDroppable({
     id: dayKey,
@@ -88,23 +54,25 @@ const DailySchedule = <T extends ItemInfo>({
       dropContext: dayKey,
     },
   })
-  const handleDayDragEnd = (event: DragOverEvent) => {
-    const { active, over } = event
-    console.log('99-[sub_Dnd] active', active)
-    console.log('99-[sub_Dnd] over', over)
-    if (!over) {
-      return
-    }
 
-    if (active.id !== over?.id) {
-      const oldIndex = scheduleItems.findIndex((e) => e.id === active.id)
-      const newIndex = scheduleItems.findIndex((e) => e.id === over?.id)
-      const checkScheduleTimeItems = checkScheduleTimeFunc(
-        arrayMove(scheduleItems, oldIndex, newIndex)
-      )
-      updateDaySchedules(dayKey, checkScheduleTimeItems)
-    }
-  }
+  // // 單日調整的邏輯 TODO:
+  // const handleDayDragEnd = (event: DragOverEvent) => {
+  //   const { active, over } = event
+  //   console.log('99-[sub_Dnd] active', active)
+  //   console.log('99-[sub_Dnd] over', over)
+  //   if (!over) {
+  //     return
+  //   }
+
+  //   if (active.id !== over?.id) {
+  //     const oldIndex = scheduleItems.findIndex((e) => e.id === active.id)
+  //     const newIndex = scheduleItems.findIndex((e) => e.id === over?.id)
+  //     const checkScheduleTimeItems = checkScheduleTimeFunc(
+  //       arrayMove(scheduleItems, oldIndex, newIndex)
+  //     )
+  //     updateDaySchedules(dayKey, checkScheduleTimeItems)
+  //   }
+  // }
 
   return (
     <div ref={setNodeRef}>

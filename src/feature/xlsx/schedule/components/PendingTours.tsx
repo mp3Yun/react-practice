@@ -2,7 +2,6 @@ import { Box, Text } from '@chakra-ui/react'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import SingleDragBlock from '../../../../components/dragDrop/SingleDragBlock'
 import { TripCard } from './TripCard'
-import { useDraggable } from '@dnd-kit/core'
 
 interface Props {
   pendingTours: ItemInfo[]

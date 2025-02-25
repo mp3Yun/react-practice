@@ -4,32 +4,27 @@ import {
   DndContext,
   DragEndEvent,
   DragOverlay,
-  UniqueIdentifier,
-  useDraggable,
 } from '@dnd-kit/core'
 import { useEffect, useState } from 'react'
 import { ItemInfo } from '../../../components/dragDrop/CrossZoneDragger'
 import { ColumnType } from '../../../helper/report-parser-content/report.type'
+import { useDragContext } from '../../../hooks/contexts/drag-context/UseDragContext'
 import { useStore } from '../../../hooks/contexts/store-context/UseStore'
 import { fakeTours } from '../data/fakeTours'
 import ConfirmedSchedules from './components/ConfirmedSchedules'
 import PendingHotels from './components/PendingHotels'
 import PendingTours from './components/PendingTours'
-import { useDragContext } from '../../../hooks/contexts/drag-context/UseDragContext'
 import { TripCard } from './components/TripCard'
-
-// 定義 Enum
-enum DataKey {
-  tours = 'tours',
-  hotels = 'hotels',
-  schedules = 'schedules',
-}
-
-interface SortOutData {
-  [DataKey.tours]: ItemInfo[]
-  [DataKey.hotels]: ItemInfo[]
-  [DataKey.schedules]: Record<string, ItemInfo[]>
-}
+import {
+  DataKey,
+  distinguishAction,
+  doAddEvent,
+  findActivedItem,
+  generateEmptyItem,
+  moveEventToAnotherDay,
+  sortEventWithinDay,
+  SortOutData,
+} from './utils/schedule-utils'
 
 const parseDataToPendingItem = <
   T extends {
@@ -49,38 +44,12 @@ const parseDataToPendingItem = <
   }))
 }
 
-/** 取得所有按鈕資料 */
-const getAllMoveableItems = (data: SortOutData): Record<string, ItemInfo[]> => {
-  // 所有可移動項目
-  const flatSchedulesData = { ...data[DataKey.schedules] }
-  const { [DataKey.schedules]: _, ...filteredData } = data
-  const allMoveableItems = {
-    ...filteredData,
-    ...flatSchedulesData,
-  } as Record<string, ItemInfo[]>
-  console.error('99-所有可移動項目 =>', allMoveableItems)
-  return allMoveableItems
-}
-
-const findActivedItem = (
-  data: SortOutData,
-  id?: UniqueIdentifier
-): ItemInfo | null => {
-  const tmpItems = getAllMoveableItems(data)
-  const mergeData = Object.keys(tmpItems).reduce((acc, key) => {
-    return [...acc, ...tmpItems[key]]
-  }, [] as ItemInfo[])
-  const activeItem = mergeData.find((item) => {
-    return item.id === id
-  })
-  return activeItem || null
-}
-
 const SchedulePage: React.FC = () => {
   const { storeData } = useStore()
   // ===== 實際資料 [ start TODO:] ===== //
   // const tours = storeData?.xlsx?.tours
   // const hotels = storeData?.xlsx?.hotels
+  const [dayKey, setDayKey] = useState<string>('Day1')
   // ===== 實際資料 [ end] ===== //
 
   const tours = fakeTours // TODO: 先用假資料
@@ -100,14 +69,13 @@ const SchedulePage: React.FC = () => {
   ] // TODO: 根據 hotels 再做整理
   // 待確認的行程
   let initialSchedules: Record<string, ItemInfo[]> = {
-    Day1: [],
+    Day1: [...generateEmptyItem(dayKey, 16)],
   }
 
   const [pendingTours, setPendingTours] = useState<ItemInfo[]>(initialTours)
   const [pendingHotels, setPendingHotels] = useState<ItemInfo[]>(initialHotels)
   const [confirmedSchedules, setConfirmedSchedules] =
     useState<Record<string, ItemInfo[]>>(initialSchedules)
-  const [dayKey, setDayKey] = useState<string>('Day1')
 
   // 管理排序的資料(含待安排、已安排)
   const [data, setData] = useState<SortOutData>({
@@ -147,14 +115,9 @@ const SchedulePage: React.FC = () => {
     if (!!cancelDrag) return
 
     const { active, over } = event
-    console.log('active', active)
-    console.log('over', over)
-    if (!over) return
-    if (active.id === over.id) {
-      // TODO: 要區分他現在是拉到哪一個區塊 這邊有點問題耶
-      return
-    }
 
+    if (!over) return
+    // [view] 讓拖拉元件看起來更為流暢，在 DragOverlay 中使用
     if (!!active.id) {
       const activeItem = findActivedItem(data, active.id)
       if (activeItem) {
@@ -162,90 +125,31 @@ const SchedulePage: React.FC = () => {
       }
     }
 
-    let sourceKey: string | null = null
-    let targetKey: string | null = null
+    // [logic] 1. 識別當前拖拉類型
+    const actionType = distinguishAction(event)
+    console.error('99-actionType=>', actionType)
 
-    // 來源目標:
-    Object.values([DataKey.tours, DataKey.hotels]).forEach((key) => {
-      const sourceData = data[key] as ItemInfo[]
-      if (
-        sourceData &&
-        sourceData.some((item: ItemInfo) => item.id === active.id)
-      ) {
-        sourceKey = key
+    // [login] 2. 根據不同拖拉類型
+    switch (actionType) {
+      case 'ADD_EVENT': {
+        let tmpData = doAddEvent(active, over, data, dayKey)
+        setData(tmpData)
+        break
       }
-    })
-
-    // 可能目標區塊: DataKey.schedules
-    const scheduleDataObj = data[DataKey.schedules] as Record<
-      string,
-      ItemInfo[]
-    >
-    Object.keys(scheduleDataObj).forEach((key) => {
-      const targeData = scheduleDataObj[key] as ItemInfo[]
-      if (
-        targeData.some((item) => item.id === over.id) ||
-        targeData.length === 0
-      ) {
-        targetKey = dayKey
+      case 'SORT_EVENT_WITHIN_DAY': {
+        let tmpData = sortEventWithinDay(active, over, confirmedSchedules)
+        if (!tmpData) return
+        updateDaySchedules(tmpData.dayKey, tmpData.items)
+        break
       }
-    })
-
-    console.error('99-sourceKey=>', sourceKey)
-    console.error('99-targetKey=>', targetKey)
-
-    if (!sourceKey) return
-    if (!targetKey) targetKey = dayKey // 預設目標區
-
-    // 如果來源和目標相同，不做任何處理
-    // TODO: 同一天的日程可以互調(晚一點再處理)
-    if (sourceKey === targetKey) return
-
-    // 所有可移動項目
-    const allMoveableItems = getAllMoveableItems(data)
-    // 移動項目
-    const movedItem = allMoveableItems[sourceKey].find(
-      (item) => item.id === active.id
-    )
-
-    if (!movedItem) return
-
-    const newSourceList = allMoveableItems[sourceKey].filter(
-      (item) => item.id !== active.id
-    )
-
-    // TODO: 為什麼 targetKey 會是 null ，要取得 tab 資料
-    console.error(
-      '99-!allMoveableItems[targetKey] =>',
-      !allMoveableItems[targetKey]
-    )
-    const tmpTargetItem = !allMoveableItems[targetKey]
-      ? []
-      : allMoveableItems[targetKey].filter((item) => !item.id.includes('empty'))
-    console.error('99-tmpTargetItem =>', tmpTargetItem)
-    const newTargetList = [...tmpTargetItem, movedItem]
-
-    console.error('99----------- 整理 [start] ---------------')
-    console.log('targetKey', targetKey)
-    console.log('newTargetList', newTargetList)
-    console.log('sourceKey', sourceKey)
-    console.log('newSourceList', newSourceList)
-
-    // 判斷 targetKey 是否為非 tours / hotels 的鍵，是的話，資料要安排在 schedules 下
-    if (targetKey !== DataKey.tours && targetKey !== DataKey.hotels) {
-      const moveResultObj = {
-        ...data,
-        [sourceKey]: [...newSourceList],
-        [DataKey.schedules]: {
-          ...data[DataKey.schedules],
-          [targetKey]: newTargetList,
-        },
+      case 'MOVE_EVENT_TO_ANOTHER_DAY': {
+        let tmpData = moveEventToAnotherDay(active, over, data)
+        setData(tmpData)
+        break
       }
-      console.error('88----------- moveResultObj [check] ---------------')
-      console.log('moveResultObj', moveResultObj)
-      setData(moveResultObj)
-    } else {
-      setData(data)
+      default:
+        console.log('unexpect action type')
+        break
     }
 
     // 清空當前移動項目
@@ -258,9 +162,6 @@ const SchedulePage: React.FC = () => {
     scheduleDays: ItemInfo[]
   ) => {
     console.error('updateSchedules =>', scheduleDays)
-    // const filteredData = scheduleDays.filter(
-    //   (item) => !item.id.includes('empty')
-    // )
     setData((prev) => {
       const moveResultObj = {
         ...prev,
@@ -289,7 +190,7 @@ const SchedulePage: React.FC = () => {
     let currentSchedulesObj = Object.assign(data[DataKey.schedules])
     const days = Object.keys(currentSchedulesObj)
     const tmpDayKey = 'Day' + (days.length + 1)
-    currentSchedulesObj[tmpDayKey] = []
+    currentSchedulesObj[tmpDayKey] = [...generateEmptyItem(tmpDayKey, 16)]
     setData((prev) => {
       let tmpDataObj = {
         ...prev,
@@ -300,7 +201,6 @@ const SchedulePage: React.FC = () => {
       return tmpDataObj
     })
     setDayKey(tmpDayKey)
-    // TODO: 測試他是不是可以亂拉?
   }
 
   const handleCloseDay = (dayKey: string) => {
@@ -329,7 +229,6 @@ const SchedulePage: React.FC = () => {
         <ConfirmedSchedules
           scheduleDays={data[DataKey.schedules]}
           updateDaySchedules={updateDaySchedules}
-          updateAllSchedules={updateAllSchedules}
           activeDayKey={dayKey}
           setDayKey={setDayKey}
           handleAddDay={handleAddDay}
