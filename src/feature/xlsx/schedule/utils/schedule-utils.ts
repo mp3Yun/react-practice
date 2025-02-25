@@ -124,7 +124,7 @@ export const doAddEvent = (
       [sourceKey]: [...newSourceList],
       [DataKey.schedules]: {
         ...data[DataKey.schedules],
-        [targetKey]: newTargetList,
+        [targetKey]: checkScheduleTimeFunc(newTargetList),
       },
     }
     console.log('moveResultObj', moveResultObj)
@@ -193,19 +193,19 @@ export const moveEventToAnotherDay = (
     ...sourceItems.slice(0, sourceIndex),
     targetItem,
     ...sourceItems.slice(sourceIndex + 1),
-  ]
+  ] as ItemInfo[]
   let newTargetItems = [
     ...targetItems.slice(0, targetIndex),
     sourceItem,
     ...targetItems.slice(targetIndex + 1),
-  ]
+  ] as ItemInfo[]
 
   const moveResultObj = {
     ...data,
     [DataKey.schedules]: {
       ...data[DataKey.schedules],
-      [sourceDayKey]: newSourceItems,
-      [targetDayKey]: newTargetItems,
+      [sourceDayKey]: checkScheduleTimeFunc(newSourceItems),
+      [targetDayKey]: checkScheduleTimeFunc(newTargetItems),
     },
   }
   return moveResultObj

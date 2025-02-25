@@ -19,12 +19,6 @@ const ConfirmedSchedules: React.FC<Props> = ({
   handleAddDay,
   handleCloseDay,
 }) => {
-  const handleClose = (dayKey: string) => {
-    // 取得那個dayKey
-    console.log('99-dayKey=>', dayKey)
-    handleCloseDay(dayKey)
-  }
-
   return (
     <Box display="flex" flexDir="column">
       <Box
@@ -82,7 +76,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
                       <Box
                         onClick={(e) => {
                           e.stopPropagation() // 防止點擊影響父層按鈕
-                          handleClose(dayKey)
+                          handleCloseDay(dayKey)
                         }}
                       >
                         <GrClose />
