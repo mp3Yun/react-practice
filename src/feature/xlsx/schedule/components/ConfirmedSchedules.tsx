@@ -72,7 +72,15 @@ const ConfirmedSchedules: React.FC<Props> = ({
                   <Flex justify="space-between" align="center" width="100%">
                     <Box></Box>
                     <Box>{dayKey}</Box>
-                    {index !== 0 ? (
+                    <Box
+                      onClick={(e) => {
+                        e.stopPropagation() // 防止點擊影響父層按鈕
+                        handleCloseDay(dayKey)
+                      }}
+                    >
+                      <GrClose />
+                    </Box>
+                    {/* {index !== 0 ? (
                       <Box
                         onClick={(e) => {
                           e.stopPropagation() // 防止點擊影響父層按鈕
@@ -83,7 +91,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
                       </Box>
                     ) : (
                       <Box></Box>
-                    )}
+                    )} */}
                   </Flex>
                 </Button>
               ))}

@@ -60,12 +60,12 @@ const SchedulePage: React.FC = () => {
     : parseDataToPendingItem(DataKey.tours, tours)
   // 待安排的旅館
   let initialHotels: ItemInfo[] = [
-    { id: 'H1', text: '住宿 1', origId: '0' },
-    { id: 'H2', text: '住宿 2', origId: '1' },
-    { id: 'H3', text: '住宿 3', origId: '2' },
-    { id: 'H4', text: '住宿 4', origId: '3' },
-    { id: 'H5', text: '住宿 5', origId: '4' },
-    { id: 'H6', text: '住宿 6', origId: '5' },
+    { id: 'hotels-1', text: '住宿 1', origId: '0' },
+    { id: 'hotels-2', text: '住宿 2', origId: '1' },
+    { id: 'hotels-3', text: '住宿 3', origId: '2' },
+    { id: 'hotels-4', text: '住宿 4', origId: '3' },
+    { id: 'hotels-5', text: '住宿 5', origId: '4' },
+    { id: 'hotels-6', text: '住宿 6', origId: '5' },
   ] // TODO: 根據 hotels 再做整理
   // 待確認的行程
   let initialSchedules: Record<string, ItemInfo[]> = {
@@ -193,11 +193,62 @@ const SchedulePage: React.FC = () => {
   }
 
   const handleCloseDay = (dayKey: string) => {
-    // 取得那個dayKey
-    console.log('99-dayKey=>', dayKey)
-    // 1. 要根據那一天的行程，把它們回復到原本的位置去
-    // 2. 將那一天之後的每個天數都往前挪....
-    // TODO: 想到就累
+    // 1. 取得 dayKey 的資料 且過濾空值
+    const removeItems = confirmedSchedules[dayKey].filter(
+      (item) => !item.id.includes('empty')
+    )
+    if (!removeItems) return
+
+    // 2. 要根據那一天的行程，把它們回復到原本的位置去(可以根據 id 來切割)
+    const tmpData = Object.assign({}, data)
+    removeItems.forEach((item) => {
+      const dataKey = item.id.split('-')[0] as keyof Omit<
+        SortOutData,
+        DataKey.schedules
+      >
+      tmpData[dataKey]?.push(item)
+    })
+    // 3. 將那一天之後的每個天數都往前挪....
+    const currentDays = Object.keys(tmpData[DataKey.schedules])
+    const filterDeleteDays = currentDays.filter((item) => item !== dayKey)
+    if (filterDeleteDays.length === 0 && dayKey === 'Day1') {
+      setDayKey('Day1')
+      const removeResultObj = {
+        ...tmpData,
+        [DataKey.schedules]: {
+          [dayKey]: [...generateEmptyItem(dayKey, 16)],
+        },
+      }
+      setData(removeResultObj)
+    } else {
+      // 小於刪除那天的都要往前排
+      const deleteNumber = dayKey.replace('Day', '')
+      const filterDeleteNumbers = filterDeleteDays.map((item) =>
+        item.replace('Day', '')
+      )
+      let adjustSchedules: Record<string, ItemInfo[]> = {}
+
+      Object.entries(tmpData[DataKey.schedules]).forEach(([key, value]) => {
+        const xDay = key.replace('Day', '')
+        const newXDay = xDay > deleteNumber ? 'Day' + (+xDay - 1) : 'Day' + xDay
+        if (filterDeleteNumbers.includes(xDay)) {
+          adjustSchedules = {
+            ...adjustSchedules,
+            [newXDay]: value,
+          }
+        }
+      })
+      const removeResultObj = {
+        ...tmpData,
+        [DataKey.schedules]: {
+          ...adjustSchedules,
+        },
+      }
+      setData(removeResultObj)
+      const prevDay =
+        +deleteNumber - 1 === 0 ? 'Day1' : 'Day' + (+deleteNumber - 1)
+      setDayKey(prevDay)
+    }
   }
 
   return (
