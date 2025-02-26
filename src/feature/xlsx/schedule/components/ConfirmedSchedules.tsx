@@ -1,10 +1,12 @@
-import { Box, Button, Flex, Text, VStack } from '@chakra-ui/react'
-import { useSortable } from '@dnd-kit/sortable'
-import React from 'react'
+import { Box, Button, Flex, IconButton, Text, VStack } from '@chakra-ui/react'
+import React, { useEffect, useRef } from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
+import { HiOutlinePrinter } from 'react-icons/hi2'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import DailySchedule from './DailySchedule'
-import Watermark from '../../../../components/watermark/Watermark'
+import usePrintPreview from '../../../../hooks/UsePrintPreview'
+import PrintPreviewDialog from '../../../../components/pdf/PrintPreviewDialog'
+import { printToPDF } from '../../../../utils/pdf-utils'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
@@ -20,6 +22,23 @@ const ConfirmedSchedules: React.FC<Props> = ({
   handleAddDay,
   handleCloseDay,
 }) => {
+  const pdfContentRef = useRef<HTMLDivElement>(null)
+  const { pdfUrl, openPreview } = usePrintPreview()
+  const [isPreviewOpen, setIsPreviewOpen] = React.useState(false)
+  const handlePreviewPDF = async () => {
+    if (pdfContentRef.current) {
+      await openPreview(pdfContentRef.current) // 呼叫統一的預覽函式
+      console.error('我是元件頁，這時候 pdfUrl 應該要有東西 =>', pdfUrl)
+    }
+  }
+
+  useEffect(() => {
+    if (pdfUrl) {
+      setIsPreviewOpen(true) // 開啟預覽 Dialog
+      console.error('我是元件頁，isPreviewOpen =>', isPreviewOpen)
+    }
+  }, [pdfUrl])
+
   return (
     <Box display="flex" flexDir="column">
       <Box
@@ -39,9 +58,21 @@ const ConfirmedSchedules: React.FC<Props> = ({
           borderRight="2px solid var(--chakra-colors-gray-300)"
           fontSize="2xl"
         >
-          <Text width="6vw" textAlign="center" justifySelf="center">
-            行程
-          </Text>
+          <Box display="flex" flexDir="row" minWidth="6vw" alignItems="center">
+            <Text textAlign="start" justifySelf="center">
+              行程
+            </Text>
+            <IconButton
+              bgColor="transparent"
+              color="black"
+              size="md"
+              aria-label="previewPDF"
+              onClick={handlePreviewPDF}
+            >
+              {/* <MdOutlineDownloading /> */}
+              <HiOutlinePrinter />
+            </IconButton>
+          </Box>
         </Box>
 
         <Box
@@ -55,7 +86,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
           overflow="auto"
           whiteSpace="nowrap" // 防止內容換行，保證內容會超出並顯示滾動條
         >
-          <VStack align="start">
+          <VStack align="start" ref={pdfContentRef}>
             <Box display="flex" width="max-content">
               {Object.keys(scheduleDays).map((dayKey, index) => (
                 <Button
@@ -81,18 +112,6 @@ const ConfirmedSchedules: React.FC<Props> = ({
                     >
                       <GrClose />
                     </Box>
-                    {/* {index !== 0 ? (
-                      <Box
-                        onClick={(e) => {
-                          e.stopPropagation() // 防止點擊影響父層按鈕
-                          handleCloseDay(dayKey)
-                        }}
-                      >
-                        <GrClose />
-                      </Box>
-                    ) : (
-                      <Box></Box>
-                    )} */}
                   </Flex>
                 </Button>
               ))}
@@ -127,6 +146,12 @@ const ConfirmedSchedules: React.FC<Props> = ({
           </VStack>
         </Box>
       </Box>
+      {/* 這是彈出的 PDF 預覽 Dialog */}
+      <PrintPreviewDialog
+        isOpen={isPreviewOpen}
+        onClose={() => setIsPreviewOpen(false)} // 關閉預覽 Dialog
+        pdfUrl={pdfUrl}
+      />
     </Box>
   )
 }

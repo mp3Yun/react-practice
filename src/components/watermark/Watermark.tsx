@@ -66,7 +66,7 @@ const Watermark: React.FC<Props> = ({
         left: 0,
         width: '100%',
         height: '100%',
-        zIndex: 9999,
+        zIndex: 150,
         pointerEvents: 'none',
         background: `url(${canvasRef.current?.toDataURL()}) repeat`,
       }}

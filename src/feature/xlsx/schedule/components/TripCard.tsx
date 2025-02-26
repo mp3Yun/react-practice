@@ -1,7 +1,7 @@
 import { Box, IconButton, Text, useDisclosure } from '@chakra-ui/react'
 import { useDraggable } from '@dnd-kit/core'
 import { useRef } from 'react'
-import { CiCircleInfo } from 'react-icons/ci'
+import { CiCircleInfo, CiSquareAlert } from 'react-icons/ci'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import { useDragContext } from '../../../../hooks/contexts/drag-context/UseDragContext'
 import DetailTripCard from './DetailTripCard'
@@ -76,17 +76,16 @@ export const TripCard = <T extends ItemInfo>({ item }: { item: T }) => {
           zIndex="15"
           pointerEvents="auto"
         >
-          <CiCircleInfo />
+          {/* <CiCircleInfo /> */}
+          <CiSquareAlert />
         </IconButton>
       </Box>
-      {open && (
-        <DetailTripCard
-          itemInfo={item}
-          isOpen={open}
-          onConfirm={handleCloseDialog}
-          onClose={handleCloseDialog}
-        />
-      )}
+      <DetailTripCard
+        itemInfo={item}
+        isOpen={open}
+        onConfirm={handleCloseDialog}
+        onClose={handleCloseDialog}
+      />
     </>
   )
 }
