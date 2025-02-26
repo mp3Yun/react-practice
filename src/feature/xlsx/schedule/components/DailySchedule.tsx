@@ -18,6 +18,7 @@ import SortableItem from '../../../../components/dragDrop/SortableItem'
 import { EmptyCard } from './EmptyCard'
 import TimeOccupiedCard from './TimeOccupiedCard'
 import { TripCard } from './TripCard'
+import Watermark from '../../../../components/watermark/Watermark'
 
 interface Props<T extends ItemInfo> {
   dayKey: string
@@ -63,9 +64,16 @@ const DailySchedule = <T extends ItemInfo>({ dayKey, data }: Props<T>) => {
               <Box flex="1" w="2px" bg="gray.200"></Box>
             </TimelineConnector>
             <TimelineContent>
+              <Watermark
+                text={dayKey}
+                customW={90}
+                customH={50}
+                opacity={0.1}
+              />
               <TimelineTitle>
                 <Span fontWeight="medium">{getContextByTime(marker)}</Span>
               </TimelineTitle>
+
               <SortableContext items={data.map((e) => e.id)}>
                 <Box position="relative" width="100%" height="18rem">
                   {/* 背景顯示時間區塊 */}

@@ -4,6 +4,7 @@ import React from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import DailySchedule from './DailySchedule'
+import Watermark from '../../../../components/watermark/Watermark'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
