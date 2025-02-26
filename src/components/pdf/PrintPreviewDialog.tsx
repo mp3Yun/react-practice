@@ -32,20 +32,18 @@ const PrintPreviewDialog: React.FC<PrintPreviewDialogProps> = ({
   }
 
   return (
-    // <Portal>
     <DialogRoot
       open={isOpen}
       onOpenChange={onClose}
       size="cover"
       placement="center"
-      motionPreset="none"
+      motionPreset="slide-in-bottom"
     >
       <DialogContent
         style={{
           width: '80vw',
           maxWidth: '800px',
           height: 'auto',
-          // zIndex: 9999,
         }}
       >
         <DialogCloseTrigger />
