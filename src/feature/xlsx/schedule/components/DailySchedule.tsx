@@ -71,7 +71,9 @@ const DailySchedule = <T extends ItemInfo>({ dayKey, data }: Props<T>) => {
                 opacity={0.1}
               />
               <TimelineTitle>
-                <Span fontWeight="medium">{getContextByTime(marker)}</Span>
+                <Span fontWeight="medium" h="1.5rem" alignSelf="center">
+                  {getContextByTime(marker)}
+                </Span>
               </TimelineTitle>
 
               <SortableContext items={data.map((e) => e.id)}>

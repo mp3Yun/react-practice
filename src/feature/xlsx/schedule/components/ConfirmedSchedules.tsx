@@ -139,6 +139,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
               <Box display="flex" width="100%" mt="2">
                 {Object.entries(scheduleDays).map(([key, value]) => (
                   <Box
+                    className="tab-panels-content"
                     id={key}
                     key={key}
                     width="25vw"

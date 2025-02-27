@@ -1,4 +1,4 @@
-import { Box, BoxProps, Center } from '@chakra-ui/react'
+import { Box, BoxProps, Text } from '@chakra-ui/react'
 import React from 'react'
 
 interface Props extends BoxProps {
@@ -15,6 +15,7 @@ const CircleWithText: React.FC<Props> = ({ size, text, boxProps }) => {
   }
   return (
     <Box
+      className="circle-marker"
       w={sizes[size] || sizes.m}
       h={sizes[size] || sizes.m}
       bg="blue.500"
@@ -26,7 +27,18 @@ const CircleWithText: React.FC<Props> = ({ size, text, boxProps }) => {
       fontWeight="bold"
       {...boxProps}
     >
-      {text}
+      <Text
+        fontSize="sm"
+        lineHeight="2"
+        whiteSpace="nowrap"
+        overflow="hidden"
+        textOverflow="ellipsis"
+        maxW="80%"
+        position="relative"
+        // top="-7px" // 手動往上移動
+      >
+        {text}
+      </Text>
     </Box>
   )
 }
