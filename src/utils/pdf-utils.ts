@@ -12,37 +12,71 @@ interface PrintOptions {
   margin?: number
 }
 
-// 用於生成 PDF 的邏輯
-export const generatePDF = async (content: HTMLElement) => {
-  if (!content) return null
-
-  console.error('99-content.offsetWidth=>', content.offsetWidth)
-  console.error('99-content.offsetHeight=>', content.offsetHeight)
+export const generatePDFwithHtml2canvas = async (
+  content: HTMLElement,
+  id: string
+) => {
+  const element = document.getElementById(id)
+  if (!element) {
+    throw 'No element, please check again.'
+  }
   const pdf = new jsPDF('p', 'mm', 'a4')
-  console.error('99-generatePDF=>', pdf)
-  const canvas = await html2canvas(content, {
-    scale: 2, // 增加解析度
-    useCORS: true, // 處理跨域圖片
+
+  // 克隆元素，並調整大小讓其內容完整展開
+  const cloned = element.cloneNode(true) as HTMLElement
+  // 取得該元素整個內容的高度
+  cloned.style.height = `${element.scrollHeight}px`
+  cloned.style.overflow = 'visible' // 移除滾動條
+
+  // 把克隆的內容放進 body (但設為隱藏)
+  document.body.appendChild(cloned)
+  cloned.style.position = 'absolute'
+  cloned.style.left = '-9999px' // 避免影響原畫面
+
+  /*****************************************************************************************
+   * 計算 A4 紙張的尺寸（以像素 px 為單位），
+   * 根據螢幕的 DPI（每英寸點數） 和 devicePixelRatio（裝置像素比例） 來轉換。
+   ****************************************************************************************/
+  // 設定紙張大小 (A4)
+  const paperWidth = 210 // mm
+  const pageHeight = 297 // mm
+  // 假設螢幕 DPI * 螢幕的像素比例
+  const dpi = 96 * window.devicePixelRatio
+  console.log(`DPI: ${dpi}`)
+  const maxWidthPx = (paperWidth / 25.4) * dpi
+  const maxHeightPx = (pageHeight / 25.4) * dpi
+
+  // 計算縮放比例
+  const scale = Math.min(
+    maxWidthPx / cloned.offsetWidth,
+    maxHeightPx / cloned.offsetHeight
+  )
+
+  // 轉換為 Canvas (截圖)
+  const canvas = await html2canvas(cloned, {
+    scale,
   })
-  console.error("99-I'm stop here ? =>", canvas)
+  document.body.removeChild(cloned) // 截完後移除
+
+  /*****************************************************************************************
+   * canvas 轉圖片
+   * 注意: PDF 使用 mm 單位，而 Canvas 使用 px
+   *****************************************************************************************/
   const imgData = canvas.toDataURL('image/png')
-  console.error('99-imgData ? =>', imgData)
+  // 把 px 轉成 mm（因為 1 px ≈ 0.264583 mm）。
   const contentWidth = canvas.width * 0.264583
   const contentHeight = canvas.height * 0.264583
   const maxWidth = 210 - 20 // A4寬度減去邊距
   const maxHeight = 297 - 20 // A4高度減去邊距
-  let scale = contentHeight > maxHeight ? maxHeight / contentHeight : 1
-  console.error('99-contentWidth ? =>', contentWidth)
-  console.error('99-contentHeight ? =>', contentHeight)
-  console.error('99-maxWidth ? =>', maxWidth)
-  console.error('99-maxHeight ? =>', maxHeight)
+  // 這裡的 scaleImg 主要是確保圖片高度不超出 A4 頁面
+  let scaleImg = Math.min(maxWidth / contentWidth, maxHeight / contentHeight, 1)
   pdf.addImage(
     imgData,
     'PNG',
     10,
     10,
-    contentWidth * scale,
-    contentHeight * scale
+    contentWidth * scaleImg,
+    contentHeight * scaleImg
   )
 
   return pdf.output('blob') // 返回 Blob 資料
@@ -134,6 +168,3 @@ export const previewPDF = async ({
   // 在新分頁開啟 PDF
   window.open(pdfUrl, '_blank')
 }
-
-/** 在 popup 視窗中，預覽 PDF */
-export const PrintPreviewPDF = async ({}) => {}

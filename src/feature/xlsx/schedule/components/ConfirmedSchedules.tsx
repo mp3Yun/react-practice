@@ -23,19 +23,17 @@ const ConfirmedSchedules: React.FC<Props> = ({
   handleCloseDay,
 }) => {
   const pdfContentRef = useRef<HTMLDivElement>(null)
-  const { pdfUrl, openPreview } = usePrintPreview()
+  const { pdfUrl, openPreviewWithHtml2canvas } = usePrintPreview()
   const [isPreviewOpen, setIsPreviewOpen] = React.useState(false)
   const handlePreviewPDF = async () => {
     if (pdfContentRef.current) {
-      await openPreview(pdfContentRef.current) // 呼叫統一的預覽函式
-      console.error('我是元件頁，這時候 pdfUrl 應該要有東西 =>', pdfUrl)
+      await openPreviewWithHtml2canvas(pdfContentRef.current, 'print-schedule') // 呼叫統一的預覽函式
     }
   }
 
   useEffect(() => {
     if (pdfUrl) {
       setIsPreviewOpen(true) // 開啟預覽 Dialog
-      console.error('我是元件頁，isPreviewOpen =>', isPreviewOpen)
     }
   }, [pdfUrl])
 
@@ -92,7 +90,13 @@ const ConfirmedSchedules: React.FC<Props> = ({
             overflow="auto"
             whiteSpace="nowrap" // 防止內容換行，保證內容會超出並顯示滾動條
           >
-            <VStack align="start" ref={pdfContentRef}>
+            <VStack
+              id="print-schedule"
+              align="start"
+              ref={pdfContentRef}
+              height="auto"
+              width="auto"
+            >
               <Box display="flex" width="max-content">
                 {Object.keys(scheduleDays).map((dayKey, index) => (
                   <Button

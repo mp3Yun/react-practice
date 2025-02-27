@@ -7,7 +7,6 @@ import {
   DialogHeader,
   DialogRoot,
   DialogTitle,
-  Portal,
 } from '@chakra-ui/react'
 
 interface PrintPreviewDialogProps {
@@ -21,7 +20,6 @@ const PrintPreviewDialog: React.FC<PrintPreviewDialogProps> = ({
   onClose,
   pdfUrl,
 }) => {
-  console.error('[PrintPreviewDialog]-pdfUrl=>', pdfUrl)
   const handleDownload = () => {
     if (pdfUrl) {
       const link = document.createElement('a')

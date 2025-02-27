@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import { generatePDF } from '../utils/pdf-utils'
+import { generatePDFwithHtml2canvas } from '../utils/pdf-utils'
 
 const usePrintPreview = () => {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null)
 
-  const openPreview = async (content: HTMLElement) => {
-    const pdfBlob = await generatePDF(content)
+  const openPreviewWithHtml2canvas = async (
+    content: HTMLElement,
+    elementId: string
+  ) => {
+    const pdfBlob = await generatePDFwithHtml2canvas(content, elementId)
     if (!pdfBlob?.size) return
     const pdfBlobUrl = URL.createObjectURL(pdfBlob)
     setPdfUrl(pdfBlobUrl)
@@ -13,7 +16,7 @@ const usePrintPreview = () => {
 
   return {
     pdfUrl,
-    openPreview,
+    openPreviewWithHtml2canvas,
   }
 }
 
