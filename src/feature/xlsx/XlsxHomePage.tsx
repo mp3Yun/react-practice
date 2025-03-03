@@ -23,7 +23,7 @@ const XlsxHomePage: React.FC = () => {
   return (
     <>
       <DragProvider>
-        <NestedComponent isOpen={isOpen}>
+        <NestedComponent isOpen={isOpen} key={String(isOpen)}>
           <Box gap="2rem" color={'gray.600'} fontSize="xl">
             <Text fontSize="2xl" fontWeight="bold">
               使用說明
