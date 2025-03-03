@@ -7,9 +7,9 @@ import { Box, Text } from '@chakra-ui/react'
 import ResultDisplay from '../components/ResultDisplay'
 import FileUpload from '../../../components/buttons/FileUpload'
 
-const ToursPage: React.FC = () => {
+const SpotsPage: React.FC = () => {
   const [showData, setShowData] = useState<any[]>([])
-  const [reportType, setReportType] = useState<ReportType>('ToursReport')
+  const [reportType, setReportType] = useState<ReportType>('SpotsReport')
   const { parsedData, handleFile } = useExcelWithStrategy(reportType)
 
   const {
@@ -90,4 +90,4 @@ const ToursPage: React.FC = () => {
   )
 }
 
-export default ToursPage
+export default SpotsPage

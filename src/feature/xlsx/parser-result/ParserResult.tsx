@@ -10,5 +10,5 @@ export const resultComponentMap: Record<
   ReportType,
   React.FC<ComponentProps>
 > = {
-  ToursReport: TouristSpotsList,
+  SpotsReport: TouristSpotsList,
 }

@@ -8,16 +8,16 @@ export const xlsxRoute = createRoute({
   component: routePathMaps[RoutePathEnum.Xlsx].component, // 定義該路由的對應組件
 })
 
-export const toursRoute = createRoute({
+export const spotsRoute = createRoute({
   getParentRoute: () => xlsxRoute,
-  path: '/tours', // 定義路由的 path
-  component: routePathMaps[RoutePathEnum.Tours].component, // 定義該路由的對應組件
+  path: '/spots', // 定義路由的 path
+  component: routePathMaps[RoutePathEnum.Spots].component, // 定義該路由的對應組件
 })
 
 export const hotelsRoute = createRoute({
   getParentRoute: () => xlsxRoute,
   path: '/hotels', // 定義路由的 path
-  component: routePathMaps[RoutePathEnum.Tours].component, // 定義該路由的對應組件
+  component: routePathMaps[RoutePathEnum.Hotels].component, // 定義該路由的對應組件
 })
 
 export const schedulesRoute = createRoute({
@@ -27,7 +27,7 @@ export const schedulesRoute = createRoute({
 })
 
 export const xlsxRouteTree = xlsxRoute.addChildren([
-  toursRoute,
+  spotsRoute,
   hotelsRoute,
   schedulesRoute,
 ])

@@ -11,12 +11,9 @@ const XlsxHomePage: React.FC = () => {
   const [isOpen, setIsOpen] = useState(() => false)
 
   useEffect(() => {
-    console.error('location', location)
     if (location.pathname === '/home/xlsx') {
-      console.log('99-沒有反應耶?')
       setIsOpen(true)
     } else {
-      console.log('99-應該要被關起來啦??')
       setIsOpen(false)
     }
   }, [location])

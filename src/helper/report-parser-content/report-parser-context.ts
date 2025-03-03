@@ -1,5 +1,5 @@
 // Define a generic type that refers to all report interfaces
-export type ReportType = 'ToursReport'
+export type ReportType = 'SpotsReport'
 // | 'HotelsReport'
 
 // Strategy Interface

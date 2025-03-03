@@ -1,6 +1,6 @@
 import BasicDataset from '../basic-dataset'
 
-export default class TourDetail extends BasicDataset<TourDetail> {
+export default class SpotDetail extends BasicDataset<SpotDetail> {
   /** 唯一值 */
   id: number = 0
   /** 景點名稱 */

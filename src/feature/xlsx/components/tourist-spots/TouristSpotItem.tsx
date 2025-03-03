@@ -1,11 +1,11 @@
 import { Box, Link, Table } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { HiHeart } from 'react-icons/hi'
-import TourDetail from '../../../../helper/report-parser-content/reports/tours-parser/tour-detail'
+import TourDetail from '../../../../helper/report-parser-content/reports/spots-parser/spot-detail'
 import { useStore } from '../../../../hooks/contexts/store-context/UseStore'
 
-// 定義 TourDetailView
-export type TourDetailValue = {
+// 定義 SpotDetailView
+export type SpotDetailValue = {
   [K in keyof TourDetail]: {
     name: string
     value: string
@@ -13,7 +13,7 @@ export type TourDetailValue = {
 }
 
 interface TouristSpotItemProps {
-  data: TourDetailValue
+  data: SpotDetailValue
   justForShow?: boolean
 }
 const TouristSpotItem: React.FC<TouristSpotItemProps> = ({

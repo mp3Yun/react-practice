@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react'
-import TouristSpotItem, { TourDetailValue } from './TouristSpotItem'
+import TouristSpotItem, { SpotDetailValue } from './TouristSpotItem'
 
 const TouristSpotsList: React.FC<{
-  data: TourDetailValue[]
+  data: SpotDetailValue[]
   justForShow?: boolean
 }> = ({ data, justForShow }) => {
   return (

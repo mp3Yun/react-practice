@@ -50,7 +50,7 @@ const useExcelWithStrategy = <T extends ReportInfo>(
 
   useEffect(() => {
     if (rawData.length > 0) {
-      // 處理 rawData 時，把 image 塞進去 找到相對應的位置 TODO:
+      // 處理 rawData 時，把 image 塞進去 找到相對應的位置
       const sortRawDataAndImages = associateImageWithRawData(
         rawData,
         imageMappings

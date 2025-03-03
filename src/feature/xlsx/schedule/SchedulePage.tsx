@@ -10,7 +10,6 @@ import { ItemInfo } from '../../../components/dragDrop/CrossZoneDragger'
 import { ColumnType } from '../../../helper/report-parser-content/report.type'
 import { useDragContext } from '../../../hooks/contexts/drag-context/UseDragContext'
 import { useStore } from '../../../hooks/contexts/store-context/UseStore'
-import { fakeTours } from '../data/fakeTours'
 import ConfirmedSchedules from './components/ConfirmedSchedules'
 import PendingHotels from './components/PendingHotels'
 import PendingTours from './components/PendingTours'
@@ -127,7 +126,6 @@ const SchedulePage: React.FC = () => {
 
     // [logic] 1. 識別當前拖拉類型
     const actionType = distinguishAction(event)
-    console.error('99-actionType=>', actionType)
 
     // [login] 2. 根據不同拖拉類型
     switch (actionType) {
@@ -161,7 +159,6 @@ const SchedulePage: React.FC = () => {
     currentDayKey: string,
     scheduleDays: ItemInfo[]
   ) => {
-    console.error('updateSchedules =>', scheduleDays)
     setData((prev) => {
       const moveResultObj = {
         ...prev,

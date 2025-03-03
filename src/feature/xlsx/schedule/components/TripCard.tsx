@@ -1,7 +1,7 @@
 import { Box, IconButton, Text, useDisclosure } from '@chakra-ui/react'
 import { useDraggable } from '@dnd-kit/core'
 import { useRef } from 'react'
-import { CiCircleInfo, CiSquareAlert } from 'react-icons/ci'
+import { CiSquareAlert } from 'react-icons/ci'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import { useDragContext } from '../../../../hooks/contexts/drag-context/UseDragContext'
 import DetailTripCard from './DetailTripCard'

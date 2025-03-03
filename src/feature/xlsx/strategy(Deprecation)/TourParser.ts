@@ -1,5 +1,5 @@
-import TourDetail from '../../../helper/report-parser-content/reports/tours-parser/tour-detail'
-export const tourParser = (rawData: any[]): TourDetail[] => {
+import SpotDetail from '../../../helper/report-parser-content/reports/spots-parser/spot-detail'
+export const tourParser = (rawData: any[]): SpotDetail[] => {
   const keys = Object.keys(rawData[0])
   return rawData.map((item: any, index) => {
     return {
