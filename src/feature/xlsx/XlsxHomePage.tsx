@@ -7,7 +7,7 @@ const XlsxHomePage: React.FC = () => {
     <>
       <DragProvider>
         <Box>
-          <p>App Version: {import.meta.env.VITE_IS_PLAN_TRIP}</p>
+          <p>IS PLAN TRIP: {import.meta.env.VITE_IS_PLAN_TRIP}</p>
         </Box>
         <Outlet />
       </DragProvider>

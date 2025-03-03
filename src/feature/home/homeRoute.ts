@@ -21,7 +21,7 @@ export const homeRoute = createRoute({
   component: routePathMaps[RoutePathEnum.Home].component, // 定義該路由的對應組件
 })
 
-const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP
+const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP === 'true'
 const tmpRoutes = isPlanTrip
   ? [mainRoute, xlsxRouteTree]
   : [
