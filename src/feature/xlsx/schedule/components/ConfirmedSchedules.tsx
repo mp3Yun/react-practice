@@ -25,6 +25,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
   const pdfContentRef = useRef<HTMLDivElement>(null)
   const { pdfUrl, openPreviewWithHtml2canvas } = usePrintPreview()
   const [isPreviewOpen, setIsPreviewOpen] = React.useState(false)
+  const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP === 'true'
   const handlePreviewPDF = async () => {
     if (pdfContentRef.current) {
       await openPreviewWithHtml2canvas(pdfContentRef.current, 'print-schedule') // 呼叫統一的預覽函式
@@ -86,7 +87,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
             padding="0.5rem"
             gap="1rem"
             justifyContent="start"
-            maxHeight="52vh" // 讓內容區域有最大高度
+            maxHeight={isPlanTrip ? '60vh' : '52vh'} // 讓內容區域有最大高度
             overflow="auto"
             whiteSpace="nowrap" // 防止內容換行，保證內容會超出並顯示滾動條
           >

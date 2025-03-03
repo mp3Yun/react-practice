@@ -62,7 +62,10 @@ const ToursPage: React.FC = () => {
 
   return (
     <Box display="flex" flexDir="column" gap="1rem">
-      <Text fontSize="2xl">Deal with xlsx</Text>
+      <Box>
+        <Text fontSize="2xl">Deal with Spots</Text>
+      </Box>
+
       <Box
         display="flex"
         flexDir="column"

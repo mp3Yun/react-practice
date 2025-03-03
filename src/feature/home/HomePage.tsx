@@ -16,6 +16,8 @@ const HomePage: React.FC = () => {
   // 取得 isOverlayVisible 狀態
   const { isOverlayVisible } = useOverlayVisible()
 
+  const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP === 'true'
+
   // 使用 useEffect 處理 modal 的開關，避免無限渲染
   useEffect(() => {
     if (isLogin) {
@@ -30,7 +32,9 @@ const HomePage: React.FC = () => {
         minHeight={'100vh'}
         backgroundColor={'gray.100'}
       >
-        <Header style={{ display: isOverlayVisible ? 'none' : 'flex' }} />
+        {!isPlanTrip && (
+          <Header style={{ display: isOverlayVisible ? 'none' : 'flex' }} />
+        )}
 
         <Flex
           direction="row"
@@ -57,7 +61,11 @@ const HomePage: React.FC = () => {
             <Box
               padding={isOverlayVisible ? 0 : '1.5rem'}
               className="custom-scrollbar"
-              css={{ '--scrollbar-max-height': 'calc(100vh - 160px)' }}
+              css={{
+                '--scrollbar-max-height': isPlanTrip
+                  ? 'calc(100vh - 20px)'
+                  : 'calc(100vh - 160px)',
+              }}
               maxHeight={
                 isOverlayVisible
                   ? 'calc(100vh - 4rem)'
@@ -71,7 +79,9 @@ const HomePage: React.FC = () => {
           </Box>
         </Flex>
 
-        <Footer style={{ display: isOverlayVisible ? 'none' : 'block' }} />
+        {!isPlanTrip && (
+          <Footer style={{ display: isOverlayVisible ? 'none' : 'block' }} />
+        )}
       </Flex>
       {/* 顯示廣告 Modal  [方法一] */}
       {isModalOpen && (
