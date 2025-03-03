@@ -1,12 +1,12 @@
 import { Box, Link, Table } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { HiHeart } from 'react-icons/hi'
-import TourDetail from '../../../../helper/report-parser-content/reports/spots-parser/spot-detail'
+import SpotDetail from '../../../../helper/report-parser-content/reports/spots-parser/spot-detail'
 import { useStore } from '../../../../hooks/contexts/store-context/UseStore'
 
 // 定義 SpotDetailView
 export type SpotDetailValue = {
-  [K in keyof TourDetail]: {
+  [K in keyof SpotDetail]: {
     name: string
     value: string
   }
@@ -30,7 +30,7 @@ const TouristSpotItem: React.FC<TouristSpotItemProps> = ({
         ...prevState,
         xlsx: {
           ...prevState.xlsx,
-          tours: [...(prevState.xlsx?.tours || []), data],
+          spots: [...(prevState.xlsx?.spots || []), data],
         },
       }))
     } else {
@@ -39,7 +39,7 @@ const TouristSpotItem: React.FC<TouristSpotItemProps> = ({
         ...prevState,
         xlsx: {
           ...prevState.xlsx,
-          tours: (prevState.xlsx?.tours ?? []).filter(
+          spots: (prevState.xlsx?.spots ?? []).filter(
             (item) => item.id.value !== data.id.value
           ),
         },

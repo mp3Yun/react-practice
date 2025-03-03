@@ -4,13 +4,13 @@ import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 
 // 定義 Enum
 export enum DataKey {
-  tours = 'tours',
+  spots = 'spots',
   hotels = 'hotels',
   schedules = 'schedules',
 }
 
 export interface SortOutData {
-  [DataKey.tours]: ItemInfo[]
+  [DataKey.spots]: ItemInfo[]
   [DataKey.hotels]: ItemInfo[]
   [DataKey.schedules]: Record<string, ItemInfo[]>
 }
@@ -66,7 +66,7 @@ export const doAddEvent = (
   let targetKey: string | null = null
 
   // 來源目標:
-  Object.values([DataKey.tours, DataKey.hotels]).forEach((key) => {
+  Object.values([DataKey.spots, DataKey.hotels]).forEach((key) => {
     const sourceData = data[key] as ItemInfo[]
     if (
       sourceData &&
@@ -118,7 +118,7 @@ export const doAddEvent = (
   console.log('newSourceList', newSourceList)
 
   // 判斷 targetKey 是否為非 tours / hotels 的鍵，是的話，資料要安排在 schedules 下
-  if (targetKey !== DataKey.tours && targetKey !== DataKey.hotels) {
+  if (targetKey !== DataKey.spots && targetKey !== DataKey.hotels) {
     const moveResultObj = {
       ...data,
       [sourceKey]: [...newSourceList],

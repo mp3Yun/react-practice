@@ -4,10 +4,10 @@ import SingleDragBlock from '../../../../components/dragDrop/SingleDragBlock'
 import { TripCard } from './TripCard'
 
 interface Props {
-  pendingTours: ItemInfo[]
+  pendingSpots: ItemInfo[]
 }
 
-const PendingTours: React.FC<Props> = ({ pendingTours }) => {
+const PendingSpots: React.FC<Props> = ({ pendingSpots }) => {
   return (
     <Box display="flex" flexDir="column">
       <Box
@@ -37,7 +37,7 @@ const PendingTours: React.FC<Props> = ({ pendingTours }) => {
           justifyContent="center"
         >
           <SingleDragBlock
-            data={pendingTours}
+            data={pendingSpots}
             CustomComponent={TripCard}
             alignContent="center"
           ></SingleDragBlock>
@@ -47,4 +47,4 @@ const PendingTours: React.FC<Props> = ({ pendingTours }) => {
   )
 }
 
-export default PendingTours
+export default PendingSpots

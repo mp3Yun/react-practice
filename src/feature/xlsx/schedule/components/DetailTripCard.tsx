@@ -79,7 +79,7 @@ const DetailTripCard: React.FC<Props> = ({
             flexDirection: 'column',
             maxHeight: '80vh',
             maxWidth: '80vw', // 限制最大寬度，避免過大
-            width: '90vw',
+            width: 'auto',
             position: 'fixed',
             top: '50%',
             left: '50%',

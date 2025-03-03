@@ -5,12 +5,12 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { TourDetailValue } from '../../../feature/xlsx/components/tourist-spots/TouristSpotItem'
+import { SpotDetailValue } from '../../../feature/xlsx/components/tourist-spots/TouristSpotItem'
 
 // 資料結構介面定義
 interface StoreDataByFeature {
   xlsx: {
-    tours: TourDetailValue[]
+    spots: SpotDetailValue[]
   }
 }
 

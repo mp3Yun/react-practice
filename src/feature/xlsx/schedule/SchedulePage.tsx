@@ -12,7 +12,7 @@ import { useDragContext } from '../../../hooks/contexts/drag-context/UseDragCont
 import { useStore } from '../../../hooks/contexts/store-context/UseStore'
 import ConfirmedSchedules from './components/ConfirmedSchedules'
 import PendingHotels from './components/PendingHotels'
-import PendingTours from './components/PendingTours'
+import PendingSpots from './components/PendingTours'
 import { TripCard } from './components/TripCard'
 import {
   DataKey,
@@ -46,17 +46,17 @@ const parseDataToPendingItem = <
 const SchedulePage: React.FC = () => {
   const { storeData } = useStore()
   // ===== 實際資料 [ start TODO:] ===== //
-  const tours = storeData?.xlsx?.tours
+  const spots = storeData?.xlsx?.spots
   // const hotels = storeData?.xlsx?.hotels
   const [dayKey, setDayKey] = useState<string>('Day1')
   // ===== 實際資料 [ end] ===== //
 
   // const tours = fakeTours // TODO: 先用假資料
 
-  // 待安排的景點 =>這邊可能要變成去聽 tours
-  let initialTours: ItemInfo[] = !tours
+  // 待安排的景點 =>這邊可能要變成去聽 spots
+  let initialSpots: ItemInfo[] = !spots
     ? []
-    : parseDataToPendingItem(DataKey.tours, tours)
+    : parseDataToPendingItem(DataKey.spots, spots)
   // 待安排的旅館
   let initialHotels: ItemInfo[] = [
     { id: 'hotels-1', text: '住宿 1', origId: '0' },
@@ -71,14 +71,14 @@ const SchedulePage: React.FC = () => {
     Day1: [...generateEmptyItem(dayKey, 16)],
   }
 
-  const [pendingTours, setPendingTours] = useState<ItemInfo[]>(initialTours)
+  const [pendingSpots, setPendingSpots] = useState<ItemInfo[]>(initialSpots)
   const [pendingHotels, setPendingHotels] = useState<ItemInfo[]>(initialHotels)
   const [confirmedSchedules, setConfirmedSchedules] =
     useState<Record<string, ItemInfo[]>>(initialSchedules)
 
   // 管理排序的資料(含待安排、已安排)
   const [data, setData] = useState<SortOutData>({
-    [DataKey.tours]: pendingTours,
+    [DataKey.spots]: pendingSpots,
     [DataKey.hotels]: pendingHotels,
     [DataKey.schedules]: confirmedSchedules,
   })
@@ -87,8 +87,8 @@ const SchedulePage: React.FC = () => {
   const [activeItem, setActiveItem] = useState<ItemInfo | null>(null)
 
   useEffect(() => {
-    if (data[DataKey.tours].length >= 0) {
-      setPendingTours(data[DataKey.tours])
+    if (data[DataKey.spots].length >= 0) {
+      setPendingSpots(data[DataKey.spots])
     }
 
     if (data[DataKey.hotels].length >= 0) {
@@ -259,7 +259,7 @@ const SchedulePage: React.FC = () => {
         }}
       >
         {/* 景點 */}
-        <PendingTours pendingTours={pendingTours}></PendingTours>
+        <PendingSpots pendingSpots={pendingSpots}></PendingSpots>
         {/* 住宿 */}
         <PendingHotels pendingHotels={pendingHotels}></PendingHotels>
         {/* 行程 */}
