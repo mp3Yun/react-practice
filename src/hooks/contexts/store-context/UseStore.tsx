@@ -24,9 +24,27 @@ const StoreContext = createContext<{
   setStoreData: () => {},
 })
 
+const LOCAL_STORAGE_KEY = 'storeData'
+
 export const StoreProvider = ({ children }: { children: ReactNode }) => {
-  const [storeData, setStoreData] = useState<Partial<StoreDataByFeature>>({})
-  useEffect(() => {}, [storeData]) // 這裡的依賴是 storeData，所以每當 storeData 更新時，useEffect 都會被調用
+  const [storeData, setStoreData] = useState<Partial<StoreDataByFeature>>(
+    () => {
+      try {
+        const storeData = localStorage.getItem(LOCAL_STORAGE_KEY)
+        return storeData ? JSON.parse(storeData) : {}
+      } catch (error) {
+        console.error('Failed to load store data from local storage', error)
+        return {}
+      }
+    }
+  )
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storeData))
+    } catch (error) {
+      console.error('Failed to save store data to local storage', error)
+    }
+  }, [storeData]) // 這裡的依賴是 storeData，所以每當 storeData 更新時，useEffect 都會被調用
 
   return (
     <StoreContext.Provider value={{ storeData, setStoreData }}>

@@ -24,6 +24,7 @@ import SettingPage from '../feature/setting/SettingPage'
 import TablePage from '../feature/table/TablePage'
 import UseRefCasePage from '../feature/use-case/useRefCasePage'
 import VideoPage from '../feature/video/VideoPage'
+import HotelsPage from '../feature/xlsx/hotels/HotelsPage'
 import SchedulePage from '../feature/xlsx/schedule/SchedulePage'
 import ToursPage from '../feature/xlsx/tours/ToursPage'
 import XlsxHomePage from '../feature/xlsx/XlsxHomePage'
@@ -60,6 +61,7 @@ export enum RoutePathEnum {
   SnakeGame = '/home/games/snakeGame',
   Xlsx = '/home/xlsx',
   Tours = '/home/xlsx/tours',
+  Hotels = '/home/xlsx/hotels',
   Schedules = '/home/xlsx/schedules',
 }
 
@@ -158,6 +160,9 @@ export const routePathMaps: Record<RoutePathEnum, RouteConfigDto> = {
   },
   [RoutePathEnum.Tours]: {
     component: ToursPage,
+  },
+  [RoutePathEnum.Hotels]: {
+    component: HotelsPage,
   },
   [RoutePathEnum.Schedules]: {
     component: SchedulePage,

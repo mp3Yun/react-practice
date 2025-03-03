@@ -47,12 +47,12 @@ const parseDataToPendingItem = <
 const SchedulePage: React.FC = () => {
   const { storeData } = useStore()
   // ===== 實際資料 [ start TODO:] ===== //
-  // const tours = storeData?.xlsx?.tours
+  const tours = storeData?.xlsx?.tours
   // const hotels = storeData?.xlsx?.hotels
   const [dayKey, setDayKey] = useState<string>('Day1')
   // ===== 實際資料 [ end] ===== //
 
-  const tours = fakeTours // TODO: 先用假資料
+  // const tours = fakeTours // TODO: 先用假資料
 
   // 待安排的景點 =>這邊可能要變成去聽 tours
   let initialTours: ItemInfo[] = !tours

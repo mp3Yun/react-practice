@@ -13,3 +13,7 @@ export function flattenObject(
   }
   return result
 }
+
+export const isNonEmptyObject = (obj: Record<string, unknown>): boolean => {
+  return obj !== null && typeof obj === 'object' && Object.keys(obj).length > 0
+}

@@ -34,7 +34,7 @@ const SingleDragBlock = <T extends ItemInfo>({
           )) // 🟢 當沒有資料時，顯示占位符
         ) : (
           <Text textAlign="center" color="gray.500">
-            拖曳項目到這裡
+            目前無項目可供排序
           </Text>
         )}
       </Box>
