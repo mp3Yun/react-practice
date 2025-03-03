@@ -21,30 +21,34 @@ export const homeRoute = createRoute({
   component: routePathMaps[RoutePathEnum.Home].component, // 定義該路由的對應組件
 })
 
+const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP
+const tmpRoutes = isPlanTrip
+  ? [mainRoute, xlsxRouteTree]
+  : [
+      // home 主頁面
+      mainRoute,
+      // button module
+      buttonRouteTree,
+      // 輪播圖
+      carouselRouteTree,
+      // video module
+      videoRoute,
+      // usecase module
+      useCaseRouteTree,
+      // form module
+      formTreeRoute,
+      // chart module
+      chartRoute,
+      // table module
+      tableRoute,
+      // setting module
+      settingRoute,
+      // chinese cabbage moudule
+      chineseCabbageRoute,
+      // games module
+      gamesRouteTree,
+      // xlsx module
+      xlsxRouteTree,
+    ]
 // 建立路由樹
-export const homeRouteTree = homeRoute.addChildren([
-  // home 主頁面
-  mainRoute,
-  // button module
-  buttonRouteTree,
-  // 輪播圖
-  carouselRouteTree,
-  // video module
-  videoRoute,
-  // usecase module
-  useCaseRouteTree,
-  // form module
-  formTreeRoute,
-  // chart module
-  chartRoute,
-  // table module
-  tableRoute,
-  // setting module
-  settingRoute,
-  // chinese cabbage moudule
-  chineseCabbageRoute,
-  // games module
-  gamesRouteTree,
-  // xlsx module
-  xlsxRouteTree,
-])
+export const homeRouteTree = homeRoute.addChildren(tmpRoutes)
