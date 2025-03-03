@@ -23,8 +23,6 @@ const SpotsPage: React.FC = () => {
   } = usePagination(parsedData, 10)
 
   const { ref, inView, entry } = useInView({
-    /* Optional options */
-    // threshold: 0.3, // 30% 可見時觸發
     threshold: 0,
     triggerOnce: false, // 允許多次觸發
   }) // 監聽元素是否進入視圖

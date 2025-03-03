@@ -1,4 +1,5 @@
 import { ReportType } from '../../../helper/report-parser-content/report-parser-context'
+import HotelsList from '../components/hotels/HotelsList'
 import { DisplayItem } from '../components/ResultDisplay'
 import TouristSpotsList from '../components/tourist-spots/TouristSpotsList'
 
@@ -11,4 +12,5 @@ export const resultComponentMap: Record<
   React.FC<ComponentProps>
 > = {
   SpotsReport: TouristSpotsList,
+  HotelsReport: HotelsList,
 }

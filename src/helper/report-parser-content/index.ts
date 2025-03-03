@@ -3,6 +3,7 @@ import ReportParserContext, {
   ReportParserStrategy,
 } from './report-parser-context'
 import { ReportInfo } from './report.type'
+import HotelsReportParser from './reports/hotels-parser'
 import SpotsReportParser from './reports/spots-parser'
 
 type ParserSelector = Record<
@@ -12,7 +13,7 @@ type ParserSelector = Record<
 // Mapping of report names to their respective parser classes
 const parserMapping: ParserSelector = {
   SpotsReport: SpotsReportParser,
-  // HotelsReport:
+  HotelsReport: HotelsReportParser,
 }
 
 export default class ReportParserService {

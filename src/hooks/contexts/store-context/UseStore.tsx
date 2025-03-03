@@ -6,11 +6,13 @@ import {
   useState,
 } from 'react'
 import { SpotDetailValue } from '../../../feature/xlsx/components/tourist-spots/TouristSpotItem'
+import { HotelDetailValue } from '../../../feature/xlsx/components/hotels/HotelItem'
 
 // 資料結構介面定義
 interface StoreDataByFeature {
   xlsx: {
-    spots: SpotDetailValue[]
+    spots?: SpotDetailValue[]
+    hotels?: HotelDetailValue[]
   }
 }
 

@@ -45,27 +45,18 @@ const parseDataToPendingItem = <
 
 const SchedulePage: React.FC = () => {
   const { storeData } = useStore()
-  // ===== 實際資料 [ start TODO:] ===== //
   const spots = storeData?.xlsx?.spots
-  // const hotels = storeData?.xlsx?.hotels
+  const hotels = storeData?.xlsx?.hotels
   const [dayKey, setDayKey] = useState<string>('Day1')
-  // ===== 實際資料 [ end] ===== //
-
-  // const tours = fakeTours // TODO: 先用假資料
 
   // 待安排的景點 =>這邊可能要變成去聽 spots
   let initialSpots: ItemInfo[] = !spots
     ? []
     : parseDataToPendingItem(DataKey.spots, spots)
   // 待安排的旅館
-  let initialHotels: ItemInfo[] = [
-    { id: 'hotels-1', text: '住宿 1', origId: '0' },
-    { id: 'hotels-2', text: '住宿 2', origId: '1' },
-    { id: 'hotels-3', text: '住宿 3', origId: '2' },
-    { id: 'hotels-4', text: '住宿 4', origId: '3' },
-    { id: 'hotels-5', text: '住宿 5', origId: '4' },
-    { id: 'hotels-6', text: '住宿 6', origId: '5' },
-  ] // TODO: 根據 hotels 再做整理
+  let initialHotels: ItemInfo[] = !hotels
+    ? []
+    : parseDataToPendingItem(DataKey.hotels, hotels)
   // 待確認的行程
   let initialSchedules: Record<string, ItemInfo[]> = {
     Day1: [...generateEmptyItem(dayKey, 16)],

@@ -53,7 +53,9 @@ const XlsxHomePage: React.FC = () => {
                 </a>
               </Text>
               <Text fontSize="xl" fontWeight="bold">
-                住宿
+                <a href="/files/Hotels.xlsx" download="HotelsSample.xlsx">
+                  住宿
+                </a>
               </Text>
               <Text fontSize="xl" fontWeight="bold">
                 餐廳

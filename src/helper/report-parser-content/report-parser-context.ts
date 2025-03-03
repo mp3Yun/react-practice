@@ -1,6 +1,5 @@
 // Define a generic type that refers to all report interfaces
-export type ReportType = 'SpotsReport'
-// | 'HotelsReport'
+export type ReportType = 'SpotsReport' | 'HotelsReport'
 
 // Strategy Interface
 export interface ReportParserStrategy<T> {
