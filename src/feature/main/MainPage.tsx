@@ -18,6 +18,8 @@ const MainPage: React.FC = () => {
     hideLoading()
     onOpen()
   }
+
+  const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP === 'true'
   return (
     <>
       {/* 我的最愛 */}
@@ -59,16 +61,18 @@ const MainPage: React.FC = () => {
         ></ExpandableTextCard>
       ))} */}
 
-      <Box>
-        <FixedButton onClick={handleAction} />
-        <ConfirmDialog
-          isOpen={open}
-          onConfirm={onClose}
-          onClose={onClose}
-          confirmTitle={'新增一筆 note'}
-          confirmMessage={'是否新增一筆 note?'}
-        ></ConfirmDialog>
-      </Box>
+      {!isPlanTrip && (
+        <Box>
+          <FixedButton onClick={handleAction} />
+          <ConfirmDialog
+            isOpen={open}
+            onConfirm={onClose}
+            onClose={onClose}
+            confirmTitle={'新增一筆 note'}
+            confirmMessage={'是否新增一筆 note?'}
+          ></ConfirmDialog>
+        </Box>
+      )}
     </>
   )
 }

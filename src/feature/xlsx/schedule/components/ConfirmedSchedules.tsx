@@ -2,11 +2,16 @@ import { Box, Button, Flex, IconButton, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import { GrAdd, GrClose } from 'react-icons/gr'
 import { HiOutlinePrinter } from 'react-icons/hi2'
+import { MdDownloading } from 'react-icons/md'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
-import DailySchedule from './DailySchedule'
-import usePrintPreview from '../../../../hooks/UsePrintPreview'
 import PrintPreviewDialog from '../../../../components/pdf/PrintPreviewDialog'
-import { printToPDF } from '../../../../utils/pdf-utils'
+import usePrintPreview from '../../../../hooks/UsePrintPreview'
+import DailySchedule from './DailySchedule'
+import { exportToExcel } from '../utils/export-to-excel'
+import exportTravelPlanToExcel, {
+  filterSpotsAndHotels,
+} from '../utils/export-travel-plan-to-excel'
+import { useStore } from '../../../../hooks/contexts/store-context/UseStore'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
@@ -26,10 +31,20 @@ const ConfirmedSchedules: React.FC<Props> = ({
   const { pdfUrl, openPreviewWithHtml2canvas } = usePrintPreview()
   const [isPreviewOpen, setIsPreviewOpen] = React.useState(false)
   const isPlanTrip = import.meta.env.VITE_IS_PLAN_TRIP === 'true'
+  const { storeData } = useStore()
   const handlePreviewPDF = async () => {
     if (pdfContentRef.current) {
       await openPreviewWithHtml2canvas(pdfContentRef.current, 'print-schedule') // 呼叫統一的預覽函式
     }
+  }
+
+  const handleDownloadExcel = async () => {
+    const { filteredSpots, filteredHotels } = filterSpotsAndHotels(
+      scheduleDays,
+      storeData?.xlsx?.spots ?? [],
+      storeData?.xlsx?.hotels ?? []
+    )
+    exportTravelPlanToExcel(scheduleDays, filteredSpots, filteredHotels)
   }
 
   useEffect(() => {
@@ -63,10 +78,11 @@ const ConfirmedSchedules: React.FC<Props> = ({
               flexDir="row"
               minWidth="6vw"
               alignItems="center"
+              justifyContent="center"
             >
-              <Text textAlign="start" justifySelf="center">
-                行程
-              </Text>
+              <Text justifySelf="center">行程</Text>
+            </Box>
+            <Box display="flex" justifyContent="center">
               <IconButton
                 bgColor="transparent"
                 color="black"
@@ -76,6 +92,15 @@ const ConfirmedSchedules: React.FC<Props> = ({
               >
                 {/* <MdOutlineDownloading /> */}
                 <HiOutlinePrinter />
+              </IconButton>
+              <IconButton
+                bgColor="transparent"
+                color="black"
+                size="md"
+                aria-label="previewPDF"
+                onClick={handleDownloadExcel}
+              >
+                <MdDownloading />
               </IconButton>
             </Box>
           </Box>
