@@ -60,7 +60,7 @@ const HotelsPage: React.FC = () => {
   return (
     <Box display="flex" flexDir="column" gap="1rem">
       <Box>
-        <Text fontSize="2xl">Deal with Hotels</Text>
+        <Text fontSize="2xl">Hotel Import & Select</Text>
       </Box>
 
       <Box

@@ -61,7 +61,7 @@ const SpotsPage: React.FC = () => {
   return (
     <Box display="flex" flexDir="column" gap="1rem">
       <Box>
-        <Text fontSize="2xl">Deal with Spots</Text>
+        <Text fontSize="2xl">Spots Import & Select</Text>
       </Box>
 
       <Box

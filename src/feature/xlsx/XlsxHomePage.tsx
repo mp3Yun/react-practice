@@ -57,9 +57,9 @@ const XlsxHomePage: React.FC = () => {
                   住宿
                 </a>
               </Text>
-              <Text fontSize="xl" fontWeight="bold">
+              {/* <Text fontSize="xl" fontWeight="bold">
                 餐廳
-              </Text>
+              </Text> */}
             </Box>
           </Box>
         </NestedComponent>

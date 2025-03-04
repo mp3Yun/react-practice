@@ -32,7 +32,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   const [storeData, setStoreData] = useState<Partial<StoreDataByFeature>>(
     () => {
       try {
-        const storeData = localStorage.getItem(LOCAL_STORAGE_KEY)
+        const storeData = sessionStorage.getItem(LOCAL_STORAGE_KEY)
         return storeData ? JSON.parse(storeData) : {}
       } catch (error) {
         console.error('Failed to load store data from local storage', error)
@@ -42,7 +42,7 @@ export const StoreProvider = ({ children }: { children: ReactNode }) => {
   )
   useEffect(() => {
     try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storeData))
+      sessionStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(storeData))
     } catch (error) {
       console.error('Failed to save store data to local storage', error)
     }

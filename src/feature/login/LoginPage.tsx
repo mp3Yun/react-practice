@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
       justifyContent={'center'}
       height={'100vh'}
     >
-      <Text fontSize={'3xl'}>practice-chakra</Text>
+      <Text fontSize={'3xl'}>Personalized trip schedule</Text>
       <Button
         mt={4}
         onClick={() => {

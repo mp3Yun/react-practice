@@ -21,7 +21,9 @@ const HomePage: React.FC = () => {
   // 使用 useEffect 處理 modal 的開關，避免無限渲染
   useEffect(() => {
     if (isLogin) {
-      setMoalOpen(true)
+      if (!isPlanTrip) {
+        setMoalOpen(true)
+      }
     }
   }, [isLogin]) // 依賴 isLogin 變化
 
@@ -42,9 +44,9 @@ const HomePage: React.FC = () => {
           as="main"
           flex={1}
           justify={'left'}
-          pt={isOverlayVisible ? 16 : 4}
+          pt={isOverlayVisible ? 16 : isPlanTrip ? 0 : 4}
           boxSizing="border-box"
-          height={`calc(100vh - ${isOverlayVisible ? 16 : 4}rem)`} // 動態計算高度
+          height={`calc(100vh - ${isOverlayVisible ? 16 : isPlanTrip ? 0 : 4}rem)`} // 動態計算高度
         >
           {/* sidebar */}
           <Box w={{ base: '20%', md: '20%' }} bg="gray.100">
@@ -63,7 +65,7 @@ const HomePage: React.FC = () => {
               className="custom-scrollbar"
               css={{
                 '--scrollbar-max-height': isPlanTrip
-                  ? 'calc(100vh - 20px)'
+                  ? 'calc(100vh - 32px)'
                   : 'calc(100vh - 160px)',
               }}
               maxHeight={
