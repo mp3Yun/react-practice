@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { Box } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { useOverlayVisible } from '../../hooks/OverlayVisibleContext'
 import './ChineseCabbagePage.css'
-import Navbar from './components/Navbar'
-import Home from './components/Home'
 import About from './components/About'
+import Footer from './components/Footer'
+import Home from './components/Home'
+import Navbar from './components/Navbar'
 import Services from './components/Services'
 import Tours from './components/Tours'
-import Footer from './components/Footer'
-import { Box } from '@chakra-ui/react'
 
 const ChineseCabbagePage: React.FC = () => {
   const { showOverlay, hideOverlay } = useOverlayVisible()

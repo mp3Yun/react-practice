@@ -1,6 +1,5 @@
 import {
   Button,
-  Dialog,
   DialogBody,
   DialogCloseTrigger,
   DialogContent,

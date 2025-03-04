@@ -1,15 +1,15 @@
+import { Box, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { ReportType } from '../../../helper/report-parser-content/report-parser-context'
+import { useInView } from 'react-intersection-observer'
+import FileUpload from '../../../components/buttons/FileUpload'
 import useExcelWithStrategy from '../../../hooks/UseExcelWithStrategy'
 import usePagination from '../../../hooks/UsePagination'
-import { useInView } from 'react-intersection-observer'
-import { Box, Text } from '@chakra-ui/react'
 import ResultDisplay from '../components/ResultDisplay'
-import FileUpload from '../../../components/buttons/FileUpload'
 
 const SpotsPage: React.FC = () => {
   const [showData, setShowData] = useState<any[]>([])
-  const [reportType, setReportType] = useState<ReportType>('SpotsReport')
+  // const [reportType, setReportType] = useState<ReportType>('SpotsReport')
+  const reportType = 'SpotsReport'
   const { parsedData, handleFile } = useExcelWithStrategy(reportType)
 
   const {

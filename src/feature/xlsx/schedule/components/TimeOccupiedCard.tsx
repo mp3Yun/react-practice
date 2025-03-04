@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 
-const TimeOccupiedCard = <T extends ItemInfo>({ item }: { item: T }) => {
+const TimeOccupiedCard = <T extends ItemInfo>({}: { item: T }) => {
   return (
     <Box
       padding="5px"

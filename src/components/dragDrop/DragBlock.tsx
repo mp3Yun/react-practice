@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react'
 import {
   closestCenter,
   DndContext,
@@ -8,13 +7,8 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core'
-import {
-  arrayMove,
-  SortableContext,
-  sortableKeyboardCoordinates,
-} from '@dnd-kit/sortable'
+import { arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable'
 import { useState } from 'react'
-import SortableItem from './SortableItem'
 
 export interface DraggableProps<T> {
   data: T[]
@@ -51,6 +45,8 @@ const DragBlock = <T extends { id: number; text: string }>({
       })
     }
   }
+  console.log('items', items)
+  console.log('CustomComponent', CustomComponent)
 
   return (
     <>
@@ -59,7 +55,7 @@ const DragBlock = <T extends { id: number; text: string }>({
         onDragEnd={handleDragEnd}
         collisionDetection={closestCenter}
       >
-        <SortableContext items={items}>
+        {/* <SortableContext items={items}>
           <Box display="flex" flexWrap="wrap" gap={2}>
             {items.map((item, index) => (
               <SortableItem<T>
@@ -69,7 +65,7 @@ const DragBlock = <T extends { id: number; text: string }>({
               />
             ))}
           </Box>
-        </SortableContext>
+        </SortableContext> */}
       </DndContext>
     </>
   )

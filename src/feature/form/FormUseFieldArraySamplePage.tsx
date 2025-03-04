@@ -56,6 +56,7 @@ const SampleFormUseFieldArray: React.FC = () => {
   }
 
   const [tabIndex, setTabIndex] = useState(0)
+  console.log('tabIndex', tabIndex)
   const handleAddOne = () => {
     const newMember = { id: fields.length, name: '', age: 0, gender: '' }
     append(newMember)

@@ -19,6 +19,7 @@ export const FormGuardProvider: React.FC<PropsWithChildren> = ({
 
   const { proceed, status } = useBlocker({
     shouldBlockFn: ({ next }) => {
+      console.log('next', next)
       if (isDirty) {
         setModalOpen(true)
         return true

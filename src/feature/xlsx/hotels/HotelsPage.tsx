@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { ReportType } from '../../../helper/report-parser-content/report-parser-context'
-import useExcelWithStrategy from '../../../hooks/UseExcelWithStrategy'
 import { Box, Text } from '@chakra-ui/react'
-import usePagination from '../../../hooks/UsePagination'
+import React, { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
-import ResultDisplay from '../components/ResultDisplay'
 import FileUpload from '../../../components/buttons/FileUpload'
+import useExcelWithStrategy from '../../../hooks/UseExcelWithStrategy'
+import usePagination from '../../../hooks/UsePagination'
+import ResultDisplay from '../components/ResultDisplay'
 
 const HotelsPage: React.FC = () => {
   const [showData, setShowData] = useState<any[]>([])
-  const [reportType, setReportType] = useState<ReportType>('HotelsReport')
+  const reportType = 'HotelsReport'
   const { parsedData, handleFile } = useExcelWithStrategy(reportType)
 
   const {

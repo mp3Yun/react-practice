@@ -1,9 +1,8 @@
 import { Box, Input, InputProps, Text } from '@chakra-ui/react'
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form'
+import { useFormLayoutContext } from '../../hooks/FormLayoutContext'
 import { AllIcons } from '../../utils/icons-utils'
 import ErrorMessage from './ErrorMessage'
-import { useFormLayoutContext } from '../../hooks/FormLayoutContext'
-import { useEffect } from 'react'
 
 interface IconInfoProps {
   icon: AllIcons

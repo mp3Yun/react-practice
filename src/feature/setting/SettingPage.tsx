@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import AutoCompleteSelect from '../../components/selects/AutoCompleteSelect'
 import AutoCompleteSelect2 from '../../components/selects/AutoCompleteSelect2'
-import { BaseOption } from '../../hooks/UseAutoComplete'
 import MultipleSelect from '../../components/selects/MultipleSelect'
 import MultipleSelect2 from '../../components/selects/MultipleSelect2'
+import { BaseOption } from '../../hooks/UseAutoComplete'
 
 interface FormValues {
   language: string
@@ -34,7 +34,6 @@ const SettingPage: React.FC = () => {
 
   const {
     control: control3,
-    watch,
     handleSubmit: handleSubmit3,
     setValue, // 用來更新表單值
   } = useForm<FormValues3>({

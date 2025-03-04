@@ -1,8 +1,7 @@
-import { Box, Button, Flex } from '@chakra-ui/react'
+import { Button, Flex } from '@chakra-ui/react'
 import { Link, Outlet, useNavigate, useRouter } from '@tanstack/react-router'
-import { RoutePathEnum } from '../../dto/route-paths'
 import NestedComponent from '../../components/NestedComponent'
-import { useRef, useState } from 'react'
+import { RoutePathEnum } from '../../dto/route-paths'
 
 const ButtonPage: React.FC = () => {
   // 路由轉跳使用-法1

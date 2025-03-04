@@ -1,15 +1,13 @@
 import { Box, Input, Text } from '@chakra-ui/react'
+import { Outlet, useLocation } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
-import { FormGuardProvider } from '../../hooks/FormGuardContext'
-import { Outlet, useLocation, useRouter } from '@tanstack/react-router'
 import NestedComponent from '../../components/NestedComponent'
-import { useEffect, useState } from 'react'
+import { FormGuardProvider } from '../../hooks/FormGuardContext'
 
 const FormPage: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {

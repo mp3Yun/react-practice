@@ -37,6 +37,8 @@ const DetailTripCard: React.FC<Props> = ({
   // 1. print pdf
   // 2. get data for useStore
 
+  console.log('onConfirm', onConfirm)
+
   useEffect(() => {
     if (storeData !== null) {
       const tmpDataItems = storeData?.xlsx

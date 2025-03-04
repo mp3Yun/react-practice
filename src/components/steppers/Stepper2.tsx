@@ -9,10 +9,11 @@ interface Props {
 }
 
 const Stepper2: React.FC<Props> = ({ currentStep, totalSteps }) => {
+  console.log('currentStep', currentStep)
   return (
     <Box>
       <StepsList>
-        {totalSteps.map((step, index) => (
+        {totalSteps.map((_, index) => (
           <StepsItem key={index} index={index} title={`step${index + 1}`} />
         ))}
       </StepsList>

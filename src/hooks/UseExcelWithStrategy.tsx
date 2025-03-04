@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
+import { ReportType } from '../helper/report-parser-content/report-parser-context'
+import { ReportInfo } from '../helper/report-parser-content/report.type'
 import {
   associateImageWithRawData,
   getExcelImagesMaps,
   getExcelRawData,
   getExcelSheetName,
   parseExcelDataToReportModel,
-  readExcelWithImages,
 } from '../utils/xlsx-utils'
-import { ReportType } from '../helper/report-parser-content/report-parser-context'
-import { ReportInfo } from '../helper/report-parser-content/report.type'
 
 interface UseExcelWithStrategyProp<T extends ReportInfo> {
   sheetName: string

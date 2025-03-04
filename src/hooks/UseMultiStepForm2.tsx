@@ -81,6 +81,8 @@ export function useMultiStepForm2<TFieldValues extends readonly FieldValues[]>(
     prevIsAnyFormDirty.current = isAnyFormDirty
   }, [isAnyFormDirty, setIsDirty])
 
+  console.log('onStepChange', onStepChange)
+
   return {
     currentStep,
     formMethods: formMethods[currentStep],

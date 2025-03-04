@@ -1,14 +1,13 @@
-import { Button, Box, Group, Text } from '@chakra-ui/react'
 import {
-  StepsRoot,
-  StepsList,
-  StepsItem,
-  StepsContent,
-  StepsPrevTrigger,
-  StepsNextTrigger,
+  Box,
   StepsCompletedContent,
+  StepsContent,
+  StepsItem,
+  StepsList,
+  StepsRoot,
+  Text,
 } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface Props {
   currentStep: number | StepperInfo

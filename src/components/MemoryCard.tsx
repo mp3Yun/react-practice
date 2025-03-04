@@ -1,5 +1,4 @@
 import { Box } from '@chakra-ui/react'
-import { useState } from 'react'
 import { createIcon, PngImgs } from '../utils/icons-utils'
 
 interface Props {

@@ -5,13 +5,12 @@ import { HiOutlinePrinter } from 'react-icons/hi2'
 import { MdDownloading } from 'react-icons/md'
 import { ItemInfo } from '../../../../components/dragDrop/CrossZoneDragger'
 import PrintPreviewDialog from '../../../../components/pdf/PrintPreviewDialog'
+import { useStore } from '../../../../hooks/contexts/store-context/UseStore'
 import usePrintPreview from '../../../../hooks/UsePrintPreview'
-import DailySchedule from './DailySchedule'
-import { exportToExcel } from '../utils/export-to-excel'
 import exportTravelPlanToExcel, {
   filterSpotsAndHotels,
 } from '../utils/export-travel-plan-to-excel'
-import { useStore } from '../../../../hooks/contexts/store-context/UseStore'
+import DailySchedule from './DailySchedule'
 
 interface Props {
   scheduleDays: Record<string, ItemInfo[]>
@@ -124,7 +123,7 @@ const ConfirmedSchedules: React.FC<Props> = ({
               width="auto"
             >
               <Box display="flex" width="max-content">
-                {Object.keys(scheduleDays).map((dayKey, index) => (
+                {Object.keys(scheduleDays).map((dayKey) => (
                   <Button
                     key={dayKey}
                     onClick={() => setDayKey(dayKey)}

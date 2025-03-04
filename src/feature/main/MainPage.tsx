@@ -15,6 +15,7 @@ const MainPage: React.FC = () => {
     showLoading()
     // 模擬異步操作
     const result = await new Promise((resolve) => setTimeout(resolve, 2000))
+    console.log('result', result)
     hideLoading()
     onOpen()
   }

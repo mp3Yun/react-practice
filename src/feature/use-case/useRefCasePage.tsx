@@ -12,7 +12,7 @@ const UseRefCase1: React.FC = () => {
     setCount(count + 1)
   }
   return (
-    <Box p={4} sx={{ '& > *': { my: 2 } }} className="show-border">
+    <Box p={4} className="show-border">
       <Box flex={1}>使用 useRef 儲存狀態</Box>
       <Box flex={1}>點擊次數：{count}</Box>
       <Box flex={1}>當前渲染儲存的值: {rerenderCountRef.current}</Box>
@@ -42,7 +42,7 @@ const UseRefCase2: React.FC = () => {
   return (
     <Box
       p={4}
-      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+      style={{ display: 'flex', flexDirection: 'column', gap: 2 }}
       className="show-border"
     >
       <Box>

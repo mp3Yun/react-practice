@@ -1,8 +1,8 @@
-import { Box } from '@chakra-ui/react'
 import { useOverlayVisible } from '../../../hooks/OverlayVisibleContext'
 
 const Navbar: React.FC = () => {
   const { isOverlayVisible } = useOverlayVisible()
+  console.log('isOverlayVisible', isOverlayVisible)
   const linksData = [
     { id: 1, href: '#home', text: 'home' },
     { id: 2, href: '#about', text: 'about' },

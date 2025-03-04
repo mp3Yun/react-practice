@@ -1,11 +1,8 @@
-import * as XLSX from 'xlsx'
 import JSZip from 'jszip'
-import {
-  ColumnType,
-  ReportInfo,
-} from '../helper/report-parser-content/report.type'
+import * as XLSX from 'xlsx'
 import ReportParserService from '../helper/report-parser-content'
 import { ReportType } from '../helper/report-parser-content/report-parser-context'
+import { ReportInfo } from '../helper/report-parser-content/report.type'
 
 export const parseExcelFile = (file: File): Promise<any[]> => {
   return new Promise((resolve, reject) => {

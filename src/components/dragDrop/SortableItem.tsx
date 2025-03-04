@@ -12,13 +12,12 @@ const SortableItem = <T extends { id: string; text: string }>({
   dndType,
   CustomComponent,
 }: SortableItemProps<T>) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({
-      id: item.id,
-      data: {
-        dndType: dndType,
-      },
-    })
+  const { attributes, listeners, setNodeRef } = useSortable({
+    id: item.id,
+    data: {
+      dndType: dndType,
+    },
+  })
 
   return (
     <Box ref={setNodeRef}>

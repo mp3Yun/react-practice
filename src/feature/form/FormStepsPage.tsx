@@ -7,18 +7,6 @@ import { flattenArray } from '../../utils/array-utils'
 import { validateForm } from '../../utils/form-utils'
 import { flattenObject } from '../../utils/object-utils'
 
-// 假設我的所有表單資料如下:
-const myFormData = {
-  name: '',
-  gender: '',
-  age: '',
-  telephone: '',
-  address: [],
-  family: {
-    member1: '',
-    member2: '',
-  },
-}
 type FormStep1 = typeof step1FormData
 type FormStep2 = {
   address: { id: number; value: string }[]

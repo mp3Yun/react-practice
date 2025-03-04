@@ -1,8 +1,8 @@
-import { Box, Button, Flex, Grid } from '@chakra-ui/react'
+import { Box, Button, Flex } from '@chakra-ui/react'
+import React from 'react'
+import CircleButton from '../../components/buttons/CircleButton'
 import NestedComponent from '../../components/NestedComponent'
 import { ChakraIcons } from '../../utils/icons-utils'
-import CircleButton from '../../components/buttons/CircleButton'
-import React from 'react'
 
 const ButtonDetailPage: React.FC = () => {
   const buttonList = [

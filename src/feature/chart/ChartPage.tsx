@@ -1,15 +1,18 @@
 import React from 'react'
-import NestedComponent from '../../components/NestedComponent'
-import { Box } from '@chakra-ui/react'
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts'
 import {
-  LineChart,
+  CartesianGrid,
+  Cell,
+  Legend,
   Line,
+  LineChart,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  ResponsiveContainer,
 } from 'recharts'
+import NestedComponent from '../../components/NestedComponent'
 
 const PieChartComponent = () => {
   const data = [
@@ -32,7 +35,7 @@ const PieChartComponent = () => {
         paddingAngle={5}
         dataKey="value"
       >
-        {data.map((entry, index) => (
+        {data.map((_, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
